@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System 9 - Light Mode & Transparent Lettering</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Setup for Light Mode */
+        :root {
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+            --bg-primary: #FCFCFC;
+            --text-primary: #0A0A0A;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        
+        /* Font Utilities */
+        .font-geist { font-family: 'Geist', sans-serif; }
+        .font-jakarta { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* Transparent Lettering Effect */
+        .text-transparent-bg {
+            background-image: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 100%), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: bg-pan 30s linear infinite alternate;
+        }
+
+        .text-transparent-gradient {
+            background-image: linear-gradient(135deg, #000 0%, #666 40%, #000 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradient-pan 5s linear infinite;
+        }
+
+        @keyframes bg-pan {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes gradient-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Motion & Animations */
+        @keyframes animationIn {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+        
+        .animate-on-scroll { animation-play-state: paused !important; }
+        .animate-on-scroll.animate { animation-play-state: running !important; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee { animation: marquee 30s linear infinite; }
+
+        /* Light Mode Glassmorphism */
+        .glass-light {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+            border-radius: 1.5rem;
+        }
+
+        .glass-highlight-light {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 100%);
+            border-radius: inherit;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Flashlight Effect - Light Mode */
+        .flashlight-card {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(0, 0, 0, 0.05),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .flashlight-border {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(
+                400px circle at var(--mouse-x) var(--mouse-y),
+                rgba(0, 0, 0, 0.15),
+                transparent 40%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .flashlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .flashlight-card:hover::before,
+        .flashlight-card:hover .flashlight-border {
+            opacity: 1;
+        }
+
+        /* Border Beam - Light Mode */
+        .btn-beam-container {
+            position: relative;
+            display: inline-flex;
+            border-radius: 9999px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .beam-border {
+            position: absolute;
+            inset: -2px;
+            border-radius: 9999px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0,0,0,0.3) 60deg, transparent 120deg);
+            animation: rotate-beam 2s linear infinite;
+            transition: opacity 0.3s;
+        }
+        .btn-beam-container:hover .beam-border {
+            opacity: 1;
+        }
+        @keyframes rotate-beam {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animated Grid Background */
+        .bg-grid-light {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+
+    </style>
+</head>
+<body class="selection:bg-black/10 selection:text-black">
+
+    <!-- Global Background Elements -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-grid-light"></div>
+        <div class="absolute top-[10%] left-[20%] w-96 h-96 bg-zinc-200/50 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-slate-200/40 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-6 transition-all duration-300">
+        <div class="max-w-7xl mx-auto glass-light rounded-full px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2 font-geist font-semibold text-lg tracking-tight">
+                <div class="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+                    <div class="w-2 h-2 bg-white rounded-full"></div>
+                </div>
+                DS-9
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-zinc-500">
+                <a href="#hero" class="hover:text-black transition-colors">Intro</a>
+                <a href="#typography" class="hover:text-black transition-colors">Typography</a>
+                <a href="#colors" class="hover:text-black transition-colors">Colors</a>
+                <a href="#components" class="hover:text-black transition-colors">Components</a>
+                <a href="#motion" class="hover:text-black transition-colors">Motion</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="relative btn-beam-container group">
+                    <div class="beam-border"></div>
+                    <span class="relative z-10 flex items-center gap-2 bg-black text-white px-5 py-2 rounded-full text-sm font-medium transition-transform active:scale-95">
+                        Download Kit
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center pt-32 pb-20 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="flex flex-col text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-zinc-200 shadow-sm text-xs font-medium text-zinc-600 w-fit mb-8 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-30"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-black"></span>
+                        </span>
+                        Light Mode Activated
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-8xl font-geist font-semibold tracking-tighter leading-[1.05] mb-6 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                        The Pure <br>
+                        <span class="text-transparent-bg pb-2">Aesthetic.</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-zinc-500 font-normal leading-relaxed max-w-lg mb-10 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                        A creative synthesis of transparent lettering, precise glassmorphism, and sophisticated motion patterns, built entirely for white backgrounds.
+                    </p>
+                    
+                    <div class="flex items-center gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+                        <button class="relative btn-beam-container group">
+                            <div class="beam-border"></div>
+                            <span class="relative z-10 flex items-center justify-center bg-white text-black border border-zinc-200 px-8 py-3.5 rounded-full text-sm font-medium transition-colors group-hover:bg-zinc-50">
+                                Explore Patterns
+                            </span>
+                        </button>
+                        <button class="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium text-zinc-600 hover:text-black transition-colors">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            View Interactions
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Floating Glass Cards (Adapted from indexglass) -->
+                <div class="relative h-[600px] w-full hidden md:block animate-on-scroll [animation:animationIn_0.8s_ease-out_0.5s_both]">
+                    <!-- Back Card -->
+                    <div class="absolute top-[10%] right-[10%] w-72 h-80 rounded-[2rem] bg-gradient-to-br from-zinc-200 to-zinc-100 shadow-xl rotate-[15deg] transition-transform duration-700 hover:rotate-[5deg]"></div>
+                    
+                    <!-- Front Glass Card -->
+                    <div class="glass-light w-80 h-96 absolute top-[15%] right-[20%] rotate-[-5deg] p-8 flex flex-col justify-between transition-transform duration-700 hover:rotate-0 hover:scale-105 hover:z-20">
+                        <div class="glass-highlight-light"></div>
+                        <div class="relative z-10">
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-2xl bg-white shadow-sm border border-zinc-100 flex items-center justify-center text-black">
+                                    <iconify-icon icon="solar:pen-new-square-bold-duotone" class="text-2xl"></iconify-icon>
+                                </div>
+                                <span class="text-xs font-semibold uppercase tracking-widest text-zinc-400">Design</span>
+                            </div>
+                            <h3 class="text-2xl font-jakarta font-semibold text-black tracking-tight mb-2">Transparent Art</h3>
+                            <p class="text-sm text-zinc-500 leading-relaxed">Showcasing the power of background-clip combined with animated gradients and images.</p>
+                        </div>
+                        <div class="relative z-10 flex items-center gap-4 border-t border-black/5 pt-4">
+                            <div class="flex -space-x-3">
+                                <div class="w-8 h-8 rounded-full bg-zinc-200 border-2 border-white"></div>
+                                <div class="w-8 h-8 rounded-full bg-zinc-300 border-2 border-white"></div>
+                                <div class="w-8 h-8 rounded-full bg-zinc-400 border-2 border-white"></div>
+                            </div>
+                            <span class="text-xs font-medium text-zinc-500">+12 patterns</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Typography -->
+        <section id="typography" class="py-32 px-6 max-w-7xl mx-auto border-t border-black/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-semibold tracking-tight text-black mb-4">Typography</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl">The scale and rhythm of text styles, demonstrating the signature transparent lettering effect.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Headings -->
+                <div class="space-y-12 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    <div class="border-b border-black/5 pb-4">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Heading 1 (Geist + Transparent FX)</span>
+                        <h1 class="text-6xl md:text-8xl font-geist font-semibold tracking-tighter text-transparent-gradient">Heading 1</h1>
+                    </div>
+                    <div class="border-b border-black/5 pb-4">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Heading 2 (Geist)</span>
+                        <h2 class="text-5xl md:text-6xl font-geist font-semibold tracking-tight text-black">Heading 2</h2>
+                    </div>
+                    <div class="border-b border-black/5 pb-4">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Heading 3 (Jakarta)</span>
+                        <h3 class="text-3xl md:text-4xl font-jakarta font-semibold tracking-tight text-zinc-800">Heading 3</h3>
+                    </div>
+                    <div class="border-b border-black/5 pb-4">
+                        <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Heading 4 (Jakarta)</span>
+                        <h4 class="text-2xl font-jakarta font-medium tracking-tight text-zinc-800">Heading 4</h4>
+                    </div>
+                </div>
+                
+                <!-- Body Text -->
+                <div class="bg-white border border-zinc-100 rounded-[2rem] p-10 shadow-xl shadow-zinc-200/50 h-fit animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                    <div class="mb-8">
+                        <h3 class="text-lg font-semibold text-black mb-1">Body Text Family</h3>
+                        <p class="text-sm text-zinc-500 font-mono">font-family: 'Inter', sans-serif;</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div>
+                            <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Body Large</span>
+                            <p class="text-lg text-zinc-600 leading-relaxed">This is large body text used for subtitles and introductory paragraphs. It provides high legibility at larger sizes.</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Body Default</span>
+                            <p class="text-base text-zinc-500 leading-relaxed">The standard body text. Used for main content, articles, and general interface text where comfortable reading is essential.</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Body Small</span>
+                            <p class="text-sm text-zinc-400 leading-relaxed">Small text used for captions, metadata, and secondary information that shouldn't compete with main content.</p>
+                        </div>
+                        <div>
+                            <span class="text-xs font-medium text-zinc-400 uppercase tracking-widest mb-2 block">Label & Metadata</span>
+                            <span class="text-xs font-medium uppercase tracking-wider text-black">Strong Label Text</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Colors & Surfaces -->
+        <section id="colors" class="py-32 px-6 max-w-7xl mx-auto border-t border-black/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-semibold tracking-tight text-black mb-4">Colors & Surfaces</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl">A refined light-mode palette utilizing whites, grays, and sophisticated glassmorphism.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <!-- Solid Colors -->
+                <div class="flex flex-col gap-3 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    <div class="h-32 rounded-2xl bg-[#FAFAFA] border border-black/5 shadow-sm"></div>
+                    <div>
+                        <div class="font-medium text-sm text-black">Page Background</div>
+                        <div class="text-xs text-zinc-500 font-mono">bg-[#FAFAFA]</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                    <div class="h-32 rounded-2xl bg-white border border-black/5 shadow-xl shadow-zinc-200/50"></div>
+                    <div>
+                        <div class="font-medium text-sm text-black">Card Surface</div>
+                        <div class="text-xs text-zinc-500 font-mono">bg-white</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+                    <div class="h-32 rounded-2xl bg-[#0A0A0A] border border-black/5 shadow-lg"></div>
+                    <div>
+                        <div class="font-medium text-sm text-black">Deep Black (Text/Buttons)</div>
+                        <div class="text-xs text-zinc-500 font-mono">bg-[#0A0A0A]</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.5s_both]">
+                    <div class="h-32 rounded-2xl bg-zinc-100 border border-black/5 shadow-inner"></div>
+                    <div>
+                        <div class="font-medium text-sm text-black">Neutral Fill</div>
+                        <div class="text-xs text-zinc-500 font-mono">bg-zinc-100</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glassmorphism & Gradients -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.6s_both]">
+                <div class="bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center rounded-[2rem] p-12 h-80 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/20"></div>
+                    <div class="glass-light w-full max-w-sm h-40 flex items-center justify-center flex-col z-10 transition-transform hover:scale-105 duration-500">
+                        <h3 class="text-xl font-medium font-geist text-black">Light Glass</h3>
+                        <p class="text-sm text-zinc-600">.glass-light utility</p>
+                        <div class="glass-highlight-light"></div>
+                    </div>
+                </div>
+                
+                <div class="rounded-[2rem] p-12 h-80 flex flex-col items-center justify-center relative overflow-hidden border border-black/5" style="background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);">
+                    <h3 class="text-5xl font-geist font-bold text-transparent-gradient mb-4">Gradient</h3>
+                    <p class="text-sm text-zinc-500">Used for text-clip and subtle backgrounds.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. UI Components -->
+        <section id="components" class="py-32 px-6 max-w-7xl mx-auto border-t border-black/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-semibold tracking-tight text-black mb-4">UI Components</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl">Interactive elements featuring border beams, flashlight hovers, and clean shadows.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Buttons & Actions -->
+                <div class="flex flex-col gap-8 bg-white border border-zinc-100 rounded-[2rem] p-10 shadow-xl shadow-zinc-200/50 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    <h3 class="text-lg font-semibold text-black">Buttons</h3>
+                    
+                    <div class="flex flex-wrap gap-6 items-center">
+                        <!-- Primary Beam -->
+                        <button class="relative btn-beam-container group">
+                            <div class="beam-border"></div>
+                            <span class="relative z-10 flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full text-sm font-medium transition-transform active:scale-95 shadow-md shadow-black/20">
+                                Primary Action
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+                        
+                        <!-- Secondary Outline -->
+                        <button class="px-6 py-3 rounded-full border bg-white text-sm font-medium transition-all border-zinc-200 text-black hover:border-black hover:bg-zinc-50 shadow-sm">
+                            Secondary Outline
+                        </button>
+
+                        <!-- Ghost -->
+                        <button class="px-6 py-3 rounded-full text-sm font-medium transition-colors text-zinc-600 hover:text-black hover:bg-zinc-100">
+                            Ghost Button
+                        </button>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-black mt-4">Badges & Tags</h3>
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <span class="text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-full border font-medium bg-black text-white border-black">Active Badge</span>
+                        <span class="text-[11px] uppercase tracking-wider px-3 py-1.5 rounded-full border font-medium bg-white text-black border-zinc-200 shadow-sm">Neutral Tag</span>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-zinc-200 bg-zinc-50">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                            <span class="text-xs font-medium text-zinc-600">System Online</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashlight Cards -->
+                <div class="flex flex-col gap-8">
+                    <div class="flashlight-card p-8 h-48 flex flex-col justify-end group animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                        <div class="flashlight-border"></div>
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 bg-white border border-zinc-100 shadow-sm rounded-xl flex items-center justify-center mb-4 text-black group-hover:scale-110 transition-transform duration-300">
+                                <iconify-icon icon="solar:shield-check-bold-duotone" class="text-xl"></iconify-icon>
+                            </div>
+                            <h3 class="text-lg font-semibold text-black mb-1">Flashlight Effect</h3>
+                            <p class="text-sm text-zinc-500">Adapted for light mode. Hover over this card to see the radial mask reveal the border and background.</p>
+                        </div>
+                    </div>
+
+                    <!-- Data/Rotator Card Concept -->
+                    <div class="bg-white border border-zinc-100 rounded-2xl p-8 shadow-xl shadow-zinc-200/50 flex flex-col justify-between relative overflow-hidden animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both] transition-all hover:-translate-y-1 hover:shadow-2xl hover:shadow-zinc-200/80">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-zinc-100 to-transparent rounded-bl-[4rem]"></div>
+                        <div class="relative z-10">
+                            <div class="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-black mb-6">
+                                <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
+                            </div>
+                            <div class="text-sm font-medium text-zinc-400 mb-1">Total Revenue</div>
+                            <div class="text-4xl font-geist font-semibold tracking-tight text-black">$124,592.00</div>
+                        </div>
+                        <div class="relative z-10 mt-6 pt-6 border-t border-zinc-100 flex justify-between items-center">
+                            <span class="text-sm font-medium text-emerald-500 flex items-center gap-1">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i> +14.5%
+                            </span>
+                            <span class="text-xs text-zinc-400">vs last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Motion & Icons -->
+        <section id="motion" class="py-32 px-6 max-w-7xl mx-auto border-t border-black/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-semibold tracking-tight text-black mb-4">Motion & Icons</h2>
+                <p class="text-lg text-zinc-500 max-w-2xl">Infinite loops and dual-tone icons completing the visual language.</p>
+            </div>
+
+            <!-- Infinite Marquee -->
+            <div class="relative w-full py-12 mb-20 border-y border-black/5 bg-zinc-50 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both] overflow-hidden">
+                <div class="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-zinc-50 to-transparent"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-zinc-50 to-transparent"></div>
+                <div class="flex animate-marquee w-max items-center gap-16 px-8 opacity-40 hover:opacity-100 transition-opacity duration-500 grayscale hover:grayscale-0">
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:apple"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:stripe"></iconify-icon>
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:vercel"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:github"></iconify-icon>
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:figma"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:spacex"></iconify-icon>
+                    <!-- Duplicates for seamless loop -->
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:apple"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:stripe"></iconify-icon>
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:vercel"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:github"></iconify-icon>
+                    <iconify-icon class="text-4xl text-black" icon="simple-icons:figma"></iconify-icon>
+                    <iconify-icon class="text-5xl text-black" icon="simple-icons:spacex"></iconify-icon>
+                </div>
+            </div>
+
+            <!-- Icon Grid -->
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-8 bg-white border border-zinc-100 p-10 rounded-[2rem] shadow-xl shadow-zinc-200/50 justify-items-center animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                <iconify-icon class="text-3xl text-black hover:scale-125 transition-transform" icon="solar:home-2-bold-duotone"></iconify-icon>
+                <iconify-icon class="text-3xl text-black hover:scale-125 transition-transform" icon="solar:settings-bold-duotone"></iconify-icon>
+                <iconify-icon class="text-3xl text-black hover:scale-125 transition-transform" icon="solar:chart-square-bold-duotone"></iconify-icon>
+                <iconify-icon class="text-3xl text-black hover:scale-125 transition-transform" icon="solar:user-bold-duotone"></iconify-icon>
+                <i data-lucide="zap" class="w-8 h-8 text-black hover:scale-125 transition-transform"></i>
+                <i data-lucide="shield" class="w-8 h-8 text-black hover:scale-125 transition-transform"></i>
+                <i data-lucide="cpu" class="w-8 h-8 text-black hover:scale-125 transition-transform"></i>
+                <i data-lucide="layers" class="w-8 h-8 text-black hover:scale-125 transition-transform"></i>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 border-t border-black/5 text-center mt-20">
+            <h2 class="text-4xl md:text-6xl font-geist font-bold text-transparent-bg mb-6">Create the Future.</h2>
+            <p class="text-sm text-zinc-400 font-mono">Design System 9 &bull; Clean Architecture &bull; 2026</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Init Lucide
+        lucide.createIcons();
+
+        // Scroll Animation Observer
+        (function () {
+            const once = true;
+            if (!window.__inViewIO) {
+                window.__inViewIO = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate");
+                            if (once) window.__inViewIO.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+            }
+
+            window.initInViewAnimations = function (selector = ".animate-on-scroll") {
+                document.querySelectorAll(selector).forEach((el) => {
+                    window.__inViewIO.observe(el);
+                });
+            };
+
+            document.addEventListener("DOMContentLoaded", () => initInViewAnimations());
+        })();
+
+        // Flashlight effect for cards
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.flashlight-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>

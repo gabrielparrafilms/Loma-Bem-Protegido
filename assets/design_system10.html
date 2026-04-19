@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System 10 - Ultimate Dark Mode</title>
+    
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Setup for Dark Mode */
+        :root {
+            --mouse-x: 50%;
+            --mouse-y: 50%;
+            --bg-primary: #09090b;
+            --bg-secondary: #131316;
+            --text-primary: rgba(255,255,255,0.95);
+            --text-secondary: #a1a1aa; /* zinc-400 */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        body::-webkit-scrollbar { display: none; }
+        
+        /* Font Utilities */
+        .font-geist { font-family: 'Geist', sans-serif; }
+
+        /* Transparent Lettering Effect (Gradient over Image) */
+        .text-transparent-bg {
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,1) 100%), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: bg-pan 30s linear infinite alternate;
+        }
+
+        .text-transparent-gradient {
+            background-image: linear-gradient(135deg, #fff 0%, #71717a 40%, #fff 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradient-pan 5s linear infinite;
+        }
+
+        @keyframes bg-pan {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes gradient-pan {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Motion & Animations */
+        @keyframes animationIn {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+        
+        .animate-on-scroll { animation-play-state: paused !important; }
+        .animate-on-scroll.animate { animation-play-state: running !important; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee { animation: marquee 30s linear infinite; }
+
+        /* Dark Mode Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 30px 60px -15px rgba(0, 0, 0, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 1.5rem;
+        }
+
+        .glass-highlight {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: inherit;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Flashlight Effect - Dark Mode */
+        .flashlight-card {
+            position: relative;
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .flashlight-border {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(
+                400px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.3),
+                transparent 40%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .flashlight-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        .flashlight-card:hover::before,
+        .flashlight-card:hover .flashlight-border {
+            opacity: 1;
+        }
+
+        /* Border Beam - Dark Mode */
+        .btn-beam-container {
+            position: relative;
+            display: inline-flex;
+            border-radius: 9999px;
+            background: var(--bg-primary);
+        }
+        .beam-border {
+            position: absolute;
+            inset: -2px;
+            border-radius: 9999px;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255,255,255,0.5) 60deg, transparent 120deg);
+            animation: rotate-beam 2s linear infinite;
+            transition: opacity 0.3s;
+        }
+        .btn-beam-container:hover .beam-border {
+            opacity: 1;
+        }
+        @keyframes rotate-beam {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body class="selection:bg-white/10 selection:text-white">
+
+    <!-- Global Background Elements (Masked Gradient & Glows) -->
+    <div class="fixed top-0 w-full h-screen -z-10 brightness-75" style="mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 0%, black 80%, transparent);">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-[60vh] bg-gradient-to-b via-zinc-500/20 to-transparent z-10 from-zinc-400/40"></div>
+        <div class="absolute top-[10%] left-1/2 -translate-x-1/2 w-48 h-56 blur-[100px] rounded-full z-10 bg-zinc-400/20"></div>
+        <div class="absolute -top-[50vh] w-[150vw] h-[100vh] rounded-[100%] border border-zinc-500/20 shadow-[0_0_120px_rgba(161,161,170,0.1)]"></div>
+        <div class="absolute top-[20vh] w-[120vw] h-[120vh] rounded-[100%] border shadow-[0_0_80px_rgba(161,161,170,0.05)] border-zinc-600/10"></div>
+        <div class="absolute top-[30%] left-[15%] w-64 h-64 bg-zinc-500/10 blur-[80px] rounded-full"></div>
+        <div class="absolute bottom-[20%] right-[20%] w-80 h-80 blur-[100px] rounded-full bg-zinc-400/10"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed flex md:px-12 z-50 pointer-events-auto pt-6 pr-6 pb-6 pl-6 top-0 right-0 left-0 items-center justify-between">
+        <a href="#" class="flex items-center gap-2.5 text-xl tracking-tight font-medium hover:opacity-80 transition-opacity font-geist text-white">
+            <iconify-icon icon="solar:play-bold" class="rotate-90 w-5 h-5 flex items-center justify-center text-white" style="stroke-width: 1.5;"></iconify-icon>
+            Design System 10
+        </a>
+        
+        <nav class="hidden md:flex items-center gap-10 text-sm font-normal text-zinc-400">
+            <a href="#typography" class="transition-colors hover:text-zinc-200">Typography</a>
+            <a href="#colors" class="transition-colors hover:text-zinc-200">Colors</a>
+            <a href="#components" class="transition-colors hover:text-zinc-200">Components</a>
+            <a href="#icons" class="transition-colors hover:text-zinc-200">Icons</a>
+        </nav>
+        
+        <div class="hidden md:flex items-center gap-6">
+            <a href="#" class="text-sm font-normal transition-colors px-4 py-2 backdrop-blur-sm border rounded-full text-zinc-300 hover:text-white bg-black/50 border-zinc-700/50">Log out</a>
+            
+            <!-- Animated Hover CTA Nav -->
+            <button class="group relative inline-flex min-w-[120px] cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white border-zinc-700/80 shadow-[0_2.8px_2.2px_rgba(0,0,0,0.3)]">
+                <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                    Export Kit
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                </span>
+                
+                <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 group-hover:blur-none opacity-0 rounded-full blur-md">
+                    Export Kit
+                    <i data-lucide="download" class="w-4 h-4 text-white"></i>
+                </span>
+
+                <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
+                <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="z-20 relative">
+
+        <!-- 1. Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center pt-32 pb-20 px-6 max-w-7xl mx-auto border-b border-white/5">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="flex flex-col text-left gap-8">
+                    <h1 class="text-6xl md:text-8xl font-geist font-medium tracking-tighter leading-[1.05] animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                        Ultimate <br>
+                        <span class="text-transparent-bg">Dark Mode.</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl text-zinc-400 font-normal leading-relaxed max-w-lg animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                        A comprehensive documentation of a highly premium dark aesthetic, featuring Geist typography, transparent lettering, and advanced glassmorphism.
+                    </p>
+                    
+                    <div class="flex items-center gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                        <button class="relative btn-beam-container group">
+                            <div class="beam-border"></div>
+                            <span class="relative z-10 flex items-center justify-center bg-[#131316] text-white border border-white/10 px-8 py-3.5 rounded-full text-sm font-medium transition-colors group-hover:bg-[#18181b]">
+                                Explore Patterns
+                            </span>
+                        </button>
+                        <button class="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium text-zinc-500 hover:text-white transition-colors">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            View Interactions
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Floating Glass Cards (Creative Portfolio style) -->
+                <div class="relative h-[550px] w-full hidden lg:block animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+                    <div class="glass-card absolute top-[5%] left-[5%] w-48 aspect-square rotate-[-4deg] p-3 z-30 transition-all duration-500 hover:scale-105 hover:z-50">
+                        <div class="relative w-full h-full rounded-xl overflow-hidden bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent"></div>
+                        </div>
+                        <div class="glass-highlight"></div>
+                    </div>
+                    <div class="glass-card absolute top-[25%] right-[5%] w-64 aspect-square rotate-[3deg] p-3 z-40 transition-all duration-500 hover:scale-105 hover:z-50">
+                        <div class="relative w-full h-full rounded-xl overflow-hidden bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4">
+                                <span class="px-2 py-1 bg-black/50 backdrop-blur border border-white/10 rounded-md text-xs font-medium text-white">Glassmorphism</span>
+                            </div>
+                        </div>
+                        <div class="glass-highlight"></div>
+                    </div>
+                    <div class="glass-card absolute bottom-[10%] left-[20%] w-52 aspect-square rotate-[4deg] p-3 z-30 transition-all duration-500 hover:scale-105 hover:z-50">
+                        <div class="relative w-full h-full rounded-xl overflow-hidden bg-zinc-900">
+                            <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent"></div>
+                        </div>
+                        <div class="glass-highlight"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Typography -->
+        <section id="typography" class="py-32 px-6 max-w-7xl mx-auto border-b border-white/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-medium tracking-tight text-white mb-4">Typography System</h2>
+                <p class="text-lg text-zinc-400 max-w-2xl">Geist for structural hierarchy and Inter for highly legible body copy. Demonstrating transparent gradient clipping on main displays.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <!-- Headings (Geist) -->
+                <div class="space-y-12 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    <div class="border-b border-white/5 pb-6">
+                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 block">H1 (Geist, Medium, text-7xl, text-transparent-bg)</span>
+                        <h1 class="text-5xl md:text-7xl font-geist font-medium tracking-tighter text-transparent-gradient">Heading 1</h1>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 block">H2 (Geist, Medium, text-5xl, text-white/95)</span>
+                        <h2 class="text-4xl md:text-5xl font-geist font-medium tracking-tight text-white/95">Heading 2</h2>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 block">H3 (Geist, Medium, text-3xl, text-zinc-200)</span>
+                        <h3 class="text-2xl md:text-3xl font-geist font-medium tracking-tight text-zinc-200">Heading 3</h3>
+                    </div>
+                    <div class="border-b border-white/5 pb-6">
+                        <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-3 block">H4 (Geist, Medium, text-xl, text-zinc-200)</span>
+                        <h4 class="text-xl font-geist font-medium tracking-tight text-zinc-200">Heading 4</h4>
+                    </div>
+                </div>
+                
+                <!-- Body Text (Inter) -->
+                <div class="bg-[#131316] border border-white/5 rounded-3xl p-10 h-fit animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both] shadow-2xl">
+                    <div class="mb-10">
+                        <h3 class="text-xl font-medium text-white mb-2">Body Text Roles</h3>
+                        <p class="text-xs text-zinc-500 font-mono bg-black/50 px-2 py-1 rounded inline-block">font-family: 'Inter', sans-serif;</p>
+                    </div>
+                    <div class="space-y-10">
+                        <div>
+                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-2 block">Body Large (text-lg, font-normal, leading-relaxed)</span>
+                            <p class="text-lg text-zinc-300 leading-relaxed font-normal">This is the large body text used for subtitles and introductory paragraphs. It provides high legibility at larger sizes.</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-2 block">Body Default (text-base, font-normal, text-zinc-400)</span>
+                            <p class="text-base text-zinc-400 leading-relaxed font-normal">The standard body text. Used for main content, articles, and general interface text where comfortable reading is essential.</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-2 block">Body Small (text-sm, font-normal, text-zinc-500)</span>
+                            <p class="text-sm text-zinc-500 leading-relaxed font-normal">Small text used for captions, metadata, and secondary information that shouldn't compete with main content.</p>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-2 block">Labels (text-xs, font-medium, uppercase)</span>
+                            <span class="text-xs font-medium uppercase tracking-widest text-zinc-300">Strong Label Text</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Colors System -->
+        <section id="colors" class="py-32 px-6 max-w-7xl mx-auto border-b border-white/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-medium tracking-tight text-white mb-4">Color System</h2>
+                <p class="text-lg text-zinc-400 max-w-2xl">Dark background hierarchy, semantic highlights, and translucent borders.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                <!-- Backgrounds -->
+                <div class="flex flex-col gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    <div class="h-32 rounded-2xl bg-[#09090b] border border-white/5 shadow-inner"></div>
+                    <div>
+                        <div class="font-medium text-sm text-white">App Background</div>
+                        <div class="text-[11px] text-zinc-500 font-mono">HEX #09090b</div>
+                        <div class="text-[10px] text-zinc-600 font-mono mt-1">Role: Primary Base</div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                    <div class="h-32 rounded-2xl bg-[#131316] border border-white/5 shadow-inner"></div>
+                    <div>
+                        <div class="font-medium text-sm text-white">Card Surface</div>
+                        <div class="text-[11px] text-zinc-500 font-mono">HEX #131316</div>
+                        <div class="text-[10px] text-zinc-600 font-mono mt-1">Role: Secondary Card</div>
+                    </div>
+                </div>
+                <!-- Texts -->
+                <div class="flex flex-col gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+                    <div class="h-32 rounded-2xl bg-zinc-400 border border-white/5"></div>
+                    <div>
+                        <div class="font-medium text-sm text-white">Body Text Muted</div>
+                        <div class="text-[11px] text-zinc-500 font-mono">HEX #a1a1aa (zinc-400)</div>
+                        <div class="text-[10px] text-zinc-600 font-mono mt-1">Role: Main Paragraphs</div>
+                    </div>
+                </div>
+                <!-- Semantic -->
+                <div class="flex flex-col gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.5s_both]">
+                    <div class="h-32 rounded-2xl bg-emerald-400 border border-emerald-400/20 shadow-[0_0_20px_rgba(52,211,153,0.2)]"></div>
+                    <div>
+                        <div class="font-medium text-sm text-white">Success / Feedback</div>
+                        <div class="text-[11px] text-zinc-500 font-mono">HEX #34d399</div>
+                        <div class="text-[10px] text-zinc-600 font-mono mt-1">Role: Status Badges</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Translucency & Borders -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.6s_both]">
+                <div class="rounded-3xl p-10 h-64 flex flex-col justify-center bg-[#131316] border border-white/5 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop')] opacity-10 bg-cover bg-center"></div>
+                    <div class="relative z-10">
+                        <div class="text-[10px] font-mono text-zinc-500 mb-2">BORDER TOKENS</div>
+                        <div class="flex flex-col gap-3 mt-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-1 bg-white/5 rounded"></div>
+                                <span class="text-sm font-mono text-zinc-400">border-white/5 (Subtle)</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-1 bg-white/10 rounded"></div>
+                                <span class="text-sm font-mono text-zinc-400">border-white/10 (Cards)</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-1 bg-white/20 rounded"></div>
+                                <span class="text-sm font-mono text-zinc-400">border-white/20 (Hover/Focus)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rounded-3xl p-10 h-64 flex flex-col items-center justify-center bg-[#0e0e11] border border-white/5 relative">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_60%)]"></div>
+                    <h3 class="text-6xl font-geist font-medium text-transparent-gradient mb-4">Gradient</h3>
+                    <p class="text-sm text-zinc-500 font-mono text-center">linear-gradient(135deg, #fff, #71717a, #fff)<br>Used for text-clip</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. UI Components -->
+        <section id="components" class="py-32 px-6 max-w-7xl mx-auto border-b border-white/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-medium tracking-tight text-white mb-4">UI Components</h2>
+                <p class="text-lg text-zinc-400 max-w-2xl">Animated elements, feature dashboards, buttons, and form inputs built for dark mode.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Buttons & Forms -->
+                <div class="flex flex-col gap-10 bg-[#131316] border border-white/5 rounded-3xl p-10 shadow-2xl animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+                    
+                    <div>
+                        <h3 class="text-sm font-medium text-white mb-5 uppercase tracking-widest">Action Buttons</h3>
+                        <div class="flex flex-wrap gap-6 items-center">
+                            <!-- Beam CTA -->
+                            <button class="relative btn-beam-container group">
+                                <div class="beam-border"></div>
+                                <span class="relative z-10 flex items-center gap-2 bg-[#18181b] text-white px-6 py-3 rounded-full text-sm font-medium border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                                    Primary Beam
+                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </span>
+                            </button>
+                            
+                            <!-- Ghost -->
+                            <button class="px-6 py-3 rounded-full text-sm font-medium transition-colors text-zinc-400 hover:text-white hover:bg-white/5">
+                                Ghost Variant
+                            </button>
+
+                            <!-- Hover Clone CTA -->
+                            <button class="group relative inline-flex min-w-[120px] cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-3 items-center justify-center text-sm text-zinc-300 hover:text-white bg-zinc-900 border-zinc-700/80">
+                                <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                                    Hover Clone
+                                </span>
+                                <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
+                                    Hover Clone
+                                </span>
+                                <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-40 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white/20 to-transparent rounded-full"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-px bg-white/5"></div>
+
+                    <!-- Inputs & Badges -->
+                    <div>
+                        <h3 class="text-sm font-medium text-white mb-5 uppercase tracking-widest">Inputs & Status</h3>
+                        <div class="flex flex-col gap-6">
+                            <!-- Input -->
+                            <div class="relative w-full max-w-sm">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i data-lucide="mail" class="w-4 h-4 text-zinc-500"></i>
+                                </div>
+                                <input type="email" class="w-full bg-[#09090b] border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-white/30 focus:ring-1 focus:ring-white/30 transition-all shadow-inner" placeholder="Enter your email...">
+                            </div>
+
+                            <!-- Badges -->
+                            <div class="flex flex-wrap gap-4 items-center">
+                                <span class="text-[11px] font-medium px-2.5 py-1 rounded-md bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 flex items-center gap-1.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    Operational
+                                </span>
+                                <span class="text-[11px] font-medium px-2.5 py-1 rounded-md bg-white/5 text-zinc-300 border border-white/10">
+                                    v2.4.0
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flashlight & Dashboard Cards -->
+                <div class="flex flex-col gap-8">
+                    <!-- SOC 2 Feature Card (Dashboard) -->
+                    <div class="flex flex-col bg-[#0e0e11] border rounded-3xl p-1.5 transition-all duration-500 hover:scale-[1.02] group shadow-2xl animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both] border-white/5">
+                        <div class="h-48 rounded-[1.25rem] relative overflow-hidden flex items-center justify-center bg-[#131316] border border-white/5">
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_0%,transparent_60%)]"></div>
+                            <div class="relative w-[85%] max-w-[260px] bg-[#09090b] border border-white/10 rounded-xl p-4 shadow-2xl z-10 flex flex-col group-hover:-translate-y-1 transition-transform duration-500">
+                                <div class="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                                        <span class="text-xs font-medium text-zinc-200">Security Audit</span>
+                                    </div>
+                                    <span class="text-[10px] px-1.5 py-0.5 rounded border font-medium bg-emerald-400/10 text-emerald-400 border-emerald-400/20">Passed</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] font-medium text-zinc-400">End-to-end Encryption</span>
+                                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 transition-colors duration-500"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-5 py-5 flex flex-col gap-1.5">
+                            <h3 class="text-lg font-medium font-geist text-white">Complex Dashboard Cards</h3>
+                            <p class="text-sm font-normal text-zinc-400">Cards designed to house mini-UI components internally to demonstrate features.</p>
+                        </div>
+                    </div>
+
+                    <!-- Flashlight Card -->
+                    <div class="flashlight-card p-8 h-48 flex flex-col justify-end group animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+                        <div class="flashlight-border"></div>
+                        <div class="relative z-10">
+                            <div class="w-12 h-12 bg-[#09090b] border border-white/10 shadow-lg rounded-xl flex items-center justify-center mb-4 text-zinc-400 group-hover:text-white transition-colors duration-300">
+                                <i data-lucide="mouse-pointer-2" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-xl font-geist font-medium text-white mb-1">Flashlight Hover Card</h3>
+                            <p class="text-sm text-zinc-500">Move your mouse over this card to reveal the radial light tracking your pointer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Motion & Icons -->
+        <section id="icons" class="py-32 px-6 max-w-7xl mx-auto border-b border-white/5">
+            <div class="mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+                <h2 class="text-4xl font-geist font-medium tracking-tight text-white mb-4">Motion & Icons</h2>
+                <p class="text-lg text-zinc-400 max-w-2xl">Infinite alpha-masked loops and beautifully integrated SVGs.</p>
+            </div>
+
+            <!-- Infinite Marquee (Dark Mode) -->
+            <div class="relative w-full py-12 mb-20 border-y border-white/5 bg-[#131316] animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both] overflow-hidden">
+                <div class="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-[#131316] to-transparent"></div>
+                <div class="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-[#131316] to-transparent"></div>
+                <div class="flex animate-marquee w-max items-center gap-16 px-8 opacity-50 hover:opacity-100 transition-opacity duration-500">
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:apple"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:stripe"></iconify-icon>
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:vercel"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:github"></iconify-icon>
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:figma"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:spacex"></iconify-icon>
+                    <!-- Duplicates for seamless loop -->
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:apple"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:stripe"></iconify-icon>
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:vercel"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:github"></iconify-icon>
+                    <iconify-icon class="text-4xl text-zinc-300" icon="simple-icons:figma"></iconify-icon>
+                    <iconify-icon class="text-5xl text-zinc-300" icon="simple-icons:spacex"></iconify-icon>
+                </div>
+            </div>
+
+            <!-- Icon Grid -->
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-8 bg-[#131316] border border-white/5 p-10 rounded-3xl shadow-2xl justify-items-center animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <iconify-icon class="text-2xl text-zinc-300" icon="solar:home-2-bold-duotone"></iconify-icon>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <iconify-icon class="text-2xl text-zinc-300" icon="solar:settings-bold-duotone"></iconify-icon>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <iconify-icon class="text-2xl text-zinc-300" icon="solar:chart-square-bold-duotone"></iconify-icon>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <iconify-icon class="text-2xl text-zinc-300" icon="solar:user-bold-duotone"></iconify-icon>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="zap" class="w-5 h-5 text-zinc-300"></i>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="shield" class="w-5 h-5 text-zinc-300"></i>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="cpu" class="w-5 h-5 text-zinc-300"></i>
+                </div>
+                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors cursor-pointer">
+                    <i data-lucide="layers" class="w-5 h-5 text-zinc-300"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-24 text-center mt-10 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.05)_0%,transparent_50%)]"></div>
+            <h2 class="text-4xl md:text-6xl font-geist font-medium text-transparent-bg mb-6 relative z-10">Design System 10</h2>
+            <p class="text-sm text-zinc-500 font-mono relative z-10">Creative Portfolio Architecture &bull; Dark Mode &bull; 2026</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Init Lucide
+        lucide.createIcons();
+
+        // Scroll Animation Observer
+        (function () {
+            const once = true;
+            if (!window.__inViewIO) {
+                window.__inViewIO = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate");
+                            if (once) window.__inViewIO.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+            }
+
+            window.initInViewAnimations = function (selector = ".animate-on-scroll") {
+                document.querySelectorAll(selector).forEach((el) => {
+                    window.__inViewIO.observe(el);
+                });
+            };
+
+            document.addEventListener("DOMContentLoaded", () => initInViewAnimations());
+        })();
+
+        // Flashlight effect for cards
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.flashlight-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>
