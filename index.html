@@ -146,7 +146,7 @@
 
         /* Video Scroll Controls */
         .video-container {
-            position: sticky;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
@@ -312,7 +312,7 @@
     </div>
 
     <!-- Bloco 2: Benefícios e Funcionamento -->
-    <section id="bento-benefits" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5 bg-[#09090b]">
+    <section id="bento-benefits" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5">
         
         <!-- Header da Seção -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 bento-reveal">
@@ -332,7 +332,7 @@
             <div class="lg:col-span-7 flex flex-col gap-6">
                 
                 <!-- Card 1: Imagem + Texto -->
-                <div class="glass-card flex-1 p-8 md:p-12 relative overflow-hidden bento-reveal min-h-[300px] group border-white/5 bg-[#131316]">
+                <div class="glass-card flex-1 p-8 md:p-12 relative overflow-hidden bento-reveal min-h-[300px] group border-white/5">
                     <div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity transition-transform duration-1000 group-hover:scale-105" style="background-image: url('assets/imagem/Img bloco 2.jpg');"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-[#131316] via-[#131316]/80 to-transparent"></div>
                     
@@ -354,7 +354,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     
                     <!-- Card 2 -->
-                    <div class="glass-card p-8 relative bento-reveal border-white/5 bg-[#131316]">
+                    <div class="glass-card p-8 relative bento-reveal border-white/5">
                         <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-4">Como funciona?</h3>
                         <p class="text-zinc-400 text-sm leading-relaxed mb-6">
                             Você paga uma mensalidade fixa. Se acontecer algum imprevisto, o fundo cobre o prejuízo.
@@ -390,7 +390,7 @@
 
             <!-- Coluna Direita (Card 3) -->
             <div class="lg:col-span-5">
-                <div class="glass-card h-full p-8 md:p-12 relative flex flex-col bento-reveal border-white/5 bg-[#131316]">
+                <div class="glass-card h-full p-8 md:p-12 relative flex flex-col bento-reveal border-white/5">
                     <h3 class="text-3xl md:text-4xl font-geist font-medium tracking-tight text-white mb-6">Por que escolher a LOMA?</h3>
                     <p class="text-zinc-400 leading-relaxed mb-10 text-lg">
                         Mais proteção, menos custo — sem burocracia.
@@ -479,13 +479,45 @@
         gsap.set(".glass-card-wrapper", { x: 100, opacity: 0, rotationY: 15, scale: 0.9 });
         gsap.set(".bento-reveal", { y: 60, opacity: 0 });
 
+        // Lógica de Loop do Vídeo (Background infinito)
+        let loopTween = null;
+        const startLoopFrame = 100; // Volta para os 5 segundos (20fps)
+
+        function startIdleLoop() {
+            if (loopTween) loopTween.kill();
+            loopTween = gsap.fromTo(videoState, 
+                { frame: frameCount },
+                { 
+                    frame: startLoopFrame, 
+                    duration: 4, // Aumentei o tempo para 4s para dar uma sensação "slow motion" super premium
+                    repeat: -1, 
+                    yoyo: true, 
+                    ease: "power2.inOut", // Curva mais suave para que a "frenagem" e o retorno não tenham tranco
+                    snap: "frame",
+                    onUpdate: render
+                }
+            );
+        }
+
+        function stopIdleLoop() {
+            if (loopTween) {
+                loopTween.kill();
+                loopTween = null;
+                // Devolve a posição exata para o ScrollTrigger não dar "tranco"
+                videoState.frame = Math.round(tl.scrollTrigger.progress * frameCount) || 1;
+                render();
+            }
+        }
+
         // Master Timeline amarrada ao Scroll
         let tl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#scroll-track",
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.5 // 0.5 de suavização para os frames de canvas deslizarem suavemente
+                scrub: 0.5, // 0.5 de suavização para os frames de canvas deslizarem suavemente
+                onLeave: startIdleLoop,
+                onEnterBack: stopIdleLoop
             }
         });
 
