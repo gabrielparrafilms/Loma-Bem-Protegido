@@ -210,6 +210,9 @@
             <div class="video-mask"></div>
             <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-emerald-500/5 blur-[120px] rounded-full z-[1]"></div>
         </div>
+        
+        <!-- Partículas de Fundo -->
+        <canvas id="particles-canvas" class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[-8]"></canvas>
 
         <div class="hero-content px-6 md:px-12 w-full">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-20">
@@ -540,6 +543,138 @@
 
         </div>
     </section>
+
+    <section id="app-features" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5 flex flex-col items-center overflow-hidden">
+        
+        <!-- Subtle Grid Background -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.02]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"></div>
+
+        <!-- Header Centralizado -->
+        <div class="text-center flex flex-col items-center gap-6 mb-20 bento-reveal max-w-3xl relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit shadow-lg backdrop-blur-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                <span class="text-xs font-medium text-zinc-300 uppercase tracking-widest">Na Palma da Mão</span>
+            </div>
+            
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-medium tracking-tighter leading-[1.1] text-white">
+                Sua proteção resolvida em segundos.
+            </h2>
+            
+            <p class="text-lg text-white/90 font-normal leading-relaxed">
+                Sem ligação, sem espera, sem dor de cabeça.<br>Tudo que você precisa, direto no seu celular.
+            </p>
+        </div>
+
+        <!-- 2 Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 w-full relative z-10 items-center">
+            
+            <!-- Esquerda: Imagem Grande -->
+            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden bento-reveal border-white/5 group shadow-2xl">
+                <div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-luminosity transition-transform duration-1000 group-hover:scale-105" style="background-image: url('assets/imagem/Homem e Mulher.png'); background-position: top center;"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-90"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-transparent opacity-60"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-[#09090b] via-transparent to-transparent opacity-40"></div>
+                
+                <!-- Ícone central decorativo -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md shadow-2xl">
+                    <i data-lucide="smartphone" class="w-8 h-8 text-white"></i>
+                </div>
+
+                <div class="glass-highlight"></div>
+                <div class="glass-card-border"></div>
+            </div>
+
+            <!-- Direita: Lista de Features (Estilo Clean) -->
+            <div class="flex flex-col justify-center gap-10 lg:pr-10">
+                
+                <!-- Feature 1 -->
+                <div class="flex gap-6 bento-reveal items-start group cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">01</span>
+                    </div>
+                    <div class="flex flex-col gap-3 pt-1 w-full">
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">2ª Via de Boleto</h3>
+                        <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
+                            Acesse sua fatura e resolva tudo em segundos, direto pelo app.
+                        </p>
+                        
+                        <!-- Botão Animado (Nav Style) -->
+                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acessar Fatura
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                                Acessar Fatura
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                            </span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full h-px bg-gradient-to-r from-white/10 to-transparent bento-reveal"></div>
+
+                <!-- Feature 2 -->
+                <div class="flex gap-6 bento-reveal items-start group cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">02</span>
+                    </div>
+                    <div class="flex flex-col gap-3 pt-1 w-full">
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">Solicitação de Guincho</h3>
+                        <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
+                            Acione o guincho com poucos toques e acompanhe a chegada em tempo real.
+                        </p>
+                        
+                        <!-- Botão Animado (Nav Style) -->
+                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acionar Guincho
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                                Acionar Guincho
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                            </span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full h-px bg-gradient-to-r from-white/10 to-transparent bento-reveal"></div>
+
+                <!-- Feature 3 -->
+                <div class="flex gap-6 bento-reveal items-start group cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">03</span>
+                    </div>
+                    <div class="flex flex-col gap-3 pt-1 w-full">
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">Status de Eventos</h3>
+                        <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
+                            Veja o andamento do seu atendimento e tenha total controle do processo.
+                        </p>
+
+                        <!-- Botão Animado (Nav Style) -->
+                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acompanhar Status
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                                Acompanhar Status
+                                <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
+                            </span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
+                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
     <script>
         // Prevenir o navegador de guardar a posição de rolagem no reload
         if ('scrollRestoration' in history) {
@@ -693,6 +828,57 @@
             onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", overwrite: true }),
             start: "top 85%"
         });
+
+        // Partículas Flutuantes no Background
+        const pCanvas = document.getElementById('particles-canvas');
+        const pCtx = pCanvas.getContext('2d');
+        
+        function resizeParticles() {
+            pCanvas.width = window.innerWidth;
+            pCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeParticles);
+        resizeParticles();
+
+        const particlesArray = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height;
+                this.size = Math.random() * 1.5 + 0.5; // tamanho entre 0.5 e 2
+                this.speedY = Math.random() * 0.8 + 0.3; // velocidade levemente maior
+                this.opacity = Math.random() * 0.4 + 0.1; // bem suave (0.1 a 0.5)
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = pCanvas.height;
+                    this.x = Math.random() * pCanvas.width;
+                }
+            }
+            draw() {
+                pCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
+            }
+        }
+        
+        // 100 partículas para preencher mais o espaço
+        for (let i = 0; i < 100; i++) {
+            particlesArray.push(new Particle());
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
     </script>
 </body>
 </html>
