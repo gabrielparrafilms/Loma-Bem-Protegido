@@ -256,14 +256,14 @@
 
                 <div class="relative h-[600px] w-full hidden lg:flex flex-col items-end justify-between py-10 hero-cards-col perspective-[1000px]">
                     <div class="glass-card-wrapper z-40">
-                        <div class="glass-card w-72 p-5 will-change-transform float-animation-1" style="margin-right: 0 !important;">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
-                                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        <div class="glass-card w-80 p-6 will-change-transform float-animation-1" style="margin-right: 0 !important;">
+                            <div class="flex items-center gap-5 mb-5">
+                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+                                    <i data-lucide="shield-check" class="w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-sm font-medium text-white">Cobertura Total</h3>
-                                    <p class="text-xs text-zinc-500">Ativa e monitorando</p>
+                                    <h3 class="text-base font-medium text-white">Cobertura Total</h3>
+                                    <p class="text-sm text-zinc-500">Ativa e monitorando</p>
                                 </div>
                             </div>
                             <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
@@ -275,18 +275,18 @@
                     </div>
 
                     <div class="glass-card-wrapper z-30">
-                        <div class="glass-card w-64 p-4 will-change-transform float-animation-2" style="margin-right: 0 !important;">
-                            <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-3">
-                                <span class="text-xs font-medium text-zinc-400">Assistência 24h</span>
-                                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">Online</span>
+                        <div class="glass-card w-72 p-5 will-change-transform float-animation-2" style="margin-right: 0 !important;">
+                            <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-4">
+                                <span class="text-sm font-medium text-zinc-400">Assistência 24h</span>
+                                <span class="text-xs px-2 py-1 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">Online</span>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-lg bg-[#131316] flex items-center justify-center border border-white/10">
-                                    <i data-lucide="truck" class="w-4 h-4 text-zinc-300"></i>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-[#131316] flex items-center justify-center border border-white/10">
+                                    <i data-lucide="truck" class="w-5 h-5 text-zinc-300"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="text-sm font-medium text-zinc-200">Guincho Imediato</div>
-                                    <div class="text-[10px] text-zinc-500">Chegada em ~15 min</div>
+                                    <div class="text-base font-medium text-zinc-200">Guincho Imediato</div>
+                                    <div class="text-xs text-zinc-500">Chegada em ~15 min</div>
                                 </div>
                             </div>
                             <div class="glass-highlight"></div>
@@ -295,15 +295,15 @@
                     </div>
 
                     <div class="glass-card-wrapper z-20">
-                        <div class="glass-card w-56 p-4 will-change-transform float-animation-3" style="margin-right: 0 !important;">
-                            <div class="flex gap-1 mb-2">
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-3.5 h-3.5 fill-emerald-400 text-emerald-400"></i>
+                        <div class="glass-card w-64 p-5 will-change-transform float-animation-3" style="margin-right: 0 !important;">
+                            <div class="flex gap-1 mb-3">
+                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
                             </div>
-                            <p class="text-xs text-zinc-300 leading-relaxed italic">"Acionei pelo WhatsApp e resolveram tudo em minutos. Excelente experiência."</p>
+                            <p class="text-sm text-zinc-300 leading-relaxed italic">"Acionei pelo WhatsApp e resolveram tudo em minutos. Excelente experiência."</p>
                             <div class="glass-highlight"></div>
                             <div class="glass-card-border"></div>
                         </div>
@@ -770,6 +770,31 @@
             duration: 10,
             onUpdate: render
         }, 0);
+
+        // Animação de hint inicial (carro desce e volta) para incentivar o scroll
+        let hintTween = gsap.fromTo(videoState, 
+            { frame: 1 },
+            { 
+                frame: 35, // Desce o carro levemente (aprox frame 35)
+                duration: 2.5, 
+                repeat: -1, // Fica em loop "respirando"
+                yoyo: true, 
+                ease: "power2.inOut",
+                snap: "frame",
+                onUpdate: render
+            }
+        );
+
+        // Matar o hint inicial assim que o usuário começar a rolar a página
+        window.addEventListener('scroll', function killHint() {
+            if (window.scrollY > 15) {
+                if (hintTween) {
+                    hintTween.kill();
+                    hintTween = null;
+                }
+                window.removeEventListener('scroll', killHint);
+            }
+        }, { passive: true });
 
         // Etapa 2 (1º Scroll): O conteúdo surge majestosamente na tela na marca de ~30% do scroll
         tl.to(".stage2-reveal, .stage3-reveal", {
