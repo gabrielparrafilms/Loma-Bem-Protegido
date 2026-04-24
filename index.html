@@ -850,13 +850,20 @@
                     </div>
                 </div>
 
+                <!-- Botão CTA Final (Movido para ficar logo abaixo da linha do tempo) -->
+                <div class="w-full flex justify-center mt-8 z-30">
+                    <button id="evo-cta" class="opacity-0 translate-y-4 will-change-transform inline-flex font-medium tracking-tight border border-zinc-700/50 rounded-full px-8 py-3 items-center justify-center text-sm text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 transition-colors shadow-lg">
+                        Falar com um Especialista
+                    </button>
+                </div>
+
                 <!-- Containers de Imagens (Grid Overlap) para Bloco 1 e 2 -->
-                <div class="w-full max-w-4xl mx-auto mt-4 grid grid-cols-1 grid-rows-1 z-20">
+                <div class="w-full max-w-3xl mx-auto mt-4 grid grid-cols-1 grid-rows-1 z-20">
                     
                     <!-- Imagens 3D do Bloco 01 -->
                     <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px]">
                         <!-- Imagem 1 -->
-                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full h-[35vh] md:h-[45vh] min-h-[250px] rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
                             <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017 - Imagem 1" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
                             <!-- Overlay escuro para profundidade -->
                             <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
@@ -865,7 +872,7 @@
                         </div>
 
                         <!-- Imagem 2 -->
-                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full h-[35vh] md:h-[45vh] min-h-[250px] rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
                             <img src="assets/img/Loma 2017 3.jpg" alt="Loma 2017 - Imagem 2" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="glass-highlight"></div>
@@ -874,8 +881,8 @@
                     </div>
 
                     <!-- Imagem Parallax do Bloco 02 -->
-                    <div id="evo-images-2" class="col-start-1 row-start-1 perspective-[1000px] opacity-0 pointer-events-none">
-                        <div class="evo-image-item flashlight-card glass-card relative w-full h-[35vh] md:h-[45vh] min-h-[250px] rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
+                    <div id="evo-images-2" class="col-start-1 row-start-1 perspective-[1000px] opacity-0 pointer-events-none flex justify-center items-center">
+                        <div class="evo-image-item flashlight-card glass-card relative w-full aspect-[21/9] md:aspect-[3/1] rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
                             
                             <!-- Imagem com Parallax (maior que o container para rolar) -->
                             <img id="evo-img-parallax-2" src="assets/img/Loma 2.jpeg" alt="Loma 2017 - Bloco 2" class="absolute top-0 left-0 w-full h-[150%] object-cover grayscale-[30%] group-hover:grayscale-0 transition-[filter] duration-700 will-change-transform">
@@ -888,13 +895,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <!-- Botão CTA Final -->
-                <div class="w-full flex justify-center mt-12 z-20">
-                    <button id="evo-cta" class="opacity-0 translate-y-4 will-change-transform inline-flex font-medium tracking-tight border border-zinc-700/50 rounded-full px-8 py-3 items-center justify-center text-sm text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 transition-colors shadow-lg">
-                        Falar com um Especialista
-                    </button>
                 </div>
 
             </div>
@@ -995,9 +995,15 @@
                 duration: 3, 
                 ease: "power3.out", // Desaceleração bem suave no final
                 snap: "frame",
-                onUpdate: render
+                onUpdate: render,
+                paused: true // Inicia pausado para aguardar o carregamento
             }
         );
+
+        // Toca a intro apenas quando TODAS as imagens/recursos da página carregarem (Garante 100% de fluidez sem engasgos)
+        window.addEventListener('load', () => {
+            introTween.play();
+        });
 
         // Mostra o indicador de scroll logo após o carregamento da página
         gsap.to("#scroll-indicator", { opacity: 1, y: 0, duration: 1, delay: 1.5, ease: "power2.out" });
