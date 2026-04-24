@@ -120,6 +120,61 @@
             pointer-events: none;
         }
 
+        /* Flashlight Effect - Dark Mode */
+        .flashlight-card {
+            position: relative;
+            background-color: #131316;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flashlight-card::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .flashlight-border {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(
+                400px circle at var(--mouse-x) var(--mouse-y),
+                rgba(255, 255, 255, 0.3),
+                transparent 40%
+            );
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .flashlight-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        .flashlight-card:hover::before,
+        .flashlight-card:hover .flashlight-border {
+            opacity: 1;
+        }
+
         /* Border Beam Button */
         .btn-beam-container {
             position: relative;
@@ -199,6 +254,17 @@
         .will-change-transform {
             will-change: transform, opacity;
         }
+
+        /* Mouse Scroll Animation */
+        @keyframes scroll-wheel {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0; }
+            50.1% { transform: translateY(-8px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .animate-scroll-wheel {
+            animation: scroll-wheel 2s cubic-bezier(0.15, 0.83, 0.66, 1) infinite;
+        }
     </style>
 </head>
 <body>
@@ -244,10 +310,10 @@
 
                         <button class="group relative inline-flex min-w-[160px] cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-8 py-4 items-center justify-center text-sm text-zinc-300 hover:text-white bg-transparent border-zinc-700/50 backdrop-blur-sm transition-colors hover:border-zinc-500">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
-                                Falar com Especialista
+                                Falar com um Especialista
                             </span>
                             <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
-                                Falar com Especialista
+                                Falar com um Especialista
                             </span>
                             <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-full"></span>
                         </button>
@@ -256,17 +322,17 @@
 
                 <div class="relative h-[600px] w-full hidden lg:flex flex-col items-end justify-between py-10 hero-cards-col perspective-[1000px]">
                     <div class="glass-card-wrapper z-40">
-                        <div class="glass-card w-80 p-6 will-change-transform float-animation-1" style="margin-right: 0 !important;">
-                            <div class="flex items-center gap-5 mb-5">
-                                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
-                                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        <div class="glass-card w-[28rem] p-8 will-change-transform float-animation-1" style="margin-right: 0 !important;">
+                            <div class="flex items-center gap-6 mb-6">
+                                <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+                                    <i data-lucide="shield-check" class="w-8 h-8"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-base font-medium text-white">Cobertura Total</h3>
-                                    <p class="text-sm text-zinc-500">Ativa e monitorando</p>
+                                    <h3 class="text-2xl font-medium text-white">Cobertura Total</h3>
+                                    <p class="text-lg text-zinc-500">Ativa e monitorando</p>
                                 </div>
                             </div>
-                            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-2.5 w-full bg-white/5 rounded-full overflow-hidden">
                                 <div class="h-full bg-emerald-400 w-full shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
                             </div>
                             <div class="glass-highlight"></div>
@@ -275,18 +341,18 @@
                     </div>
 
                     <div class="glass-card-wrapper z-30">
-                        <div class="glass-card w-72 p-5 will-change-transform float-animation-2" style="margin-right: 0 !important;">
-                            <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-4">
-                                <span class="text-sm font-medium text-zinc-400">Assistência 24h</span>
-                                <span class="text-xs px-2 py-1 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">Online</span>
+                        <div class="glass-card w-[26rem] p-8 will-change-transform float-animation-2" style="margin-right: 0 !important;">
+                            <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-5">
+                                <span class="text-lg font-medium text-zinc-400">Assistência 24h</span>
+                                <span class="text-base px-3 py-1.5 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">Online</span>
                             </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-lg bg-[#131316] flex items-center justify-center border border-white/10">
-                                    <i data-lucide="truck" class="w-5 h-5 text-zinc-300"></i>
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 rounded-lg bg-[#131316] flex items-center justify-center border border-white/10">
+                                    <i data-lucide="truck" class="w-7 h-7 text-zinc-300"></i>
                                 </div>
                                 <div class="flex-1">
-                                    <div class="text-base font-medium text-zinc-200">Guincho Imediato</div>
-                                    <div class="text-xs text-zinc-500">Chegada em ~15 min</div>
+                                    <div class="text-2xl font-medium text-zinc-200">Guincho Imediato</div>
+                                    <div class="text-base text-zinc-500">Chegada em ~15 min</div>
                                 </div>
                             </div>
                             <div class="glass-highlight"></div>
@@ -295,21 +361,31 @@
                     </div>
 
                     <div class="glass-card-wrapper z-20">
-                        <div class="glass-card w-64 p-5 will-change-transform float-animation-3" style="margin-right: 0 !important;">
-                            <div class="flex gap-1 mb-3">
-                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
-                                <i data-lucide="star" class="w-4 h-4 fill-emerald-400 text-emerald-400"></i>
+                        <div class="glass-card w-[24rem] p-8 will-change-transform float-animation-3" style="margin-right: 0 !important;">
+                            <div class="flex gap-1.5 mb-5">
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
                             </div>
-                            <p class="text-sm text-zinc-300 leading-relaxed italic">"Acionei pelo WhatsApp e resolveram tudo em minutos. Excelente experiência."</p>
+                            <p class="text-lg text-zinc-300 leading-relaxed italic">"Acionei pelo WhatsApp e resolveram tudo em minutos. Excelente experiência."</p>
                             <div class="glass-highlight"></div>
                             <div class="glass-card-border"></div>
                         </div>
                     </div>
                 </div>
                 
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div id="scroll-indicator" class="absolute bottom-[35%] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer group pointer-events-auto opacity-0" onclick="document.getElementById('bento-benefits').scrollIntoView({behavior: 'smooth'})">
+                <span class="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-widest text-center group-hover:text-zinc-300 transition-colors">
+                    Rolar para baixo a página<br>e ter a experiência Loma
+                </span>
+                <div class="w-7 h-11 rounded-full border border-white/10 bg-[#131316]/80 backdrop-blur-md flex items-start justify-center p-1.5 shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors group-hover:border-white/20 group-hover:bg-[#18181b]">
+                    <div class="w-1 h-2.5 bg-zinc-400 rounded-full animate-scroll-wheel mt-1 group-hover:bg-zinc-200 transition-colors"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -462,7 +538,7 @@
             
             <!-- Linha 1 -->
             <!-- 1. Roubo & Furto (Span 2) -->
-            <div class="glass-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal border-white/5">
+            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
                 </div>
@@ -470,12 +546,11 @@
                 <p class="text-zinc-400 text-sm md:text-base leading-relaxed">
                     Indenização de até 100% da FIPE em caso de perda total.<br>Segurança de verdade quando você mais precisa.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
             <!-- 2. Colisão (Span 1) -->
-            <div class="glass-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal border-white/5">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
                     <i data-lucide="car-front" class="w-5 h-5"></i>
                 </div>
@@ -483,12 +558,11 @@
                 <p class="text-zinc-400 text-sm leading-relaxed">
                     Assistência rápida e suporte completo em qualquer tipo de batida.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
             <!-- 3. Eventos Naturais (Span 1 - Destaque Cor) -->
-            <div class="glass-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden" style="background: rgba(52, 211, 153, 0.05); border-color: rgba(52, 211, 153, 0.1);">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
                 <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
                 <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="cloud-lightning" class="w-5 h-5"></i>
@@ -497,13 +571,12 @@
                 <p class="text-zinc-400 text-sm leading-relaxed relative z-10">
                     Proteção contra enchentes, incêndios e outros imprevistos — sem dor de cabeça.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
             <!-- Linha 2 -->
             <!-- 4. Terceiros (Span 1) -->
-            <div class="glass-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal border-white/5">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
                     <i data-lucide="users" class="w-5 h-5"></i>
                 </div>
@@ -511,12 +584,11 @@
                 <p class="text-zinc-400 text-sm leading-relaxed">
                     Cobertura para prejuízos causados a outros veículos ou pessoas.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
             <!-- 5. Guincho 24h (Span 2) -->
-            <div class="glass-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal border-white/5">
+            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
                     <i data-lucide="truck" class="w-5 h-5"></i>
                 </div>
@@ -524,12 +596,11 @@
                 <p class="text-zinc-400 text-sm md:text-base leading-relaxed">
                     Atendimento em todo o Brasil, sem limite de KM.<br>Você nunca fica na mão.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
             <!-- 6. Carro Reserva (Span 1) -->
-            <div class="glass-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal border-white/5">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
                 <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
                     <i data-lucide="key" class="w-5 h-5"></i>
                 </div>
@@ -537,8 +608,7 @@
                 <p class="text-zinc-400 text-sm leading-relaxed">
                     Continue sua rotina enquanto resolvemos tudo pra você.
                 </p>
-                <div class="glass-highlight"></div>
-                <div class="glass-card-border"></div>
+                <div class="flashlight-border"></div>
             </div>
 
         </div>
@@ -584,32 +654,34 @@
                 <div class="glass-card-border"></div>
             </div>
 
+            <!-- Sombra de fundo para legibilidade sem quebrar a sutileza -->
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[60%] h-[120%] bg-[#09090b]/80 blur-[100px] pointer-events-none z-0 rounded-full"></div>
+
             <!-- Direita: Lista de Features (Estilo Clean) -->
-            <div class="flex flex-col justify-center gap-10 lg:pr-10">
+            <div class="flex flex-col justify-center gap-10 lg:pr-10 relative z-10">
                 
                 <!-- Feature 1 -->
-                <div class="flex gap-6 bento-reveal items-start group cursor-default">
-                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
-                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">01</span>
+                <div class="flex gap-6 bento-reveal items-start group/item cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/item:bg-white/10 group-hover/item:border-white/20 group-hover/item:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover/item:text-white transition-colors duration-300">01</span>
                     </div>
                     <div class="flex flex-col gap-3 pt-1 w-full">
-                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">2ª Via de Boleto</h3>
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover/item:text-blue-400">2ª Via de Boleto</h3>
                         <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
                             Acesse sua fatura e resolva tudo em segundos, direto pelo app.
                         </p>
                         
-                        <!-- Botão Animado (Nav Style) -->
-                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
-                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                        <!-- Botão Animado (Falar com Especialista Style) -->
+                        <button class="group relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-transparent border-zinc-700/50 backdrop-blur-sm transition-colors hover:border-zinc-500 w-fit mt-2">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Acessar Fatura
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
                                 Acessar Fatura
                                 <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
                             </span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-full"></span>
                         </button>
                     </div>
                 </div>
@@ -617,28 +689,27 @@
                 <div class="w-full h-px bg-gradient-to-r from-white/10 to-transparent bento-reveal"></div>
 
                 <!-- Feature 2 -->
-                <div class="flex gap-6 bento-reveal items-start group cursor-default">
-                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
-                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">02</span>
+                <div class="flex gap-6 bento-reveal items-start group/item cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/item:bg-white/10 group-hover/item:border-white/20 group-hover/item:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover/item:text-white transition-colors duration-300">02</span>
                     </div>
                     <div class="flex flex-col gap-3 pt-1 w-full">
-                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">Solicitação de Guincho</h3>
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover/item:text-blue-400">Solicitação de Guincho</h3>
                         <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
                             Acione o guincho com poucos toques e acompanhe a chegada em tempo real.
                         </p>
                         
-                        <!-- Botão Animado (Nav Style) -->
-                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
-                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                        <!-- Botão Animado (Falar com Especialista Style) -->
+                        <button class="group relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-transparent border-zinc-700/50 backdrop-blur-sm transition-colors hover:border-zinc-500 w-fit mt-2">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Acionar Guincho
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
                                 Acionar Guincho
                                 <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
                             </span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-full"></span>
                         </button>
                     </div>
                 </div>
@@ -646,30 +717,132 @@
                 <div class="w-full h-px bg-gradient-to-r from-white/10 to-transparent bento-reveal"></div>
 
                 <!-- Feature 3 -->
-                <div class="flex gap-6 bento-reveal items-start group cursor-default">
-                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-white/10 group-hover:border-white/20 group-hover:scale-110 shadow-lg">
-                        <span class="text-sm font-medium text-white/50 group-hover:text-white transition-colors duration-300">03</span>
+                <div class="flex gap-6 bento-reveal items-start group/item cursor-default">
+                    <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 transition-all duration-300 group-hover/item:bg-white/10 group-hover/item:border-white/20 group-hover/item:scale-110 shadow-lg">
+                        <span class="text-sm font-medium text-white/50 group-hover/item:text-white transition-colors duration-300">03</span>
                     </div>
                     <div class="flex flex-col gap-3 pt-1 w-full">
-                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover:text-blue-400">Status de Eventos</h3>
+                        <h3 class="text-xl font-geist font-medium tracking-tight text-white transition-colors duration-300 group-hover/item:text-blue-400">Status de Eventos</h3>
                         <p class="text-white/80 text-sm md:text-base leading-relaxed max-w-sm">
                             Veja o andamento do seu atendimento e tenha total controle do processo.
                         </p>
 
-                        <!-- Botão Animado (Nav Style) -->
-                        <button class="group/btn relative inline-flex mt-2 cursor-pointer transition-all duration-[1000ms] ease-[cubic-bezier(0.15,0.83,0.66,1)] hover:-translate-y-[2px] overflow-hidden font-normal tracking-tight bg-[#09090b]/80 backdrop-blur-md border rounded-full px-5 py-2 items-center justify-center text-sm text-zinc-300 hover:text-white border-white/10 shadow-lg w-fit">
-                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                        <!-- Botão Animado (Falar com Especialista Style) -->
+                        <button class="group relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-transparent border-zinc-700/50 backdrop-blur-sm transition-colors hover:border-zinc-500 w-fit mt-2">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Acompanhar Status
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 group-hover/btn:blur-none opacity-0 rounded-full blur-md">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
                                 Acompanhar Status
                                 <i data-lucide="arrow-right" class="w-4 h-4 text-white"></i>
                             </span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 transition-all duration-[1000ms] opacity-0 group-hover/btn:opacity-80 bg-gradient-to-r from-transparent via-neutral-200 to-transparent rounded-full blur-[2px]"></span>
-                            <span aria-hidden="true" class="absolute bottom-0 left-0 right-0 h-[100%] opacity-0 group-hover/btn:opacity-60 transition-all duration-[1000ms] pointer-events-none bg-gradient-to-t from-white/20 via-white/10 to-transparent rounded-full"></span>
+                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-full"></span>
                         </button>
                     </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bloco 5: Social Proof (Texto animado com zoom/blur no scroll) -->
+    <section id="social-proof" class="relative z-20 w-full h-screen flex flex-col items-center justify-center overflow-hidden border-t border-white/5 bg-transparent">
+        <!-- Backdrop animado (Desfoca e escurece o vídeo) -->
+        <div id="social-proof-backdrop" class="absolute inset-0 bg-[#09090b]/70 backdrop-blur-xl opacity-0 pointer-events-none -z-10"></div>
+        
+        <!-- Grid de fundo muito suave -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.02] -z-10" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 50px 50px; mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"></div>
+
+        <!-- Container 1: Texto Principal -->
+        <div class="absolute inset-0 flex items-center justify-center w-full h-full pointer-events-none">
+            <h2 id="social-proof-text" class="text-5xl md:text-6xl lg:text-[5rem] font-geist font-medium tracking-tighter leading-[1.05] text-white text-center px-6 will-change-transform opacity-0">
+                Mais de <span class="text-emerald-400 font-bold tracking-tight">20.000</span> brasileiros<br class="hidden md:block"> já escolheram a LOMA.
+            </h2>
+        </div>
+
+        <!-- Container 2: 98% Resolvidos -->
+        <div class="absolute inset-0 flex items-center justify-center w-full h-full pointer-events-none">
+            <div id="social-proof-stat-1" class="flex flex-col items-center justify-center will-change-transform opacity-0 px-6">
+                <span class="text-[6rem] md:text-[10rem] font-geist font-bold tracking-tighter text-emerald-400 leading-none mb-2 md:mb-4 text-center">98%</span>
+                <span class="text-lg md:text-3xl font-medium tracking-[0.2em] text-zinc-400 uppercase text-center">Eventos Resolvidos</span>
+            </div>
+        </div>
+
+        <!-- Container 3: 40 Dias -->
+        <div class="absolute inset-0 flex items-center justify-center w-full h-full pointer-events-none">
+            <div id="social-proof-stat-2" class="flex flex-col items-center justify-center will-change-transform opacity-0 px-6">
+                <span class="text-[6rem] md:text-[10rem] font-geist font-bold tracking-tighter text-emerald-400 leading-none mb-2 md:mb-4 text-center">40 Dias</span>
+                <span class="text-lg md:text-3xl font-medium tracking-[0.2em] text-zinc-400 uppercase text-center">Ressarcimento Médio</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bloco 6: Timeline de Evolução -->
+    <section id="evolution-timeline" class="relative z-30 w-full h-screen bg-transparent text-white flex flex-col items-center justify-center overflow-hidden border-t border-white/5">
+        
+        <!-- Fundo Escurecido e Desfocado para o Vídeo aparecer -->
+        <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-10 pointer-events-none"></div>
+
+        <!-- Conteúdo Interno que entra na diagonal -->
+        <div id="evolution-content" class="w-full max-w-6xl px-6 flex flex-col items-center will-change-transform">
+            
+            <div class="text-center mb-24">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-bold tracking-tighter mb-4">Origem e Consolidação</h2>
+                <p class="text-zinc-400 text-lg md:text-xl font-medium tracking-wide">Uma trajetória de solidez e crescimento contínuo</p>
+            </div>
+
+            <!-- Grid de Blocos e Linha do Tempo -->
+            <div class="relative w-full max-w-5xl mx-auto flex flex-col">
+                
+                <!-- Blocos de Texto (01, 02, 03) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-12 relative z-10">
+                    <!-- Bloco 01 -->
+                    <div id="evo-block-1" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">01</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Origem com propósito</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm">A empresa nasce com um objetivo claro: oferecer proteção real para pessoas que não tinham acesso a soluções confiáveis. Desde o início, o foco foi construir algo sólido, baseado em responsabilidade e entrega verdadeira.</p>
+                    </div>
+                    
+                    <!-- Bloco 02 -->
+                    <div id="evo-block-2" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">02</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Estrutura e superação</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm">Com o crescimento, surgem desafios que exigem organização, adaptação e evolução. A operação se fortalece ao estruturar processos, desenvolver gestão e superar momentos críticos com consistência.</p>
+                    </div>
+
+                    <!-- Bloco 03 -->
+                    <div id="evo-block-3" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">03</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Crescimento e solidez</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm">A empresa se consolida como uma operação estruturada, com crescimento acelerado, base sólida de clientes e capacidade de expansão. O foco continua sendo evolução constante e segurança para quem confia no serviço.</p>
+                    </div>
+                </div>
+
+                <!-- Linha Horizontal e Pontos -->
+                <div class="relative w-full h-[2px] bg-white/10 rounded-full mt-4 hidden md:block">
+                    <!-- Linha Preenchida (Glow) -->
+                    <div id="evo-progress-line" class="absolute top-0 left-0 w-full h-full bg-emerald-400 rounded-full origin-left will-change-transform shadow-[0_0_15px_rgba(52,211,153,0.6)]" style="transform: scaleX(0);"></div>
+                    
+                    <!-- Carrinho (Ícone animado junto com a linha) -->
+                    <div id="evo-car" class="absolute top-1/2 left-[0%] transform -translate-y-1/2 -translate-x-1/2 z-20 flex items-center justify-center bg-zinc-900 rounded-full border border-emerald-400 p-1.5 shadow-[0_0_15px_rgba(52,211,153,0.8)] text-emerald-400 will-change-[left]">
+                        <i data-lucide="car" class="w-4 h-4"></i>
+                    </div>
+
+                    <!-- Pontos (Marcadores nas divisas dos blocos) -->
+                    <div class="absolute inset-0 pointer-events-none transform -translate-y-1/2">
+                        <div id="evo-dot-0" class="absolute left-[0%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-1" class="absolute left-[33.33%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-2" class="absolute left-[66.66%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-3" class="absolute left-[100%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                    </div>
+                </div>
+
+                <!-- Botão CTA Final -->
+                <div class="w-full flex justify-center mt-20">
+                    <button id="evo-cta" class="opacity-0 translate-y-4 will-change-transform inline-flex font-medium tracking-tight border border-zinc-700/50 rounded-full px-8 py-3 items-center justify-center text-sm text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 transition-colors shadow-lg">
+                        Falar com um Especialista
+                    </button>
                 </div>
 
             </div>
@@ -762,39 +935,45 @@
             }
         });
 
-        // Etapa 1, 2 e 3: O canvas renderiza fluidamente do primeiro ao último frame 
-        tl.to(videoState, {
-            frame: frameCount,
-            snap: "frame",
-            ease: "none",
-            duration: 10,
-            onUpdate: render
-        }, 0);
-
-        // Animação de hint inicial (carro desce e volta) para incentivar o scroll
-        let hintTween = gsap.fromTo(videoState, 
+        // Animação de introdução: o carro desce até o frame 45 e para suavemente
+        let introTween = gsap.fromTo(videoState, 
             { frame: 1 },
             { 
-                frame: 35, // Desce o carro levemente (aprox frame 35)
-                duration: 2.5, 
-                repeat: -1, // Fica em loop "respirando"
-                yoyo: true, 
-                ease: "power2.inOut",
+                frame: 45, // Carro desce até que bem e para
+                duration: 3, 
+                ease: "power3.out", // Desaceleração bem suave no final
                 snap: "frame",
                 onUpdate: render
             }
         );
 
-        // Matar o hint inicial assim que o usuário começar a rolar a página
-        window.addEventListener('scroll', function killHint() {
+        // Mostra o indicador de scroll logo após o carregamento da página
+        gsap.to("#scroll-indicator", { opacity: 1, y: 0, duration: 1, delay: 1.5, ease: "power2.out" });
+
+        // Matar a animação inicial se o usuário começar a rolar a página antes de acabar
+        // E também esconde o indicador de scroll para limpar a tela
+        window.addEventListener('scroll', function handleFirstScroll() {
             if (window.scrollY > 15) {
-                if (hintTween) {
-                    hintTween.kill();
-                    hintTween = null;
+                if (introTween) {
+                    introTween.kill();
+                    introTween = null;
                 }
-                window.removeEventListener('scroll', killHint);
+                gsap.to("#scroll-indicator", { opacity: 0, duration: 0.5, pointerEvents: "none" });
+                window.removeEventListener('scroll', handleFirstScroll);
             }
         }, { passive: true });
+
+        // Etapa 1, 2 e 3: O canvas renderiza do frame 45 (onde parou a intro) até o último
+        tl.fromTo(videoState, {
+            frame: 45
+        }, {
+            frame: frameCount,
+            snap: "frame",
+            ease: "none",
+            duration: 10,
+            onUpdate: render,
+            immediateRender: false // Importante: não forçar frame 45 antes da intro acabar
+        }, 0);
 
         // Etapa 2 (1º Scroll): O conteúdo surge majestosamente na tela na marca de ~30% do scroll
         tl.to(".stage2-reveal, .stage3-reveal", {
@@ -811,7 +990,7 @@
 
         // Efeito de Lanterna nos Cards (Design System 10)
         document.addEventListener('mousemove', (e) => {
-            document.querySelectorAll('.glass-card').forEach(card => {
+            document.querySelectorAll('.glass-card, .flashlight-card').forEach(card => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
@@ -853,6 +1032,94 @@
             onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", overwrite: true }),
             start: "top 85%"
         });
+
+        // --- FUNÇÃO PARA QUEBRAR TEXTOS EM LETRAS (Para o efeito de Bounce) ---
+        function wrapLettersInSpans(element) {
+            const childNodes = Array.from(element.childNodes);
+            childNodes.forEach(node => {
+                if (node.nodeType === 3) { // Text Node
+                    const text = node.textContent;
+                    if (text.trim() === '') return;
+                    const fragment = document.createDocumentFragment();
+                    for (let char of text) {
+                        if (char === ' ') {
+                            fragment.appendChild(document.createTextNode(' '));
+                        } else {
+                            const span = document.createElement('span');
+                            span.className = 'split-char inline-block will-change-transform';
+                            span.textContent = char;
+                            fragment.appendChild(span);
+                        }
+                    }
+                    node.parentNode.replaceChild(fragment, node);
+                } else if (node.nodeType === 1 && node.nodeName !== 'BR') { // Element Node
+                    wrapLettersInSpans(node);
+                }
+            });
+        }
+
+        wrapLettersInSpans(document.getElementById('social-proof-text'));
+        wrapLettersInSpans(document.getElementById('social-proof-stat-1'));
+        wrapLettersInSpans(document.getElementById('social-proof-stat-2'));
+
+        // Bloco 5: Animação Scrub de Zoom & Blur Sequencial (Efeito Apple + Bounce Letras)
+        const spTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#social-proof",
+                start: "top top", // Quando a seção tocar no topo da tela, ela pína (trava)
+                end: "+=400%",    // Aumentado um pouco para dar mais espaço para o stagger das letras
+                scrub: 1,         // Deixa a animação amarrada ao scroll, com suavização
+                pin: true         // Prende a tela no lugar enquanto a animação ocorre
+            }
+        });
+
+        // 0. Backdrop entra no começo
+        spTimeline.fromTo("#social-proof-backdrop", 
+            { opacity: 0 }, 
+            { opacity: 1, duration: 0.5, ease: "power2.out" }, 0
+        );
+
+        // 1. TEXTO PRINCIPAL (Mais de 20.000)
+        spTimeline.add("startText1")
+        .fromTo("#social-proof-text", 
+            { scale: 0.8, opacity: 1 }, 
+            { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, "startText1"
+        )
+        .fromTo("#social-proof-text .split-char", 
+            { y: 100, opacity: 0, filter: "blur(10px)" }, 
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, stagger: 0.02, ease: "back.out(1.5)" }, "startText1"
+        )
+        .to({}, { duration: 1.5 }) // Pausa
+        .to("#social-proof-text", 
+            { scale: 2.5, opacity: 0, filter: "blur(30px)", duration: 1.0, ease: "power2.in" }
+        )
+
+        // 2. DADO 1 (98% Resolvidos)
+        .add("startStat1")
+        .fromTo("#social-proof-stat-1", 
+            { scale: 0.8, opacity: 1 }, 
+            { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, "startStat1"
+        )
+        .fromTo("#social-proof-stat-1 .split-char", 
+            { y: 150, opacity: 0, filter: "blur(15px)" }, 
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, stagger: 0.03, ease: "back.out(1.5)" }, "startStat1"
+        )
+        .to({}, { duration: 1.5 }) // Pausa
+        .to("#social-proof-stat-1", 
+            { scale: 2.5, opacity: 0, filter: "blur(30px)", duration: 1.0, ease: "power2.in" }
+        )
+
+        // 3. DADO 2 (40 Dias)
+        .add("startStat2")
+        .fromTo("#social-proof-stat-2", 
+            { scale: 0.8, opacity: 1 }, 
+            { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, "startStat2"
+        )
+        .fromTo("#social-proof-stat-2 .split-char", 
+            { y: 150, opacity: 0, filter: "blur(15px)" }, 
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, stagger: 0.03, ease: "back.out(1.5)" }, "startStat2"
+        )
+        .to({}, { duration: 1.5 }); // Pausa final para manter o dado na tela
 
         // Partículas Flutuantes no Background
         const pCanvas = document.getElementById('particles-canvas');
@@ -903,6 +1170,80 @@
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
+
+        // --- Bloco 6: Timeline de Evolução ---
+        
+        // 1. Transição Diagonal (Bloco 5 saindo pra esquerda, Bloco 6 entrando da direita)
+        
+        // Faz o número "40 Dias" do Bloco 5 ir para a esquerda enquanto sobe
+        gsap.to("#social-proof-stat-2", {
+            x: "-50vw", // Vai para a esquerda
+            opacity: 0,
+            ease: "power1.inOut",
+            scrollTrigger: {
+                trigger: "#evolution-timeline",
+                start: "top bottom", 
+                end: "top top",      
+                scrub: 1.5 // Aumentado o scrub para dar mais fluidez e não parecer "truncado"
+            }
+        });
+
+        // Faz o conteúdo do Bloco 6 vir da direita enquanto sobe
+        gsap.fromTo("#evolution-content", 
+            { x: "60vw", opacity: 0 }, 
+            { 
+                x: "0vw", opacity: 1, 
+                ease: "power2.out", // Suaviza bem a parada no centro da tela
+                scrollTrigger: {
+                    trigger: "#evolution-timeline",
+                    start: "top bottom",
+                    end: "top top",
+                    scrub: 1.5
+                }
+            }
+        );
+
+        // 2. Timeline Principal do Bloco 6 (Pinned)
+        const tlEvo = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#evolution-timeline",
+                start: "top top",
+                end: "+=300%",
+                pin: true,
+                scrub: 1
+            }
+        });
+
+        // Configuração inicial (Dot 0 aceso, Bloco 1 em destaque)
+        gsap.set("#evo-block-1", { opacity: 1, scale: 1 });
+        gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
+        gsap.set("#evo-car", { left: "0%" });
+        
+        tlEvo.fromTo("#evo-progress-line", 
+            { scaleX: 0 }, 
+            { scaleX: 0.3333, duration: 1, ease: "none" }
+        )
+        .to("#evo-car", { left: "33.33%", duration: 1, ease: "none" }, "<")
+        // Quando chega em 33.33% (Dot 1)
+        .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+        .to("#evo-block-1", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+        .to("#evo-block-2", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+        
+        // Linha vai até o Dot 2 (66.66%)
+        .to("#evo-progress-line", { scaleX: 0.6666, duration: 1, ease: "none" })
+        .to("#evo-car", { left: "66.66%", duration: 1, ease: "none" }, "<")
+        // Quando chega em 66.66% (Dot 2)
+        .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+        .to("#evo-block-2", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+        .to("#evo-block-3", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+        
+        // Linha termina (100%)
+        .to("#evo-progress-line", { scaleX: 1, duration: 1, ease: "none" })
+        .to("#evo-car", { left: "100%", duration: 1, ease: "none" }, "<")
+        // Quando chega em 100% (Dot 3)
+        .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+        // Reveal do CTA Final
+        .to("#evo-cta", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, "<");
 
     </script>
 </body>
