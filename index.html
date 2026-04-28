@@ -229,18 +229,17 @@
             z-index: -9;
         }
 
-        /* Scroll track (Height virtual para controlar o scroll do video) */
+        /* Scroll track (Agora é apenas a primeira dobra normal) */
         .scroll-track {
-            height: 300vh; /* Reduzido para focar em 3 etapas perfeitas */
+            height: 100vh;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .hero-content {
-            position: sticky;
-            top: 0;
-            left: 0;
+            position: relative;
             width: 100%;
-            height: 100vh;
             display: flex;
             align-items: center;
             z-index: 10;
@@ -378,15 +377,7 @@
                 
             </div>
 
-            <!-- Scroll Indicator -->
-            <div id="scroll-indicator" class="absolute bottom-[35%] left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 cursor-pointer group pointer-events-auto opacity-0" onclick="document.getElementById('bento-benefits').scrollIntoView({behavior: 'smooth'})">
-                <span class="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-widest text-center group-hover:text-zinc-300 transition-colors">
-                    Rolar para baixo a página<br>e ter a experiência Loma
-                </span>
-                <div class="w-7 h-11 rounded-full border border-white/10 bg-[#131316]/80 backdrop-blur-md flex items-start justify-center p-1.5 shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors group-hover:border-white/20 group-hover:bg-[#18181b]">
-                    <div class="w-1 h-2.5 bg-zinc-400 rounded-full animate-scroll-wheel mt-1 group-hover:bg-zinc-200 transition-colors"></div>
-                </div>
-            </div>
+            <!-- Scroll Indicator removido pois não há mais trava de scroll -->
         </div>
     </div>
 
@@ -779,7 +770,7 @@
     </section>
 
     <!-- Bloco 6: Timeline de Evolução -->
-    <section id="evolution-timeline" class="relative z-30 w-full h-screen bg-transparent text-white flex flex-col items-center justify-start pt-20 md:pt-24 pb-10 overflow-hidden border-t border-white/5">
+    <section id="evolution-timeline" class="relative z-30 w-full h-screen bg-transparent text-white flex flex-col items-center justify-center py-10 overflow-hidden border-t border-white/5">
         
         <!-- Fundo Escurecido e Desfocado para o Vídeo aparecer (Camada Base) -->
         <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-20 pointer-events-none"></div>
@@ -975,74 +966,40 @@
             }
         }
 
-        // Master Timeline amarrada ao Scroll
-        let tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#scroll-track",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 0.5, // 0.5 de suavização para os frames de canvas deslizarem suavemente
-                onLeave: startIdleLoop,
-                onEnterBack: stopIdleLoop
-            }
-        });
-
-        // Animação de introdução: o carro desce até o frame 45 e para suavemente
-        let introTween = gsap.fromTo(videoState, 
+        // =====================================
+        // HERO AUTOPLAY (SEM SCROLL)
+        // =====================================
+        // Toca a animação do vídeo direto até o fim de forma autônoma
+        let autoPlayTween = gsap.fromTo(videoState, 
             { frame: 1 },
             { 
-                frame: 45, // Carro desce até que bem e para
-                duration: 3, 
-                ease: "power3.out", // Desaceleração bem suave no final
+                frame: frameCount,
+                duration: 6, // 6 segundos de animação fluida para o carro descer
+                ease: "power2.inOut",
                 snap: "frame",
                 onUpdate: render,
-                paused: true // Inicia pausado para aguardar o carregamento
+                paused: true,
+                onComplete: startIdleLoop // Começa o loop infinito quando chegar no fim
             }
         );
 
-        // Toca a intro apenas quando TODAS as imagens/recursos da página carregarem (Garante 100% de fluidez sem engasgos)
+        // Toca a intro apenas quando a página carregar
         window.addEventListener('load', () => {
-            introTween.play();
+            autoPlayTween.play();
+            
+            // Depois de 3 segundos, revela o conteúdo do Hero sem depender de scroll
+            setTimeout(() => {
+                gsap.to(".stage2-reveal, .stage3-reveal", {
+                    y: 0, opacity: 1, filter: "blur(0px)",
+                    duration: 1.5, stagger: 0.15, ease: "power2.out"
+                });
+
+                gsap.to(".glass-card-wrapper", {
+                    x: 0, opacity: 1, rotationY: 0, scale: 1,
+                    duration: 1.5, stagger: 0.2, ease: "power3.out"
+                });
+            }, 3000); // 3 segundos exatos de delay antes dos textos surgirem
         });
-
-        // Mostra o indicador de scroll logo após o carregamento da página
-        gsap.to("#scroll-indicator", { opacity: 1, y: 0, duration: 1, delay: 1.5, ease: "power2.out" });
-
-        // Matar a animação inicial se o usuário começar a rolar a página antes de acabar
-        // E também esconde o indicador de scroll para limpar a tela
-        window.addEventListener('scroll', function handleFirstScroll() {
-            if (window.scrollY > 15) {
-                if (introTween) {
-                    introTween.kill();
-                    introTween = null;
-                }
-                gsap.to("#scroll-indicator", { opacity: 0, duration: 0.5, pointerEvents: "none" });
-                window.removeEventListener('scroll', handleFirstScroll);
-            }
-        }, { passive: true });
-
-        // Etapa 1, 2 e 3: O canvas renderiza do frame 45 (onde parou a intro) até o último
-        tl.fromTo(videoState, {
-            frame: 45
-        }, {
-            frame: frameCount,
-            snap: "frame",
-            ease: "none",
-            duration: 10,
-            onUpdate: render,
-            immediateRender: false // Importante: não forçar frame 45 antes da intro acabar
-        }, 0);
-
-        // Etapa 2 (1º Scroll): O conteúdo surge majestosamente na tela na marca de ~30% do scroll
-        tl.to(".stage2-reveal, .stage3-reveal", {
-            y: 0, opacity: 1, filter: "blur(0px)",
-            duration: 4, stagger: 0.15, ease: "power2.out"
-        }, 3.0);
-
-        tl.to(".glass-card-wrapper", {
-            x: 0, opacity: 1, rotationY: 0, scale: 1,
-            duration: 3.5, stagger: 0.2, ease: "power3.out"
-        }, 3.5);
         
         // Etapa 3: O vídeo termina o scroll até o último frame (sem novos elementos surgindo).
 
@@ -1314,6 +1271,9 @@
         .add("block3")
         .to("#evo-progress-line", { scaleX: 1, duration: 1, ease: "none" }, "block3")
         .to("#evo-car", { left: "100%", duration: 1, ease: "none" }, "block3")
+        
+        // Move todo o conteúdo para baixo (Y) para centralizar visualmente e preencher o vazio
+        .to("#evolution-content", { y: "15vh", duration: 1, ease: "power2.out" }, "block3")
         
         // Background Master aparece
         .to("#evo-bg-container", { opacity: 1, duration: 0.2 }, "block3")
