@@ -1078,33 +1078,50 @@
         wrapLettersInSpans(document.getElementById('social-proof-stat-2'));
 
         // Bloco 5: Animação Scrub de Zoom & Blur Sequencial (Efeito Apple + Bounce Letras)
-        const spTimeline = gsap.timeline({
+        
+        // 1. Entrada Automática (Background escurece e Primeiro Texto entra sozinho ao chegar na dobra)
+        const introTl = gsap.timeline({
             scrollTrigger: {
                 trigger: "#social-proof",
-                start: "top top", // Quando a seção tocar no topo da tela, ela pína (trava)
-                end: "+=400%",    // Aumentado um pouco para dar mais espaço para o stagger das letras
-                scrub: 1,         // Deixa a animação amarrada ao scroll, com suavização
-                pin: true         // Prende a tela no lugar enquanto a animação ocorre
+                start: "top 75%", // Dispara quando a seção entra 25% na tela
+                toggleActions: "play none none reverse" // Toca ao entrar, reverte ao voltar
             }
         });
-
-        // 0. Backdrop entra no começo
-        spTimeline.fromTo("#social-proof-backdrop", 
+        
+        introTl.fromTo("#social-proof-backdrop", 
             { opacity: 0 }, 
-            { opacity: 1, duration: 0.5, ease: "power2.out" }, 0
-        );
-
-        // 1. TEXTO PRINCIPAL (Mais de 20.000)
-        spTimeline.add("startText1")
+            { opacity: 1, duration: 1.0, ease: "power2.out" }, 0
+        )
         .fromTo("#social-proof-text", 
             { scale: 0.8, opacity: 1 }, 
-            { scale: 1, opacity: 1, duration: 0.5, ease: "power2.out" }, "startText1"
+            { scale: 1, opacity: 1, duration: 1.0, ease: "power2.out" }, 0
         )
         .fromTo("#social-proof-text .split-char", 
             { y: 100, opacity: 0, filter: "blur(10px)" }, 
-            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, stagger: 0.02, ease: "back.out(1.5)" }, "startText1"
-        )
-        .to({}, { duration: 1.5 }) // Pausa
+            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, stagger: 0.02, ease: "back.out(1.5)" }, 0
+        );
+
+        // 2. Pin da seção (trava quando chega no topo da tela)
+        ScrollTrigger.create({
+            trigger: "#social-proof",
+            start: "top top",
+            end: "+=400%",
+            pin: true
+        });
+
+        // 3. Timeline de animação (Scrub) - Controla a saída do texto 1 e entrada dos próximos no scroll
+        const spTimeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#social-proof",
+                start: "top top", // O scrub inicia apenas quando a seção pinar no topo
+                end: "+=400%",    // Termina junto com o pin
+                scrub: 1
+            }
+        });
+
+        // O texto principal já está na tela (entrou no introTl).
+        // Vamos dar uma leve pausa no scroll antes de começar a dar zoom-out nele.
+        spTimeline.to({}, { duration: 0.5 }) 
         .to("#social-proof-text", 
             { scale: 2.5, opacity: 0, filter: "blur(30px)", duration: 1.0, ease: "power2.in" }
         )
