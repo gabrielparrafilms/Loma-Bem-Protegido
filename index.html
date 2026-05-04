@@ -264,6 +264,29 @@
         .animate-scroll-wheel {
             animation: scroll-wheel 2s cubic-bezier(0.15, 0.83, 0.66, 1) infinite;
         }
+
+        /* Marquee Animations for Prova Social */
+        @keyframes marquee-vertical {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        @keyframes marquee-vertical-reverse {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes marquee-horizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-horizontal-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .animate-marquee-v { animation: marquee-vertical 40s linear infinite; }
+        .animate-marquee-v-reverse { animation: marquee-vertical-reverse 45s linear infinite; }
+        .animate-marquee-h { animation: marquee-horizontal 30s linear infinite; }
+        .animate-marquee-h-reverse { animation: marquee-horizontal-reverse 35s linear infinite; }
+        .pause-on-hover:hover { animation-play-state: paused; }
     </style>
 </head>
 <body>
@@ -891,6 +914,57 @@
             </div>
         </div>
     </section>
+
+    <!-- Bloco 7: Prova Social (Feedbacks em Loop Contínuo) -->
+    <section id="feedbacks" class="pb-24 pt-20 relative z-10 border-t border-white/5 overflow-hidden">
+        
+        <!-- Overlay leve uniforme para manter a estética clean das dobras anteriores -->
+        <div class="absolute inset-0 bg-[#09090b]/20 -z-20 pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6">
+            
+            <!-- TEXTO PRINCIPAL -->
+            <div class="text-center mb-12 relative z-30 opacity-0 transform translate-y-8" id="feedback-header">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-semibold text-white mb-4 tracking-tighter">Eles não arriscaram.<br><span class="text-emerald-400">E você?</span></h2>
+            </div>
+
+            <!-- CONTAINER DO FEED (Isolado e com mask para feathering perfeito) -->
+            <div class="relative overflow-hidden w-full rounded-2xl [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] md:[mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+
+                <!-- LAYOUT DESKTOP -->
+                <div class="hidden md:flex justify-center gap-6 h-[750px] relative z-10">
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v hover:pause-on-hover" id="desktop-col-1"></div>
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v-reverse hover:pause-on-hover mt-[-150px]" id="desktop-col-2"></div>
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v hover:pause-on-hover pt-12" id="desktop-col-3"></div>
+                </div>
+
+                <!-- LAYOUT MOBILE -->
+                <div class="flex flex-col md:hidden gap-4 relative mt-4 z-10 py-4">
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h-reverse hover:pause-on-hover" id="mobile-row-1"></div>
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h hover:pause-on-hover" id="mobile-row-2"></div>
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h-reverse hover:pause-on-hover" id="mobile-row-3"></div>
+                </div>
+            </div>
+            
+            <!-- Botão CTA -->
+            <div class="w-full flex justify-center mt-12 z-30 opacity-0 transform translate-y-8" id="feedback-cta-wrapper">
+                <a href="#" class="group relative inline-flex min-w-[200px] cursor-pointer overflow-hidden font-medium tracking-tight bg-white rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] shadow-[0_2.8px_2.2px_rgba(0,0,0,0.3)] transition-all duration-300">
+                    <!-- Hover Fill (Emerald) -->
+                    <span class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+                        <span class="w-8 h-8 rounded-full bg-emerald-400 transition-all duration-700 ease-out scale-0 group-hover:scale-[20] opacity-0 group-hover:opacity-100"></span>
+                    </span>
+
+                    <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:-translate-y-8 group-hover:opacity-0 text-[#09090b] font-bold">
+                        Quero me proteger agora
+                    </span>
+                    <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full text-[#09090b] font-bold shadow-sm">
+                        Quero me proteger agora
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </section>
     <script>
         // Prevenir o navegador de guardar a posição de rolagem no reload
         if ('scrollRestoration' in history) {
@@ -1022,6 +1096,20 @@
             onLeaveBack: () => {
                 gsap.to(".video-container", { opacity: 1, duration: 0.5 });
                 if (loopTween) loopTween.play();
+            }
+        });
+
+        // Otimização: Retomar e mostrar o vídeo de fundo ao chegar na sétima dobra (Feedbacks)
+        ScrollTrigger.create({
+            trigger: "#feedbacks",
+            start: "top bottom", // Quando a dobra 7 entra na tela por baixo
+            onEnter: () => {
+                gsap.to(".video-container", { opacity: 1, duration: 0.8 });
+                if (loopTween) loopTween.play();
+            },
+            onLeaveBack: () => {
+                gsap.to(".video-container", { opacity: 0, duration: 0.8 });
+                if (loopTween) loopTween.pause();
             }
         });
 
@@ -1369,6 +1457,82 @@
                     duration: 0.8
                 });
             });
+        });
+
+        // ==========================================
+        // BLOCO 7: Prova Social Dinâmica (Feedbacks)
+        // ==========================================
+        const testimonials = [
+            { text: "Cara, eu nunca achei que ia precisar… fiz a proteção meio no 'vai que'… Não deu outra… bateram no meu carro 3 meses depois. Se eu não tivesse com a Loma, tava ferrado hoje.", name: "Carlos Silva", img: "men/32.jpg", car: "Ford Ka" },
+            { text: "Mano, coisa boba… uma batida pequena no trânsito. Mas quando fui ver o valor… já ia pesar demais. Ainda bem que eu tava com a proteção… resolveu tudo.", name: "Tiago Souza", img: "men/44.jpg", car: "Chevrolet Celta" },
+            { text: "Eu uso o carro pra trabalhar todo dia. Ficar sem ele nem pensar. Quando precisei, a Loma resolveu rápido… isso pra mim vale tudo.", name: "Marcos Paulo", img: "men/67.jpg", car: "Renault Kwid" },
+            { text: "Sinceramente, eu achava que era mais uma dessas coisas… Até precisar de verdade. Aí você vê quem resolve e quem some.", name: "Rafael Lima", img: "men/22.jpg", car: "Fiat Uno" },
+            { text: "Fiz mais por segurança mesmo… nem tava pensando em usar. Mas aí deu ruim… vidro quebrado, prejuízo… E foi aí que vi que vale a pena.", name: "Felipe Costa", img: "men/85.jpg", car: "Volkswagen Gol" },
+            { text: "Pra quem trabalha com o carro, isso aqui não é luxo não… É necessidade. Ficar parado é perder dinheiro.", name: "Leandro Santos", img: "men/55.jpg", car: "Hyundai HB20" },
+            { text: "Já fiquei dias sem trabalhar por causa de carro antes… Nunca mais passo por isso. Hoje tenho proteção e fico tranquilo.", name: "André Gomes", img: "men/75.jpg", car: "Chevrolet Onix" },
+            { text: "O valor que eu pago é nada perto do prejuízo que eu teria. Sério mesmo… não compensa arriscar.", name: "Bruno Alves", img: "men/12.jpg", car: "Fiat Palio" },
+            { text: "Eu tava juntando grana pra trocar de carro… Se desse algum problema, já era. A proteção me deu segurança pra seguir com meu plano.", name: "Daniel Ribeiro", img: "men/90.jpg", car: "Renault Sandero" },
+            { text: "Depois que você passa por um susto, muda tudo… Hoje eu não fico sem proteção nem se for carro velho.", name: "Eduardo Martins", img: "men/3.jpg", car: "Toyota Etios" },
+            { text: "Não é nem questão de 'se' vai acontecer… É 'quando'. Eu aprendi isso do jeito difícil.", name: "Fernando Oliveira", img: "men/18.jpg", car: "Nissan March" },
+            { text: "Hoje eu dirijo tranquilo, sem aquele peso na cabeça. Antes qualquer barulho já me preocupava.", name: "Marcelo Pereira", img: "men/29.jpg", car: "Chevrolet Prisma" }
+        ];
+
+        const createCardHTML = (t) => `
+            <div class="glass-card p-6 flex flex-col gap-4 w-[85vw] max-w-[320px] md:w-auto md:min-w-[320px] shrink-0 whitespace-normal hover:-translate-y-1 transition-transform duration-300 relative border border-white/10 group">
+                <div class="text-zinc-300 text-[15px] leading-relaxed relative z-10 italic">
+                    "${t.text}"
+                </div>
+                <div class="flex items-center gap-3 mt-2 relative z-10">
+                    <img src="https://randomuser.me/api/portraits/${t.img}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${t.name.replace(' ', '+')}&background=0ABAB5&color=fff';" class="w-10 h-10 rounded-full object-cover filter border border-zinc-700" alt="Avatar">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-semibold text-white">${t.name}</span>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1">
+                            <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i>
+                            Protege seu ${t.car}
+                        </span>
+                    </div>
+                </div>
+                <div class="glass-highlight"></div>
+            </div>
+        `;
+
+        // Popular Colunas Desktop
+        const dCol1 = document.getElementById('desktop-col-1');
+        const dCol2 = document.getElementById('desktop-col-2');
+        const dCol3 = document.getElementById('desktop-col-3');
+        if (dCol1 && dCol2 && dCol3) {
+            dCol1.innerHTML = testimonials.slice(0, 4).map(createCardHTML).join('');
+            dCol2.innerHTML = testimonials.slice(4, 8).map(createCardHTML).join('');
+            dCol3.innerHTML = testimonials.slice(8, 12).map(createCardHTML).join('');
+            dCol1.innerHTML += dCol1.innerHTML;
+            dCol2.innerHTML += dCol2.innerHTML;
+            dCol3.innerHTML += dCol3.innerHTML;
+        }
+
+        // Popular Linhas Mobile
+        const mRow1 = document.getElementById('mobile-row-1');
+        const mRow2 = document.getElementById('mobile-row-2');
+        const mRow3 = document.getElementById('mobile-row-3');
+        if (mRow1 && mRow2 && mRow3) {
+            mRow1.innerHTML = testimonials.slice(0, 4).map(createCardHTML).join('');
+            mRow2.innerHTML = testimonials.slice(4, 8).map(createCardHTML).join('');
+            mRow3.innerHTML = testimonials.slice(8, 12).map(createCardHTML).join('');
+            mRow1.innerHTML += mRow1.innerHTML;
+            mRow2.innerHTML += mRow2.innerHTML;
+            mRow3.innerHTML += mRow3.innerHTML;
+        }
+
+        // Animação de Entrada para a Dobra de Feedbacks
+        ScrollTrigger.create({
+            trigger: "#feedbacks",
+            start: "top 70%",
+            onEnter: () => {
+                gsap.to(["#feedback-header", "#feedback-cta-wrapper"], {
+                    opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
+                });
+                lucide.createIcons();
+            },
+            once: true
         });
 
     </script>
