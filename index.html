@@ -985,6 +985,11 @@
 
         // Toca a intro apenas quando a página carregar
         window.addEventListener('load', () => {
+            // Trava o scroll (desktop e mobile) para garantir que a animação não seja interrompida
+            document.body.style.overflow = 'hidden';
+            const preventTouch = (e) => e.preventDefault();
+            document.addEventListener('touchmove', preventTouch, { passive: false });
+
             autoPlayTween.play();
             
             // Depois de 3 segundos, revela o conteúdo do Hero sem depender de scroll
@@ -999,9 +1004,27 @@
                     duration: 1.5, stagger: 0.2, ease: "power3.out"
                 });
             }, 3000); // 3 segundos exatos de delay antes dos textos surgirem
+
+            // Libera o scroll após a parte crítica da animação concluir (textos apareceram)
+            setTimeout(() => {
+                document.body.style.overflow = '';
+                document.removeEventListener('touchmove', preventTouch);
+            }, 4500); // 4.5 segundos (3s delay + 1.5s duração do texto)
         });
-        
-        // Etapa 3: O vídeo termina o scroll até o último frame (sem novos elementos surgindo).
+        // Otimização: Pausar e esconder o vídeo de fundo (canvas) ao chegar na quinta dobra
+        ScrollTrigger.create({
+            trigger: "#social-proof",
+            start: "top bottom", // Quando a dobra 5 entra na tela por baixo
+            onEnter: () => {
+                gsap.to(".video-container", { opacity: 0, duration: 0.5 });
+                if (loopTween) loopTween.pause();
+            },
+            onLeaveBack: () => {
+                gsap.to(".video-container", { opacity: 1, duration: 0.5 });
+                if (loopTween) loopTween.play();
+            }
+        });
+
 
         // Efeito de Lanterna nos Cards (Design System 10)
         document.addEventListener('mousemove', (e) => {
