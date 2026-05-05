@@ -918,9 +918,6 @@
     <!-- Bloco 7: Prova Social (Feedbacks em Loop Contínuo) -->
     <section id="feedbacks" class="pb-24 pt-20 relative z-10 border-t border-white/5 overflow-hidden">
         
-        <!-- Overlay leve uniforme para manter a estética clean das dobras anteriores -->
-        <div class="absolute inset-0 bg-[#09090b]/20 -z-20 pointer-events-none"></div>
-
         <div class="max-w-[1400px] mx-auto px-4 md:px-6">
             
             <!-- TEXTO PRINCIPAL -->
@@ -963,6 +960,76 @@
                 </a>
             </div>
 
+        </div>
+    </section>
+
+    <!-- App Loma Section -->
+    <section id="app-loma" class="relative w-full min-h-screen py-24 md:py-32 flex items-center justify-center border-t border-white/5 z-10">
+        
+        <!-- Subtle Background Glows limitados ao tamanho da dobra -->
+        <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/5 blur-[120px] rounded-full"></div>
+            <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-400/5 blur-[100px] rounded-full translate-x-1/3 translate-y-1/3"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-8">
+            
+            <!-- Left Text Column -->
+            <div class="w-full md:w-[45%] flex flex-col items-center md:items-start text-center md:text-left md:pl-10 relative z-30">
+                <!-- Eyebrow -->
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 opacity-0" data-app-reveal>
+                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+                    <span class="text-sm font-medium tracking-wide text-zinc-300 uppercase">Tecnologia</span>
+                </div>
+                
+                <h2 class="text-4xl md:text-5xl lg:text-[64px] leading-tight font-bold text-white tracking-tight mb-6 opacity-0" style="font-family: 'Geist', sans-serif;" data-app-reveal>
+                    Conheça nosso <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">aplicativo Loma</span>
+                </h2>
+                
+                <p class="text-lg text-zinc-300 leading-relaxed mb-4 opacity-0" style="font-family: 'Inter', sans-serif;" data-app-reveal>
+                    <strong class="text-white font-semibold">Tenha sua proteção sempre à mão.</strong> Pelo app, você acessa boletos, acompanha seus serviços, atualiza dados e fala direto com a gente de forma rápida e simples.
+                </p>
+
+                <p class="text-lg text-zinc-300 leading-relaxed mb-10 opacity-0" style="font-family: 'Inter', sans-serif;" data-app-reveal>
+                    Baixe agora e aproveite mais praticidade no seu dia a dia.
+                </p>
+
+                <!-- Store Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 opacity-0" data-app-reveal>
+                    <a href="https://apps.apple.com/au/app/loma-prote%C3%A7%C3%A3o-veicular/id1456159026" target="_blank" rel="noopener noreferrer" class="transition-transform hover:-translate-y-1 duration-300">
+                        <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_70434.png" alt="Baixar na App Store" class="h-[56px] w-auto object-contain drop-shadow-lg">
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=br.com.hinovamobile.lomaprotecao&hl=en" target="_blank" rel="noopener noreferrer" class="transition-transform hover:-translate-y-1 duration-300">
+                        <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_47695.png" alt="Disponível no Google Play" class="h-[56px] w-auto object-contain drop-shadow-lg">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Image Column (Overflowing) -->
+            <div class="w-full md:w-[55%] flex justify-center md:justify-end opacity-0 relative z-20" id="app-image-container">
+                <!-- Container da imagem com margem negativa para vazar, escala ampliada e alinhamento pela base -->
+                <div class="relative w-[130%] md:w-[150%] max-w-[950px] md:-mr-32 translate-y-24 md:translate-y-48 flex items-end">
+                    
+                    <!-- Glow intensificado atrás do celular central -->
+                    <div class="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-emerald-500/20 blur-[100px] rounded-full -z-10 pointer-events-none mix-blend-screen"></div>
+                    
+                    <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_175889744530945604.png" 
+                         alt="Aplicativo Loma Bem Protegido" 
+                         class="w-full h-auto object-contain drop-shadow-[0_40px_50px_rgba(0,0,0,0.9)] scale-125 origin-bottom">
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- Máscaras da base para o corte preciso dos celulares laterais (Cria a ilusão de vazamento apenas do central) -->
+        <div class="absolute bottom-0 left-0 w-full h-[300px] translate-y-full flex pointer-events-none z-30">
+            <!-- Máscara Esquerda (Esconde o celular esquerdo que vaza) -->
+            <div class="w-[42%] md:w-[63%] h-full bg-[#09090b]"></div>
+            <!-- Área de Vazamento (Deixa o celular central vazar sobre a nona dobra) -->
+            <div class="w-[16%] md:w-[14%] h-full bg-transparent"></div>
+            <!-- Máscara Direita (Esconde o celular direito que vaza) -->
+            <div class="flex-1 h-full bg-[#09090b]"></div>
         </div>
     </section>
     <script>
@@ -1056,6 +1123,20 @@
                 onComplete: startIdleLoop // Começa o loop infinito quando chegar no fim
             }
         );
+
+        // Se o usuário começar a rolar a página enquanto o vídeo do Hero ainda está tocando,
+        // força o fim da animação instantaneamente para que ele vire o "vídeo em loop das dobras internas".
+        window.addEventListener('scroll', () => {
+            if (autoPlayTween.isActive() && window.scrollY > 50) {
+                autoPlayTween.kill();
+                
+                // Libera o scroll e reseta variáveis de touch
+                document.body.style.overflow = '';
+                
+                // Inicia o loop contínuo (o mesmo das dobras 2, 3 e 4)
+                startIdleLoop();
+            }
+        }, { passive: true });
 
         // Toca a intro apenas quando a página carregar
         window.addEventListener('load', () => {
@@ -1544,6 +1625,31 @@
                     opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
                 });
                 lucide.createIcons();
+            },
+            once: true
+        });
+
+        // Animação de Entrada para a Dobra App Loma
+        ScrollTrigger.create({
+            trigger: "#app-loma",
+            start: "top 75%",
+            onEnter: () => {
+                // Textos da esquerda
+                gsap.fromTo("#app-loma [data-app-reveal]", 
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8, 
+                        stagger: 0.15, 
+                        ease: "power3.out"
+                    }
+                );
+                // Imagem do celular na direita
+                gsap.fromTo("#app-image-container", 
+                    { opacity: 0, x: 100, scale: 0.95 },
+                    { opacity: 1, x: 0, scale: 1, duration: 1.2, ease: "power4.out", delay: 0.2 }
+                );
             },
             once: true
         });
