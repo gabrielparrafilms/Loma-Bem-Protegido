@@ -205,7 +205,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
             z-index: -10;
             overflow: hidden;
         }
@@ -215,7 +215,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 100vw;
-            height: 100vh;
+            height: 100dvh;
             object-fit: cover;
             opacity: 0.45;
             filter: blur(0px);
@@ -1179,32 +1179,39 @@
                 startIdleLoop();
             }
         });
-        // Otimização: Pausar e esconder o vídeo de fundo (canvas) ao chegar na quinta dobra
-        ScrollTrigger.create({
-            trigger: "#social-proof",
-            start: "top bottom", // Quando a dobra 5 entra na tela por baixo
-            onEnter: () => {
-                gsap.to(".video-container", { opacity: 0, duration: 0.5 });
-                if (loopTween) loopTween.pause();
-            },
-            onLeaveBack: () => {
-                gsap.to(".video-container", { opacity: 1, duration: 0.5 });
-                if (loopTween) loopTween.play();
-            }
-        });
+        // ==========================================
+        // GATILHOS DE VÍDEO (ATRASADOS PARA SEGURANÇA NO IOS)
+        // ==========================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                ScrollTrigger.create({
+                    trigger: "#social-proof",
+                    start: "top bottom", // Quando a dobra 5 entra na tela por baixo
+                    onEnter: () => {
+                        gsap.to(".video-container", { opacity: 0, duration: 0.5 });
+                        if (loopTween) loopTween.pause();
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(".video-container", { opacity: 1, duration: 0.5 });
+                        if (loopTween) loopTween.play();
+                    }
+                });
 
-        // Otimização: Retomar e mostrar o vídeo de fundo ao chegar na sétima dobra (Feedbacks)
-        ScrollTrigger.create({
-            trigger: "#feedbacks",
-            start: "top bottom", // Quando a dobra 7 entra na tela por baixo
-            onEnter: () => {
-                gsap.to(".video-container", { opacity: 1, duration: 0.8 });
-                if (loopTween) loopTween.play();
-            },
-            onLeaveBack: () => {
-                gsap.to(".video-container", { opacity: 0, duration: 0.8 });
-                if (loopTween) loopTween.pause();
-            }
+                ScrollTrigger.create({
+                    trigger: "#feedbacks",
+                    start: "top bottom", // Quando a dobra 7 entra na tela por baixo
+                    onEnter: () => {
+                        gsap.to(".video-container", { opacity: 1, duration: 0.8 });
+                        if (loopTween) loopTween.play();
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(".video-container", { opacity: 0, duration: 0.8 });
+                        if (loopTween) loopTween.pause();
+                    }
+                });
+                
+                ScrollTrigger.refresh();
+            }, 1000); // 1 segundo extra após o load garante layout 100% estabilizado no iOS
         });
 
 
