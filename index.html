@@ -966,11 +966,11 @@
         </div>
     </section>
     <script>
-        // Prevenir o navegador de guardar a posição de rolagem no reload
+        // Permite o navegador restaurar a posição de rolagem no reload (útil para testes)
         if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
+            history.scrollRestoration = 'auto';
         }
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
 
         lucide.createIcons();
         gsap.registerPlugin(ScrollTrigger);
@@ -1059,31 +1059,44 @@
 
         // Toca a intro apenas quando a página carregar
         window.addEventListener('load', () => {
-            // Trava o scroll (desktop e mobile) para garantir que a animação não seja interrompida
-            document.body.style.overflow = 'hidden';
-            const preventTouch = (e) => e.preventDefault();
-            document.addEventListener('touchmove', preventTouch, { passive: false });
+            // Verifica se o usuário carregou a página no topo (Hero)
+            if (window.scrollY < 100) {
+                // ESTÁ NO HERO: Faz a animação inicial e trava o scroll
+                document.body.style.overflow = 'hidden';
+                const preventTouch = (e) => e.preventDefault();
+                document.addEventListener('touchmove', preventTouch, { passive: false });
 
-            autoPlayTween.play();
-            
-            // Depois de 3 segundos, revela o conteúdo do Hero sem depender de scroll
-            setTimeout(() => {
-                gsap.to(".stage2-reveal, .stage3-reveal", {
-                    y: 0, opacity: 1, filter: "blur(0px)",
-                    duration: 1.5, stagger: 0.15, ease: "power2.out"
-                });
+                autoPlayTween.play();
+                
+                // Depois de 3 segundos, revela o conteúdo do Hero sem depender de scroll
+                setTimeout(() => {
+                    gsap.to(".stage2-reveal, .stage3-reveal", {
+                        y: 0, opacity: 1, filter: "blur(0px)",
+                        duration: 1.5, stagger: 0.15, ease: "power2.out"
+                    });
 
-                gsap.to(".glass-card-wrapper", {
-                    x: 0, opacity: 1, rotationY: 0, scale: 1,
-                    duration: 1.5, stagger: 0.2, ease: "power3.out"
-                });
-            }, 3000); // 3 segundos exatos de delay antes dos textos surgirem
+                    gsap.to(".glass-card-wrapper", {
+                        x: 0, opacity: 1, rotationY: 0, scale: 1,
+                        duration: 1.5, stagger: 0.2, ease: "power3.out"
+                    });
+                }, 3000); // 3 segundos exatos de delay antes dos textos surgirem
 
-            // Libera o scroll após a parte crítica da animação concluir (textos apareceram)
-            setTimeout(() => {
-                document.body.style.overflow = '';
-                document.removeEventListener('touchmove', preventTouch);
-            }, 4500); // 4.5 segundos (3s delay + 1.5s duração do texto)
+                // Libera o scroll após a parte crítica da animação concluir (textos apareceram)
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                    document.removeEventListener('touchmove', preventTouch);
+                }, 4500); // 4.5 segundos (3s delay + 1.5s duração do texto)
+                
+            } else {
+                // ESTÁ EM OUTRA DOBRA APÓS REFRESH
+                
+                // Revela instantaneamente os textos do Hero (para o caso do usuário voltar ao topo depois)
+                gsap.set(".stage2-reveal, .stage3-reveal", { y: 0, opacity: 1, filter: "blur(0px)" });
+                gsap.set(".glass-card-wrapper", { x: 0, opacity: 1, rotationY: 0, scale: 1 });
+                
+                // Pula a animação longa de entrada e inicia o vídeo direto em loop
+                startIdleLoop();
+            }
         });
         // Otimização: Pausar e esconder o vídeo de fundo (canvas) ao chegar na quinta dobra
         ScrollTrigger.create({
@@ -1478,21 +1491,21 @@
         ];
 
         const createCardHTML = (t) => `
-            <div class="glass-card p-6 flex flex-col gap-4 w-[85vw] max-w-[320px] md:w-auto md:min-w-[320px] shrink-0 whitespace-normal hover:-translate-y-1 transition-transform duration-300 relative border border-white/10 group">
+            <div class="bg-[#131316] p-6 flex flex-col gap-4 w-[85vw] max-w-[320px] md:w-auto md:min-w-[320px] shrink-0 whitespace-normal hover:-translate-y-1 transition-transform duration-300 relative border border-white/5 group shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-3xl overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.02)_0%,transparent_60%)]"></div>
                 <div class="text-zinc-300 text-[15px] leading-relaxed relative z-10 italic">
                     "${t.text}"
                 </div>
                 <div class="flex items-center gap-3 mt-2 relative z-10">
-                    <img src="https://randomuser.me/api/portraits/${t.img}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${t.name.replace(' ', '+')}&background=0ABAB5&color=fff';" class="w-10 h-10 rounded-full object-cover filter border border-zinc-700" alt="Avatar">
+                    <img src="https://randomuser.me/api/portraits/${t.img}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${t.name.replace(' ', '+')}&background=0ABAB5&color=fff';" class="w-10 h-10 rounded-full object-cover filter border border-zinc-700/50" alt="Avatar">
                     <div class="flex flex-col">
                         <span class="text-sm font-semibold text-white">${t.name}</span>
-                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1">
-                            <i data-lucide="shield-check" class="w-3 h-3 text-emerald-400"></i>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1 mt-0.5">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
                             Protege seu ${t.car}
                         </span>
                     </div>
                 </div>
-                <div class="glass-highlight"></div>
             </div>
         `;
 
