@@ -877,7 +877,7 @@
                     <!-- Imagens 3D do Bloco 01 -->
                     <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px]">
                         <!-- Imagem 1 -->
-                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
                             <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017 - Imagem 1" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
                             <!-- Overlay escuro para profundidade -->
                             <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
@@ -886,7 +886,7 @@
                         </div>
 
                         <!-- Imagem 2 -->
-                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="opacity: 0; filter: blur(10px); transform-style: preserve-3d;">
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
                             <img src="assets/img/Loma 2017 3.jpg" alt="Loma 2017 - Imagem 2" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
                             <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
                             <div class="glass-highlight"></div>
@@ -1462,12 +1462,6 @@
         gsap.set("#evo-block-1", { opacity: 1, scale: 1 });
         gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
         gsap.set("#evo-car", { left: "0%" });
-        
-        tlEvo.fromTo(".evo-img-block-1", 
-            { y: 50, opacity: 0, filter: "blur(10px)" },
-            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power2.out" }, 
-            0 // Começa exatamente no início da timeline
-        );
 
         tlEvo.fromTo("#evo-progress-line", 
             { scaleX: 0 }, 
@@ -1479,10 +1473,10 @@
         .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
         .to("#evo-block-1", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
         .to("#evo-block-2", { opacity: 1, scale: 1, duration: 0.2 }, "<")
-        .to(".evo-img-block-1", { y: 20, opacity: 0, filter: "blur(10px)", duration: 0.2 }, "<") // Bloco 1 sai
+        .to(".evo-img-block-1", { opacity: 0, duration: 0.2 }, "<") // Bloco 1 sai limpo
         .fromTo("#evo-images-2", 
-            { y: 50, opacity: 0, filter: "blur(10px)" },
-            { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "power2.out" }, "<" // Bloco 2 entra
+            { opacity: 0 },
+            { opacity: 1, duration: 0.2, ease: "none" }, "<" // Bloco 2 entra direto
         )
         
         // Linha vai até o Dot 2 (66.66%) E Parallax roda
@@ -1494,7 +1488,7 @@
         .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
         .to("#evo-block-2", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
         .to("#evo-block-3", { opacity: 1, scale: 1, duration: 0.2 }, "<")
-        .to("#evo-images-2", { y: 20, opacity: 0, filter: "blur(10px)", duration: 0.2 }, "<") // Bloco 2 (Imagem) sai
+        .to("#evo-images-2", { opacity: 0, duration: 0.2 }, "<") // Bloco 2 (Imagem) sai limpo
         
         // --- CONSTRUÇÃO DO BLOCO 3 (66.66% a 100%) ---
         .add("block3")
