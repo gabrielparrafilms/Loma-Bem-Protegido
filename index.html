@@ -793,7 +793,7 @@
     </section>
 
     <!-- Bloco 6: Timeline de Evolução -->
-    <section id="evolution-timeline" class="relative z-30 w-full h-screen bg-transparent text-white flex flex-col items-center justify-center py-10 overflow-hidden border-t border-white/5">
+    <section id="evolution-timeline" class="relative z-30 w-full h-auto min-h-[100dvh] md:h-screen bg-transparent text-white flex flex-col items-center justify-start md:justify-center py-16 md:py-10 overflow-visible md:overflow-hidden border-t border-white/5">
         
         <!-- Fundo Escurecido e Desfocado para o Vídeo aparecer (Camada Base) -->
         <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-20 pointer-events-none"></div>
@@ -828,6 +828,12 @@
                         <span class="text-emerald-400 font-bold font-geist text-xl mb-2">01</span>
                         <h3 class="text-2xl font-bold tracking-tight mb-3">Origem com propósito</h3>
                         <p class="text-zinc-400 leading-relaxed text-sm">A empresa nasce com um objetivo claro: oferecer proteção real para pessoas que não tinham acesso a soluções confiáveis. Desde o início, o foco foi construir algo sólido, baseado em responsabilidade e entrega verdadeira.</p>
+                        
+                        <!-- Imagens Mobile (Bloco 01) -->
+                        <div class="flex flex-col gap-4 mt-6 md:hidden">
+                            <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[50%]">
+                            <img src="assets/img/Loma 2017 3.jpg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[50%]">
+                        </div>
                     </div>
                     
                     <!-- Bloco 02 -->
@@ -835,6 +841,11 @@
                         <span class="text-emerald-400 font-bold font-geist text-xl mb-2">02</span>
                         <h3 class="text-2xl font-bold tracking-tight mb-3">Estrutura e superação</h3>
                         <p class="text-zinc-400 leading-relaxed text-sm">Com o crescimento, surgem desafios que exigem organização, adaptação e evolução. A operação se fortalece ao estruturar processos, desenvolver gestão e superar momentos críticos com consistência.</p>
+                        
+                        <!-- Imagens Mobile (Bloco 02) -->
+                        <div class="flex flex-col gap-4 mt-6 md:hidden">
+                            <img src="assets/img/Loma 2.jpeg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[30%]">
+                        </div>
                     </div>
 
                     <!-- Bloco 03 -->
@@ -872,7 +883,7 @@
                 </div>
 
                 <!-- Containers de Imagens (Grid Overlap) para Bloco 1 e 2 -->
-                <div class="w-full max-w-3xl mx-auto mt-4 grid grid-cols-1 grid-rows-1 z-20">
+                <div class="w-full max-w-3xl mx-auto mt-4 hidden md:grid grid-cols-1 grid-rows-1 z-20">
                     
                     <!-- Imagens 3D do Bloco 01 -->
                     <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px]">
@@ -1432,90 +1443,126 @@
             }
         });
 
-        // Faz o conteúdo do Bloco 6 vir da direita enquanto sobe
-        gsap.fromTo("#evolution-content", 
-            { x: "60vw", opacity: 0 }, 
-            { 
-                x: "0vw", opacity: 1, 
-                ease: "power2.out", // Suaviza bem a parada no centro da tela
+        // ==========================================
+        // MATCHMEDIA PARA A SEXTA DOBRA
+        // ==========================================
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            // --- DESKTOP ---
+            
+            // Faz o conteúdo do Bloco 6 vir da direita enquanto sobe
+            gsap.fromTo("#evolution-content", 
+                { x: "60vw", opacity: 0 }, 
+                { 
+                    x: "0vw", opacity: 1, 
+                    ease: "power2.out", // Suaviza bem a parada no centro da tela
+                    scrollTrigger: {
+                        trigger: "#evolution-timeline",
+                        start: "top bottom",
+                        end: "top top",
+                        scrub: 1.5
+                    }
+                }
+            );
+
+            // 2. Timeline Principal do Bloco 6 (Pinned)
+            const tlEvo = gsap.timeline({
                 scrollTrigger: {
                     trigger: "#evolution-timeline",
-                    start: "top bottom",
-                    end: "top top",
-                    scrub: 1.5
+                    start: "top top",
+                    end: "+=300%",
+                    pin: true,
+                    scrub: 1
                 }
-            }
-        );
+            });
 
-        // 2. Timeline Principal do Bloco 6 (Pinned)
-        const tlEvo = gsap.timeline({
-            scrollTrigger: {
-                trigger: "#evolution-timeline",
-                start: "top top",
-                end: "+=300%",
-                pin: true,
-                scrub: 1
-            }
+            // Configuração inicial (Dot 0 aceso, Bloco 1 em destaque)
+            gsap.set("#evo-block-1", { opacity: 1, scale: 1 });
+            gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
+            gsap.set("#evo-car", { left: "0%" });
+
+            tlEvo.fromTo("#evo-progress-line", 
+                { scaleX: 0 }, 
+                { scaleX: 0.3333, duration: 1, ease: "none" },
+                0 // Também começa no tempo 0
+            )
+            .to("#evo-car", { left: "33.33%", duration: 1, ease: "none" }, 0)
+            // Quando chega em 33.33% (Dot 1)
+            .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+            .to("#evo-block-1", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+            .to("#evo-block-2", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+            .to(".evo-img-block-1", { opacity: 0, duration: 0.2 }, "<") // Bloco 1 sai limpo
+            .fromTo("#evo-images-2", 
+                { opacity: 0 },
+                { opacity: 1, duration: 0.2, ease: "none" }, "<" // Bloco 2 entra direto
+            )
+            
+            // Linha vai até o Dot 2 (66.66%) E Parallax roda
+            .to("#evo-progress-line", { scaleX: 0.6666, duration: 1, ease: "none" })
+            .to("#evo-car", { left: "66.66%", duration: 1, ease: "none" }, "<")
+            .fromTo("#evo-img-parallax-2", { yPercent: 0 }, { yPercent: -33, duration: 1, ease: "none" }, "<") // Efeito Parallax Otimizado
+            
+            // Quando chega em 66.66% (Dot 2)
+            .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+            .to("#evo-block-2", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+            .to("#evo-block-3", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+            .to("#evo-images-2", { opacity: 0, duration: 0.2 }, "<") // Bloco 2 (Imagem) sai limpo
+            
+            // --- CONSTRUÇÃO DO BLOCO 3 (66.66% a 100%) ---
+            .add("block3")
+            .to("#evo-progress-line", { scaleX: 1, duration: 1, ease: "none" }, "block3")
+            .to("#evo-car", { left: "100%", duration: 1, ease: "none" }, "block3")
+            
+            // Move todo o conteúdo para baixo (Y) para centralizar visualmente e preencher o vazio
+            .to("#evolution-content", { y: "15vh", duration: 1, ease: "power2.out" }, "block3")
+            
+            // Background Master aparece
+            .to("#evo-bg-container", { opacity: 1, duration: 0.2 }, "block3")
+            
+            // Base Original sobe bem lá de baixo, mas termina um pouco mais baixa para focar no logo "Loma"
+            .fromTo("#evo-bg-base", 
+                { yPercent: 80, scale: 2 }, 
+                { yPercent: 15, scale: 1, duration: 1, ease: "power2.out" }, "block3"
+            )
+            // Céu ganha um parallax extremo: sobe muito mais espaço e diminui o zoom simultaneamente
+            .fromTo("#evo-bg-ceu", 
+                { yPercent: 200, scale: 4 }, 
+                { yPercent: -60, scale: 1.1, duration: 1, ease: "power2.out" }, "block3+=0.1"
+            )
+            
+            // Finaliza com Dot 3
+            .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.1")
+            // Reveal do CTA Final
+            .to("#evo-cta", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, "<");
         });
 
-        // Configuração inicial (Dot 0 aceso, Bloco 1 em destaque)
-        gsap.set("#evo-block-1", { opacity: 1, scale: 1 });
-        gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
-        gsap.set("#evo-car", { left: "0%" });
+        mm.add("(max-width: 767px)", () => {
+            // --- MOBILE ---
+            
+            // Força a visibilidade limpa de todos os blocos no mobile
+            gsap.set(["#evo-block-1", "#evo-block-2", "#evo-block-3"], { opacity: 1, scale: 1, clearProps: "transform" });
+            gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
+            gsap.set("#evolution-content", { clearProps: "all" });
 
-        tlEvo.fromTo("#evo-progress-line", 
-            { scaleX: 0 }, 
-            { scaleX: 0.3333, duration: 1, ease: "none" },
-            0 // Também começa no tempo 0
-        )
-        .to("#evo-car", { left: "33.33%", duration: 1, ease: "none" }, 0)
-        // Quando chega em 33.33% (Dot 1)
-        .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
-        .to("#evo-block-1", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
-        .to("#evo-block-2", { opacity: 1, scale: 1, duration: 0.2 }, "<")
-        .to(".evo-img-block-1", { opacity: 0, duration: 0.2 }, "<") // Bloco 1 sai limpo
-        .fromTo("#evo-images-2", 
-            { opacity: 0 },
-            { opacity: 1, duration: 0.2, ease: "none" }, "<" // Bloco 2 entra direto
-        )
-        
-        // Linha vai até o Dot 2 (66.66%) E Parallax roda
-        .to("#evo-progress-line", { scaleX: 0.6666, duration: 1, ease: "none" })
-        .to("#evo-car", { left: "66.66%", duration: 1, ease: "none" }, "<")
-        .fromTo("#evo-img-parallax-2", { yPercent: 0 }, { yPercent: -33, duration: 1, ease: "none" }, "<") // Efeito Parallax Otimizado
-        
-        // Quando chega em 66.66% (Dot 2)
-        .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
-        .to("#evo-block-2", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
-        .to("#evo-block-3", { opacity: 1, scale: 1, duration: 0.2 }, "<")
-        .to("#evo-images-2", { opacity: 0, duration: 0.2 }, "<") // Bloco 2 (Imagem) sai limpo
-        
-        // --- CONSTRUÇÃO DO BLOCO 3 (66.66% a 100%) ---
-        .add("block3")
-        .to("#evo-progress-line", { scaleX: 1, duration: 1, ease: "none" }, "block3")
-        .to("#evo-car", { left: "100%", duration: 1, ease: "none" }, "block3")
-        
-        // Move todo o conteúdo para baixo (Y) para centralizar visualmente e preencher o vazio
-        .to("#evolution-content", { y: "15vh", duration: 1, ease: "power2.out" }, "block3")
-        
-        // Background Master aparece
-        .to("#evo-bg-container", { opacity: 1, duration: 0.2 }, "block3")
-        
-        // Base Original sobe bem lá de baixo, mas termina um pouco mais baixa para focar no logo "Loma"
-        .fromTo("#evo-bg-base", 
-            { yPercent: 80, scale: 2 }, 
-            { yPercent: 15, scale: 1, duration: 1, ease: "power2.out" }, "block3"
-        )
-        // Céu ganha um parallax extremo: sobe muito mais espaço e diminui o zoom simultaneamente
-        .fromTo("#evo-bg-ceu", 
-            { yPercent: 200, scale: 4 }, 
-            { yPercent: -60, scale: 1.1, duration: 1, ease: "power2.out" }, "block3+=0.1"
-        )
-        
-        // Finaliza com Dot 3
-        .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.1")
-        // Reveal do CTA Final
-        .to("#evo-cta", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, "<");
+            // Timeline simplificada apenas para o carrinho/progresso
+            const tlMobile = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#evolution-timeline",
+                    start: "top center",
+                    end: "bottom center",
+                    scrub: true
+                }
+            });
+
+            tlMobile.fromTo("#evo-progress-line", { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0)
+                    .fromTo("#evo-car", { left: "0%" }, { left: "100%", ease: "none" }, 0)
+                    .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 0.33)
+                    .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 0.66)
+                    .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 1)
+                    .to("#evo-bg-container", { opacity: 1, duration: 0.2 }, 0.8) // Fundo aparece no final
+                    .fromTo("#evo-bg-base", { yPercent: 20 }, { yPercent: 0, duration: 0.2, ease: "none" }, 0.8);
+        });
 
         // --- Efeito 3D Perspective nas Imagens do Bloco 6 ---
         document.querySelectorAll('.evo-image-item').forEach(item => {
