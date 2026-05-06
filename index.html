@@ -225,7 +225,7 @@
         .video-mask {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, transparent 0%, var(--bg-primary) 85%);
+            background: transparent;
             z-index: -9;
         }
 
@@ -287,6 +287,14 @@
         .animate-marquee-h { animation: marquee-horizontal 30s linear infinite; }
         .animate-marquee-h-reverse { animation: marquee-horizontal-reverse 35s linear infinite; }
         .pause-on-hover:hover { animation-play-state: paused; }
+          /* Marquee Animation for Mobile App Screens */
+          @keyframes marquee-left {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+          }
+          .animate-marquee-left {
+              animation: marquee-left 12s linear infinite;
+          }
     </style>
 </head>
 <body>
@@ -988,10 +996,10 @@
             <div class="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-400/5 blur-[100px] rounded-full translate-x-1/3 translate-y-1/3"></div>
         </div>
 
-        <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-8">
+        <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 flex flex-col items-center justify-center">
             
-            <!-- Left Text Column -->
-            <div class="w-full md:w-[45%] flex flex-col items-center md:items-start text-center md:text-left md:pl-10 relative z-30">
+            <!-- Center Text Column -->
+            <div class="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-30">
                 <!-- Eyebrow -->
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 opacity-0" data-app-reveal>
                     <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
@@ -1011,7 +1019,6 @@
                     Baixe agora e aproveite mais praticidade no seu dia a dia.
                 </p>
 
-                <!-- Store Buttons -->
                 <div class="flex flex-col sm:flex-row gap-4 opacity-0" data-app-reveal>
                     <a href="https://apps.apple.com/au/app/loma-prote%C3%A7%C3%A3o-veicular/id1456159026" target="_blank" rel="noopener noreferrer" class="transition-transform hover:-translate-y-1 duration-300">
                         <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_70434.png" alt="Baixar na App Store" class="h-[56px] w-auto object-contain drop-shadow-lg">
@@ -1020,37 +1027,62 @@
                         <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_47695.png" alt="Disponível no Google Play" class="h-[56px] w-auto object-contain drop-shadow-lg">
                     </a>
                 </div>
-            </div>
 
-            <!-- Right Image Column (Overflowing) -->
-            <div class="w-full md:w-[55%] flex justify-center md:justify-end opacity-0 relative z-20" id="app-image-container">
-                <!-- Container da imagem com margem negativa para vazar, escala ampliada e alinhamento pela base -->
-                <div class="relative w-[130%] md:w-[150%] max-w-[950px] md:-mr-32 translate-y-24 md:translate-y-48 flex items-end">
+                <!-- ============================================== -->
+                <!-- APP SCREENSHOTS SECTION -->
+                <!-- ============================================== -->
+                <div class="w-full mt-16 md:mt-24 opacity-0" data-app-reveal>
                     
-                    <!-- Glow intensificado atrás do celular central -->
-                    <div class="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-3/4 h-1/2 bg-emerald-500/20 blur-[100px] rounded-full -z-10 pointer-events-none mix-blend-screen"></div>
-                    
-                    <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_175889744530945604.png" 
-                         alt="Aplicativo Loma Bem Protegido" 
-                         class="w-full h-auto object-contain drop-shadow-[0_40px_50px_rgba(0,0,0,0.9)] scale-125 origin-bottom">
+                    <!-- Desktop Composition (Stacked Fan Effect) -->
+                    <div class="hidden md:flex relative justify-center items-center h-[550px] w-full max-w-[1000px] mx-auto mt-12">
+                        <!-- Glow Central -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
+                        
+                        <!-- Imagem 1 (Extrema Esquerda) -->
+                        <img src="assets/img/Iphone 1.jpg" alt="Tela do App" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[360px] w-[220px] rounded-[32px] border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-[calc(50%+20px)] z-10 opacity-60 hover:opacity-100 hover:z-40 -rotate-12 scale-75 hover:scale-90 hover:-rotate-6 cursor-pointer">
+                        
+                        <!-- Imagem 2 (Esquerda) -->
+                        <img src="assets/img/Iphone 2.jpg" alt="Tela do App" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -ml-[180px] w-[240px] rounded-[32px] border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-[calc(50%+20px)] z-20 opacity-80 hover:opacity-100 hover:z-40 -rotate-6 scale-90 hover:scale-100 hover:-rotate-3 cursor-pointer">
+                        
+                        <!-- Imagem 3 (Direita) -->
+                        <img src="assets/img/Iphone 9.jpg" alt="Tela do App" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-[180px] w-[240px] rounded-[32px] border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-[calc(50%+20px)] z-20 opacity-80 hover:opacity-100 hover:z-40 rotate-6 scale-90 hover:scale-100 hover:rotate-3 cursor-pointer">
+                        
+                        <!-- Imagem 4 (Extrema Direita) -->
+                        <img src="assets/img/Iphone 4.jpg" alt="Tela do App" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ml-[360px] w-[220px] rounded-[32px] border border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-[calc(50%+20px)] z-10 opacity-60 hover:opacity-100 hover:z-40 rotate-12 scale-75 hover:scale-90 hover:rotate-6 cursor-pointer">
+                        
+                        <!-- Imagem Central -->
+                        <img src="assets/img/Iphone 3.jpg" alt="Tela do App Principal" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] rounded-[32px] border border-emerald-500/30 shadow-[0_20px_60px_rgba(16,185,129,0.2)] transition-all duration-500 hover:-translate-y-[calc(50%+20px)] z-30 hover:scale-105 cursor-pointer">
+                    </div>
+
+                    <!-- Mobile Carousel (Marquee Infinity Scroll) -->
+                    <div class="flex md:hidden w-screen relative left-1/2 -translate-x-1/2 overflow-hidden py-12 mt-4" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+
+                        <!-- Track do Carrossel -->
+                        <div class="flex w-max animate-marquee-left gap-6 px-4 pause-on-hover items-center">
+                            <!-- Conjunto 1 -->
+                            <img src="assets/img/Iphone 2.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 9.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 3.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 4.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 1.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            
+                            <!-- Conjunto 2 (Cópia para loop perfeito) -->
+                            <img src="assets/img/Iphone 2.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 9.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 3.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 4.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                            <img src="assets/img/Iphone 1.jpg" alt="Tela" class="w-[200px] h-auto rounded-[32px] border border-white/10 shadow-xl">
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
         
-        <!-- Máscaras da base para o corte preciso dos celulares laterais (Cria a ilusão de vazamento apenas do central) -->
-        <div class="absolute bottom-0 left-0 w-full h-[300px] translate-y-full flex pointer-events-none z-30">
-            <!-- Máscara Esquerda (Esconde o celular esquerdo que vaza) -->
-            <div class="w-[42%] md:w-[63%] h-full bg-[#09090b]"></div>
-            <!-- Área de Vazamento (Deixa o celular central vazar sobre a nona dobra) -->
-            <div class="w-[16%] md:w-[14%] h-full bg-transparent"></div>
-            <!-- Máscara Direita (Esconde o celular direito que vaza) -->
-            <div class="flex-1 h-full bg-[#09090b]"></div>
-        </div>
     </section>
 
     <!-- FAQ Section (Nona Dobra) -->
-    <section id="faq" class="relative w-full py-32 pt-[350px] md:pt-[400px] flex flex-col items-center border-t border-white/5 z-20 bg-[#09090b]">
+    <section id="faq" class="relative w-full py-32 flex flex-col items-center border-t border-white/5 z-20 bg-transparent">
         <!-- Background Glows (Tiffany) -->
         <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-[30vh] bg-gradient-to-b from-emerald-500/20 to-transparent"></div>
@@ -1775,7 +1807,7 @@
             trigger: "#app-loma",
             start: "top 75%",
             onEnter: () => {
-                // Textos da esquerda
+                // Textos
                 gsap.fromTo("#app-loma [data-app-reveal]", 
                     { opacity: 0, y: 30 },
                     {
@@ -1785,11 +1817,6 @@
                         stagger: 0.15, 
                         ease: "power3.out"
                     }
-                );
-                // Imagem do celular na direita
-                gsap.fromTo("#app-image-container", 
-                    { opacity: 0, x: 100, scale: 0.95 },
-                    { opacity: 1, x: 0, scale: 1, duration: 1.2, ease: "power4.out", delay: 0.2 }
                 );
             },
             once: true
