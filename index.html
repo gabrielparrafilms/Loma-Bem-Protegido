@@ -303,13 +303,16 @@
               animation: marquee-left 12s linear infinite;
           }
     </style>
+
+    <!-- Preload do Vídeo Hero para carregamento imediato -->
+    <link rel="preload" as="video" href="assets/video/video_hero_v2.mp4" type="video/mp4">
 </head>
 <body>
 
     <div class="scroll-track" id="scroll-track">
         
         <div class="video-container">
-            <video id="hero-video" src="assets/video/video_hero_v2.mp4" autoplay muted playsinline></video>
+            <video id="hero-video" src="assets/video/video_hero_v2.mp4" autoplay muted playsinline preload="auto"></video>
             <canvas id="hero-canvas"></canvas>
             <div class="video-mask"></div>
             <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-emerald-500/5 blur-[120px] rounded-full z-[1]"></div>
@@ -558,10 +561,7 @@
         
         <!-- Header Centralizado -->
         <div class="text-center flex flex-col items-center gap-6 mb-20 bento-reveal max-w-3xl">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-xs font-medium text-zinc-300 uppercase tracking-widest">Cobertura Completa</span>
-            </div>
+
             
             <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-medium tracking-tighter leading-[1.1] text-white">
                 Tudo o que seu veículo precisa para rodar tranquilo.
@@ -577,24 +577,26 @@
             
             <!-- Linha 1 -->
             <!-- 1. Roubo & Furto (Span 2) -->
-            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
-                <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
+            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="shield-alert" class="w-5 h-5"></i>
                 </div>
-                <h3 class="text-2xl font-geist font-medium tracking-tight text-white mb-3">Roubo & Furto</h3>
-                <p class="text-white text-sm md:text-base leading-relaxed">
+                <h3 class="text-2xl font-geist font-medium tracking-tight text-white mb-3 relative z-10">Roubo & Furto</h3>
+                <p class="text-white text-sm md:text-base leading-relaxed relative z-10">
                     Indenização de até 100% da FIPE em caso de perda total.<br>Segurança de verdade quando você mais precisa.
                 </p>
                 <div class="flashlight-border"></div>
             </div>
 
             <!-- 2. Colisão (Span 1) -->
-            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
-                <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="car-front" class="w-5 h-5"></i>
                 </div>
-                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3">Colisão</h3>
-                <p class="text-white text-sm leading-relaxed">
+                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3 relative z-10">Colisão</h3>
+                <p class="text-white text-sm leading-relaxed relative z-10">
                     Assistência rápida e suporte completo em qualquer tipo de batida.
                 </p>
                 <div class="flashlight-border"></div>
@@ -615,36 +617,39 @@
 
             <!-- Linha 2 -->
             <!-- 4. Terceiros (Span 1) -->
-            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
-                <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="users" class="w-5 h-5"></i>
                 </div>
-                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3">Danos a Terceiros</h3>
-                <p class="text-white text-sm leading-relaxed">
+                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3 relative z-10">Danos a Terceiros</h3>
+                <p class="text-white text-sm leading-relaxed relative z-10">
                     Cobertura para prejuízos causados a outros veículos ou pessoas.
                 </p>
                 <div class="flashlight-border"></div>
             </div>
 
             <!-- 5. Guincho 24h (Span 2) -->
-            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
-                <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
+            <div class="flashlight-card lg:col-span-2 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="truck" class="w-5 h-5"></i>
                 </div>
-                <h3 class="text-2xl font-geist font-medium tracking-tight text-white mb-3">Guincho 24h</h3>
-                <p class="text-white text-sm md:text-base leading-relaxed">
+                <h3 class="text-2xl font-geist font-medium tracking-tight text-white mb-3 relative z-10">Guincho 24h</h3>
+                <p class="text-white text-sm md:text-base leading-relaxed relative z-10">
                     Atendimento em todo o Brasil, sem limite de KM.<br>Você nunca fica na mão.
                 </p>
                 <div class="flashlight-border"></div>
             </div>
 
             <!-- 6. Carro Reserva (Span 1) -->
-            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal">
-                <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 shadow-lg">
+            <div class="flashlight-card lg:col-span-1 p-8 md:p-10 relative flex flex-col justify-center bento-reveal overflow-hidden">
+                <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-400/10 blur-[40px] rounded-full pointer-events-none"></div>
+                <div class="w-10 h-10 rounded-lg bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 mb-6 relative z-10 shadow-lg">
                     <i data-lucide="key" class="w-5 h-5"></i>
                 </div>
-                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3">Carro Reserva</h3>
-                <p class="text-white text-sm leading-relaxed">
+                <h3 class="text-xl font-geist font-medium tracking-tight text-white mb-3 relative z-10">Carro Reserva</h3>
+                <p class="text-white text-sm leading-relaxed relative z-10">
                     Continue sua rotina enquanto resolvemos tudo pra você.
                 </p>
                 <div class="flashlight-border"></div>
@@ -660,10 +665,7 @@
 
         <!-- Header Centralizado -->
         <div class="text-center flex flex-col items-center gap-6 mb-20 bento-reveal max-w-3xl relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit shadow-lg backdrop-blur-md">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
-                <span class="text-xs font-medium text-zinc-300 uppercase tracking-widest">Na Palma da Mão</span>
-            </div>
+
             
             <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-medium tracking-tighter leading-[1.1] text-white">
                 Sua proteção resolvida em segundos.
@@ -678,7 +680,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 w-full relative z-10 items-center">
             
             <!-- Esquerda: Imagem Grande -->
-            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden border-white/5 shadow-2xl">
+            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden app-feature-reveal border-white/5 shadow-2xl">
                 <!-- Imagem Fixa e Estática -->
                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/2 dobra.jpg');"></div>
                 
@@ -691,7 +693,7 @@
             <div class="flex flex-col justify-center gap-6 lg:pr-10 relative z-10">
                 
                 <!-- Feature 1 -->
-                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden bento-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
                     <!-- Subtle Glow -->
                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
                     
@@ -724,7 +726,7 @@
                 </div>
 
                 <!-- Feature 2 -->
-                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden bento-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
                     <!-- Subtle Glow -->
                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
                     
@@ -757,7 +759,7 @@
                 </div>
 
                 <!-- Feature 3 -->
-                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden bento-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
                     <!-- Subtle Glow -->
                     <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
                     
@@ -1052,10 +1054,7 @@
             <!-- Center Text Column -->
             <div class="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-30">
                 <!-- Eyebrow -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 opacity-0" data-app-reveal>
-                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
-                    <span class="text-sm font-medium tracking-wide text-zinc-300 uppercase">Tecnologia</span>
-                </div>
+
                 
                 <h2 class="text-4xl md:text-5xl lg:text-[64px] leading-tight font-bold text-white tracking-tight mb-6 opacity-0" style="font-family: 'Geist', sans-serif;" data-app-reveal>
                     Conheça nosso <br/>
@@ -1144,10 +1143,7 @@
             
             <!-- Header FAQ -->
             <div class="text-center mb-16 flex flex-col items-center">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/5 backdrop-blur-sm mb-6 opacity-0" data-faq-reveal>
-                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></div>
-                    <span class="text-sm font-medium tracking-wide text-emerald-400 uppercase">Dúvidas Frequentes</span>
-                </div>
+
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 font-geist opacity-0" data-faq-reveal>
                     Perguntas frequentes
                 </h2>
@@ -1332,6 +1328,7 @@
         gsap.set(".stage2-reveal, .stage3-reveal", { y: 30, opacity: 0, filter: "blur(8px)" });
         gsap.set(".glass-card-wrapper", { x: 100, opacity: 0, rotationY: 15, scale: 0.9 });
         gsap.set(".bento-reveal", { y: 60, opacity: 0 });
+        gsap.set(".app-feature-reveal", { y: 30, opacity: 0, filter: "blur(8px)" });
 
         // Lógica de Loop do Vídeo (Background infinito)
         let loopTween = null;
@@ -1527,6 +1524,12 @@
         ScrollTrigger.batch(".bento-reveal", {
             onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", overwrite: true }),
             start: "top 85%"
+        });
+
+        // Animação dos Cards de Funcionalidade do App (Blur in Premium)
+        ScrollTrigger.batch(".app-feature-reveal", {
+            onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, stagger: 0.2, ease: "power3.out", overwrite: true }),
+            start: "top 95%" // Dispara bem cedo para evitar atrasos visíveis
         });
 
         // Partículas Flutuantes no Background
