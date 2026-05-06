@@ -82,7 +82,7 @@
             border-radius: inherit;
             background: radial-gradient(
                 600px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.06),
+                rgba(52, 211, 153, 0.2),
                 transparent 40%
             );
             opacity: 0;
@@ -97,7 +97,7 @@
             padding: 1px;
             background: radial-gradient(
                 400px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.3),
+                rgba(52, 211, 153, 0.3),
                 transparent 40%
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -140,7 +140,7 @@
             border-radius: inherit;
             background: radial-gradient(
                 600px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.06),
+                rgba(52, 211, 153, 0.2),
                 transparent 40%
             );
             opacity: 0;
@@ -155,7 +155,7 @@
             padding: 1px;
             background: radial-gradient(
                 400px circle at var(--mouse-x) var(--mouse-y),
-                rgba(255, 255, 255, 0.3),
+                rgba(52, 211, 153, 0.3),
                 transparent 40%
             );
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -322,27 +322,27 @@
         <canvas id="particles-canvas" class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[40]"></canvas>
 
         <div class="hero-content px-6 md:px-12 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-6 lg:mt-20">
                 
-                <div class="flex flex-col text-left gap-8 hero-text-col">
+                <div class="flex flex-col text-left gap-8 lg:gap-0 lg:h-[600px] lg:justify-between lg:py-10 hero-text-col">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit stage2-reveal">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                         <span class="text-xs font-medium text-zinc-300 uppercase tracking-widest">Proteção 24/7</span>
                     </div>
 
-                    <h1 class="text-5xl md:text-7xl lg:text-[5rem] font-geist font-medium tracking-tighter leading-[1.05] stage2-reveal">
+                    <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-geist font-medium tracking-tighter leading-[1.05] stage2-reveal">
                         Proteção Veicular <br>
                         <span class="text-transparent-bg block mt-2">Inteligente</span>
-                        <span class="text-white text-4xl md:text-5xl mt-2 block font-normal tracking-tight">Para Quem Não Pode Parar.</span>
+                        <span class="text-white text-4xl md:text-5xl lg:text-[3.5rem] mt-2 block font-normal tracking-tight leading-tight">Para Quem Não Pode Parar.</span>
                     </h1>
                     
-                    <p class="text-lg md:text-xl text-white font-normal leading-relaxed max-w-lg stage3-reveal">
+                    <p class="text-lg md:text-xl lg:text-2xl text-white font-normal leading-relaxed max-w-xl stage3-reveal">
                         Dirija tranquilo sabendo que você está protegido contra imprevistos, sem burocracia, 100% digital e feito para o seu ritmo.
                     </p>
                     
                     <div class="flex flex-wrap items-center gap-4 mt-4 stage3-reveal">
                         <!-- Botão Fazer Simulação -->
-                        <button class="group relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                        <button class="group relative w-full sm:w-auto inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Fazer Simulação
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -353,13 +353,13 @@
                             </span>
                         </button>
 
-                        <!-- Botão Falar com Especialista -->
-                        <button class="group relative inline-flex min-w-[160px] cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                        <!-- Botão Falar com Especialista (Secondary / Ghost) -->
+                        <button class="group relative w-full sm:w-auto inline-flex cursor-pointer overflow-hidden tracking-tight rounded-full px-6 py-3.5 md:px-8 md:py-4 items-center justify-center text-sm text-white font-medium border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:bg-yellow-400 hover:border-yellow-400 hover:text-zinc-900 shadow-none hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Falar com um Especialista
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none font-bold">
                                 Falar com um Especialista
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
@@ -430,7 +430,7 @@
     </div>
 
     <!-- Bloco 2: Benefícios e Funcionamento -->
-    <section id="bento-benefits" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5">
+    <section id="bento-benefits" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5">
         
         <!-- Header da Seção -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 bento-reveal">
@@ -557,7 +557,7 @@
     </section>
 
     <!-- Bloco 3: Coberturas (Grid 6 Cards) -->
-    <section id="coberturas" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5 flex flex-col items-center">
+    <section id="coberturas" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5 flex flex-col items-center">
         
         <!-- Header Centralizado -->
         <div class="text-center flex flex-col items-center gap-6 mb-20 bento-reveal max-w-3xl">
@@ -658,7 +658,7 @@
         </div>
     </section>
 
-    <section id="app-features" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-32 border-t border-white/5 flex flex-col items-center overflow-hidden">
+    <section id="app-features" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5 flex flex-col items-center overflow-hidden">
         
         <!-- Subtle Grid Background -->
         <div class="absolute inset-0 pointer-events-none opacity-[0.02]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"></div>
@@ -796,7 +796,7 @@
     </section>
 
     <!-- Bloco 5: Social Proof (Estático) -->
-    <section id="social-proof" class="relative z-20 w-full py-32 flex flex-col items-center justify-center overflow-hidden border-t border-white/5 bg-transparent">
+    <section id="social-proof" class="relative z-20 w-full py-16 lg:py-32 flex flex-col items-center justify-center overflow-hidden border-t border-white/5 bg-transparent">
         <!-- Grid de fundo muito suave -->
         <div class="absolute inset-0 pointer-events-none opacity-[0.02]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"></div>
 
@@ -831,7 +831,7 @@
     </section>
 
     <!-- Bloco 6: Timeline de Evolução -->
-    <section id="evolution-timeline" class="relative z-30 w-full h-auto min-h-[100dvh] md:h-screen bg-transparent text-white flex flex-col items-center justify-start md:justify-center py-16 md:py-10 overflow-visible md:overflow-hidden border-t border-white/5">
+    <section id="evolution-timeline" class="relative z-30 w-full h-auto min-h-[100dvh] md:h-screen bg-transparent text-white flex flex-col items-center justify-start md:justify-center py-12 md:py-10 overflow-visible md:overflow-hidden border-t border-white/5">
         
         <!-- Fundo Escurecido e Desfocado para o Vídeo aparecer (Camada Base) -->
         <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-20 pointer-events-none"></div>
@@ -996,7 +996,7 @@
     </section>
 
     <!-- Bloco 7: Prova Social (Feedbacks em Loop Contínuo) -->
-    <section id="feedbacks" class="pb-24 pt-20 relative z-10 border-t border-white/5 overflow-hidden">
+    <section id="feedbacks" class="pb-12 pt-10 lg:pb-24 lg:pt-20 relative z-10 border-t border-white/5 overflow-hidden">
         
         <div class="max-w-[1400px] mx-auto px-4 md:px-6">
             
@@ -1041,7 +1041,7 @@
     </section>
 
     <!-- App Loma Section -->
-    <section id="app-loma" class="relative w-full min-h-screen py-24 md:py-32 flex items-center justify-center border-t border-white/5 z-10">
+    <section id="app-loma" class="relative w-full min-h-screen py-16 lg:py-32 flex items-center justify-center border-t border-white/5 z-10">
         
         <!-- Subtle Background Glows limitados ao tamanho da dobra -->
         <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -1132,7 +1132,7 @@
     </section>
 
     <!-- FAQ Section (Nona Dobra) -->
-    <section id="faq" class="relative w-full py-32 flex flex-col items-center border-t border-white/5 z-20 bg-transparent">
+    <section id="faq" class="relative w-full py-16 lg:py-32 flex flex-col items-center border-t border-white/5 z-20 bg-transparent">
         <!-- Background Glows (Tiffany) -->
         <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-[30vh] bg-gradient-to-b from-emerald-500/20 to-transparent"></div>
