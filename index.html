@@ -675,12 +675,12 @@
         </div>
 
         <!-- 2 Column Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 w-full relative z-10 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 w-full relative z-10 items-center">
             
             <!-- Esquerda: Imagem Grande -->
-            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden bento-reveal border-white/5 group shadow-2xl">
-                <!-- Imagem Limpa e Clara -->
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" style="background-image: url('assets/img/2 dobra.jpg');"></div>
+            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden border-white/5 shadow-2xl">
+                <!-- Imagem Fixa e Estática -->
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/2 dobra.jpg');"></div>
                 
                 <div class="glass-highlight"></div>
                 <div class="glass-card-border"></div>
@@ -879,8 +879,10 @@
                         <p class="text-zinc-400 leading-relaxed text-sm">Com o crescimento, surgem desafios que exigem organização, adaptação e evolução. A operação se fortalece ao estruturar processos, desenvolver gestão e superar momentos críticos com consistência.</p>
                         
                         <!-- Imagens Mobile (Bloco 02) -->
-                        <div class="flex flex-col gap-4 mt-6 md:hidden">
-                            <img src="assets/img/Loma 2.jpeg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[30%]">
+                        <div class="flex flex-col gap-4 mt-6 md:hidden w-full max-w-sm mx-auto">
+                            <img src="assets/img/Loma Campinas.png" alt="Loma Campinas" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
+                            <img src="assets/img/Loma Osasco.jpg" alt="Loma Osasco" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
+                            <img src="assets/img/Predio Loma.png" alt="Prédio Loma" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
                         </div>
                     </div>
 
@@ -931,10 +933,10 @@
                 </div>
 
                 <!-- Containers de Imagens (Grid Overlap) para Bloco 1 e 2 -->
-                <div class="w-full max-w-3xl mx-auto mt-4 hidden md:grid grid-cols-1 grid-rows-1 z-20">
+                <div class="w-full max-w-6xl mx-auto mt-4 hidden md:grid grid-cols-1 grid-rows-1 z-20 place-items-center">
                     
-                    <!-- Imagens 3D do Bloco 01 -->
-                    <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px]">
+                    <!-- Imagens 3D do Bloco 01 (Restrito ao tamanho original) -->
+                    <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px] w-full max-w-3xl">
                         <!-- Imagem 1 -->
                         <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
                             <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017 - Imagem 1" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
@@ -953,18 +955,35 @@
                         </div>
                     </div>
 
-                    <!-- Imagem Parallax do Bloco 02 -->
-                    <div id="evo-images-2" class="col-start-1 row-start-1 perspective-[1000px] opacity-0 pointer-events-none flex justify-center items-center">
-                        <div class="evo-image-item flashlight-card glass-card relative w-full aspect-[21/9] md:aspect-[3/1] rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
+                    <!-- Imagens Fixas do Bloco 02 (3 Cards) -->
+                    <div id="evo-images-2" class="col-start-1 row-start-1 perspective-[1000px] opacity-0 pointer-events-none flex justify-center items-center w-full">
+                        <!-- Grid 3 colunas Desktop, 1 Coluna Mobile -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full" style="transform-style: preserve-3d;">
                             
-                            <!-- Imagem com Parallax (maior que o container para rolar) -->
-                            <img id="evo-img-parallax-2" src="assets/img/Loma 2.jpeg" alt="Loma 2017 - Bloco 2" class="absolute top-0 left-0 w-full h-[150%] object-cover grayscale-[30%] group-hover:grayscale-0 transition-[filter] duration-700 will-change-transform">
+                            <!-- Card 1: Loma Campinas -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Loma Campinas.png" alt="Loma Campinas" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
+
+                            <!-- Card 2: Loma Osasco -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Loma Osasco.jpg" alt="Loma Osasco" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
+
+                            <!-- Card 3: Predio Loma -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Predio Loma.png" alt="Prédio Loma" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
                             
-                            <!-- Overlay escuro para profundidade -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
-                            
-                            <div class="glass-highlight"></div>
-                            <div class="flashlight-border"></div>
                         </div>
                     </div>
 
@@ -1635,7 +1654,7 @@
             // Linha vai até o Dot 2 (66.66%) E Parallax roda
             .to("#evo-progress-line", { scaleX: 0.6666, duration: 1, ease: "none" })
             .to("#evo-car", { left: "66.66%", duration: 1, ease: "none" }, "<")
-            .fromTo("#evo-img-parallax-2", { yPercent: 0 }, { yPercent: -33, duration: 1, ease: "none" }, "<") // Efeito Parallax Otimizado
+            // .fromTo("#evo-img-parallax-2", { yPercent: 0 }, { yPercent: -33, duration: 1, ease: "none" }, "<") // Efeito Parallax Removido a pedido
             
             // Quando chega em 66.66% (Dot 2)
             .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
