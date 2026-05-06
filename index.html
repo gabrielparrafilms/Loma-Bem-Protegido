@@ -338,22 +338,28 @@
                     </p>
                     
                     <div class="flex flex-wrap items-center gap-4 mt-4 stage3-reveal">
-                        <button class="relative btn-beam-container group">
-                            <div class="beam-border"></div>
-                            <span class="relative z-10 flex items-center gap-2 bg-[#131316] text-white px-8 py-4 rounded-full text-sm font-medium border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-colors group-hover:bg-[#18181b]">
+                        <!-- Botão Fazer Simulação -->
+                        <button class="group relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Fazer Simulação
-                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                                Fazer Simulação
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
                         </button>
 
-                        <button class="group relative inline-flex min-w-[160px] cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-8 py-4 items-center justify-center text-sm text-zinc-300 hover:text-white bg-transparent border-zinc-700/50 backdrop-blur-sm transition-colors hover:border-zinc-500">
+                        <!-- Botão Falar com Especialista -->
+                        <button class="group relative inline-flex min-w-[160px] cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Falar com um Especialista
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
                                 Falar com um Especialista
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-full"></span>
                         </button>
                     </div>
                 </div>
@@ -527,11 +533,14 @@
                     </div>
 
                     <div class="mt-12">
-                        <button class="relative btn-beam-container group w-full sm:w-auto">
-                            <div class="beam-border"></div>
-                            <span class="relative z-10 flex items-center justify-center gap-2 bg-[#18181b] text-white px-8 py-4 rounded-full text-sm font-medium border border-white/10 shadow-[0_0_20px_rgba(0,0,0,0.5)] w-full transition-colors group-hover:bg-[#27272a]">
+                        <button class="group relative inline-flex w-full sm:w-auto cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                                 Fazer simulação
-                                <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                                Fazer simulação
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
                         </button>
                     </div>
@@ -670,7 +679,7 @@
             
             <!-- Esquerda: Imagem Grande -->
             <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden bento-reveal border-white/5 group shadow-2xl">
-                <div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-luminosity transition-transform duration-1000 group-hover:scale-105" style="background-image: url('assets/img/homem_e_mulher.png'); background-position: top center;"></div>
+                <div class="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-luminosity transition-transform duration-1000 group-hover:scale-105" style="background-image: url('assets/img/2 dobra.jpg');"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-90"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-transparent opacity-60"></div>
                 <div class="absolute inset-0 bg-gradient-to-b from-[#09090b] via-transparent to-transparent opacity-40"></div>
@@ -705,16 +714,15 @@
                     </p>
                     
                     <div class="mt-2 relative z-10">
-                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-[#09090b]/50 border-white/10 backdrop-blur-sm transition-all hover:border-emerald-400/40 w-fit">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
                                 Acessar Fatura
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
                                 Acessar Fatura
-                                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-400"></i>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover/btn:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-emerald-400 to-transparent rounded-full"></span>
                         </button>
                     </div>
                     
@@ -739,16 +747,15 @@
                     </p>
                     
                     <div class="mt-2 relative z-10">
-                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-[#09090b]/50 border-white/10 backdrop-blur-sm transition-all hover:border-emerald-400/40 w-fit">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
                                 Acionar Guincho
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
                                 Acionar Guincho
-                                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-400"></i>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover/btn:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-emerald-400 to-transparent rounded-full"></span>
                         </button>
                     </div>
                     
@@ -773,16 +780,15 @@
                     </p>
                     
                     <div class="mt-2 relative z-10">
-                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight border rounded-full px-6 py-2.5 items-center justify-center text-sm text-zinc-300 hover:text-white bg-[#09090b]/50 border-white/10 backdrop-blur-sm transition-all hover:border-emerald-400/40 w-fit">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
                             <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
                                 Acompanhar Status
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none">
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
                                 Acompanhar Status
-                                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-400"></i>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </span>
-                            <span class="absolute bottom-0 left-0 right-0 h-full opacity-0 group-hover/btn:opacity-10 transition-all duration-700 pointer-events-none bg-gradient-to-t from-emerald-400 to-transparent rounded-full"></span>
                         </button>
                     </div>
                     
@@ -919,8 +925,15 @@
 
                 <!-- Botão CTA Final (Movido para ficar logo abaixo da linha do tempo) -->
                 <div class="w-full flex justify-center mt-8 z-30">
-                    <button id="evo-cta" class="opacity-0 translate-y-4 will-change-transform inline-flex font-medium tracking-tight border border-zinc-700/50 rounded-full px-8 py-3 items-center justify-center text-sm text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 transition-colors shadow-lg">
-                        Falar com um Especialista
+                    <button id="evo-cta" class="group opacity-0 translate-y-4 will-change-transform inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-3 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                        <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                            Falar com um Especialista
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </span>
+                        <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                            Falar com um Especialista
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </span>
                     </button>
                 </div>
 
@@ -998,17 +1011,14 @@
             
             <!-- Botão CTA -->
             <div class="w-full flex justify-center mt-12 z-30 opacity-0 transform translate-y-8" id="feedback-cta-wrapper">
-                <a href="#" class="group relative inline-flex min-w-[200px] cursor-pointer overflow-hidden font-medium tracking-tight bg-white rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] shadow-[0_2.8px_2.2px_rgba(0,0,0,0.3)] transition-all duration-300">
-                    <!-- Hover Fill (Emerald) -->
-                    <span class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                        <span class="w-8 h-8 rounded-full bg-emerald-400 transition-all duration-700 ease-out scale-0 group-hover:scale-[20] opacity-0 group-hover:opacity-100"></span>
-                    </span>
-
-                    <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:-translate-y-8 group-hover:opacity-0 text-[#09090b] font-bold">
+                <a href="#" class="group relative inline-flex min-w-[200px] cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-white bg-[#0ebac5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(14,186,197,0.3)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                    <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:-translate-y-8 group-hover:opacity-0 group-hover:blur-md">
                         Quero me proteger agora
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </span>
-                    <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full text-[#09090b] font-bold shadow-sm">
+                    <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
                         Quero me proteger agora
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </span>
                 </a>
             </div>
