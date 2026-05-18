@@ -1,0 +1,86 @@
+    <!-- FAQ Section (Nona Dobra) -->
+    <section id="faq" class="relative w-full py-16 lg:py-32 flex flex-col items-center border-t border-white/5 z-20 bg-transparent">
+        <!-- Background Glows (Tiffany) -->
+        <div class="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-[30vh] bg-gradient-to-b from-emerald-500/20 to-transparent"></div>
+            <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center">
+            
+            <!-- Header FAQ -->
+            <div class="text-center mb-16 flex flex-col items-center">
+
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6 font-geist opacity-0" data-faq-reveal>
+                    Perguntas frequentes
+                </h2>
+                <p class="text-lg text-white leading-relaxed max-w-2xl text-center opacity-0" data-faq-reveal>
+                    Tire suas dúvidas sobre a proteção veicular da LOMA antes de simular seu plano.
+                </p>
+            </div>
+
+            <!-- Accordion Container -->
+            <div class="w-full flex flex-col gap-4 mb-16 opacity-0" id="faq-accordion" data-faq-reveal>
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-item group bg-[#131316] border border-white/5 hover:border-white/10 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full flex items-center justify-between p-6 text-left cursor-pointer focus:outline-none">
+                        <span class="text-lg font-medium text-white pr-8 group-hover:text-emerald-400 transition-colors">Pergunta frequente 01</span>
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 group-[.active]:rotate-45 group-[.active]:bg-emerald-400/10">
+                            <i data-lucide="plus" class="w-5 h-5 text-white group-[.active]:text-emerald-400 transition-colors"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                        <div class="p-6 pt-0 text-white leading-relaxed text-base">
+                            Resposta temporária para visualização do accordion. O conteúdo final será inserido aqui em breve para esclarecer todas as dúvidas dos usuários.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item group bg-[#131316] border border-white/5 hover:border-white/10 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full flex items-center justify-between p-6 text-left cursor-pointer focus:outline-none">
+                        <span class="text-lg font-medium text-white pr-8 group-hover:text-emerald-400 transition-colors">Pergunta frequente 02</span>
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 group-[.active]:rotate-45 group-[.active]:bg-emerald-400/10">
+                            <i data-lucide="plus" class="w-5 h-5 text-white group-[.active]:text-emerald-400 transition-colors"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                        <div class="p-6 pt-0 text-white leading-relaxed text-base">
+                            Resposta temporária para visualização do accordion. O conteúdo final será inserido aqui em breve para esclarecer todas as dúvidas dos usuários.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item group bg-[#131316] border border-white/5 hover:border-white/10 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full flex items-center justify-between p-6 text-left cursor-pointer focus:outline-none">
+                        <span class="text-lg font-medium text-white pr-8 group-hover:text-emerald-400 transition-colors">Pergunta frequente 03</span>
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white/5 flex items-center justify-center transition-transform duration-300 group-[.active]:rotate-45 group-[.active]:bg-emerald-400/10">
+                            <i data-lucide="plus" class="w-5 h-5 text-white group-[.active]:text-emerald-400 transition-colors"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                        <div class="p-6 pt-0 text-white leading-relaxed text-base">
+                            Resposta temporária para visualização do accordion. O conteúdo final será inserido aqui em breve para esclarecer todas as dúvidas dos usuários.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA Footer -->
+            <div class="flex flex-col items-center p-8 bg-[#131316]/50 border border-white/5 rounded-3xl w-full max-w-2xl text-center opacity-0" data-faq-reveal>
+                <h3 class="text-xl font-semibold text-white mb-2 font-geist">Ainda ficou com dúvida?</h3>
+                <p class="text-white mb-6">Fale com um consultor agora e resolva tudo pelo WhatsApp.</p>
+                <a href="https://api.whatsapp.com/send?phone=553198642786&text=Ol%C3%A1,%20gostaria%20de%20fazer%20uma%20cota%C3%A7%C3%A3o!" target="_blank" class="group relative inline-flex items-center justify-center px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-semibold rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                    <span class="relative z-10 flex items-center gap-2">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Simular meu plano agora
+                    </span>
+                    <div class="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-150%] skew-x-[-20deg] group-hover:animate-[shine_1.5s_ease-out]"></div>
+                </a>
+            </div>
+
+        </div>
+    </section>

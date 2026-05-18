@@ -17,11 +17,43 @@
     <!-- Lenis (Smooth Scroll) -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
 
+
     <style>
         /* ====================================================
-           Tokens e Classes do design_system10.html
+           GLOBAL — Design System Tokens & Shared Utilities
            ==================================================== */
+        /* ====================================================
+           NAVBAR (HEADER) ESTILOS
+           ==================================================== */
+        #main-nav {
+            background-color: rgba(9, 9, 11, 0.6); /* Visível mesmo na Hero */
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #main-nav.nav-scrolled {
+            background-color: rgba(9, 9, 11, 0.98); /* Fica quase sólido no scroll */
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(52, 211, 153, 0.2); /* Bordinha verde sutil separadora */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        #main-nav.nav-scrolled #nav-top-bar {
+            height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-bottom-color: transparent;
+        }
+
+        #main-nav.nav-scrolled #nav-main-bar {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+
         :root {
+            --foreground-rgb: 255, 255, 255;
             --mouse-x: 50%;
             --mouse-y: 50%;
             --bg-primary: #09090b;
@@ -199,6 +231,44 @@
             to { transform: rotate(360deg); }
         }
 
+        .will-change-transform {
+            will-change: transform, opacity;
+        }
+
+        /* Marquee Animations for Prova Social */
+        @keyframes marquee-vertical {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        @keyframes marquee-vertical-reverse {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes marquee-horizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-horizontal-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        .animate-marquee-v { animation: marquee-vertical 40s linear infinite; }
+        .animate-marquee-v-reverse { animation: marquee-vertical-reverse 45s linear infinite; }
+        .animate-marquee-h { animation: marquee-horizontal 30s linear infinite; }
+        .animate-marquee-h-reverse { animation: marquee-horizontal-reverse 35s linear infinite; }
+        .pause-on-hover:hover { animation-play-state: paused; }
+          /* Marquee Animation for Mobile App Screens */
+          @keyframes marquee-left {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+          }
+          .animate-marquee-left {
+              animation: marquee-left 12s linear infinite;
+          }
+
+/* ====================================================
+           HERO — Estilos exclusivos da dobra Hero
+           ==================================================== */
         /* Video Scroll Controls */
         .video-container {
             position: fixed;
@@ -257,10 +327,6 @@
             pointer-events: auto;
         }
 
-        .will-change-transform {
-            will-change: transform, opacity;
-        }
-
         /* Mouse Scroll Animation */
         @keyframes scroll-wheel {
             0% { transform: translateY(0); opacity: 1; }
@@ -271,37 +337,6 @@
         .animate-scroll-wheel {
             animation: scroll-wheel 2s cubic-bezier(0.15, 0.83, 0.66, 1) infinite;
         }
-
-        /* Marquee Animations for Prova Social */
-        @keyframes marquee-vertical {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-        @keyframes marquee-vertical-reverse {
-            0% { transform: translateY(-50%); }
-            100% { transform: translateY(0); }
-        }
-        @keyframes marquee-horizontal {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        @keyframes marquee-horizontal-reverse {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-        }
-        .animate-marquee-v { animation: marquee-vertical 40s linear infinite; }
-        .animate-marquee-v-reverse { animation: marquee-vertical-reverse 45s linear infinite; }
-        .animate-marquee-h { animation: marquee-horizontal 30s linear infinite; }
-        .animate-marquee-h-reverse { animation: marquee-horizontal-reverse 35s linear infinite; }
-        .pause-on-hover:hover { animation-play-state: paused; }
-          /* Marquee Animation for Mobile App Screens */
-          @keyframes marquee-left {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-          }
-          .animate-marquee-left {
-              animation: marquee-left 12s linear infinite;
-          }
     </style>
 
     <!-- Preload do Vídeo Hero para carregamento imediato -->
@@ -310,7 +345,48 @@
 <body>
 
     <div class="scroll-track" id="scroll-track">
-        
+        <!-- NAVBAR PORTO SEGURO STYLE -->
+        <header class="fixed top-0 left-0 w-full z-[60] flex flex-col transition-all duration-300" id="main-nav">
+            <!-- Top Bar (Thin) -->
+            <div id="nav-top-bar" class="hidden md:flex w-full py-1.5 px-6 md:px-12 justify-end gap-6 text-xs font-medium text-zinc-300 transition-all duration-300">
+                <a href="#faq" class="hover:text-emerald-400 transition-colors">Ajuda</a>
+                <a href="#app-loma" class="hover:text-emerald-400 transition-colors">Baixe o App</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Sinistro</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Seja um Corretor</a>
+            </div>
+            
+            <!-- Main Bar -->
+            <div id="nav-main-bar" class="w-full py-4 px-6 md:px-12 flex items-center justify-between transition-all duration-300">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer">
+                    <img src="assets/Logo Loma Branca.svg" alt="Loma" class="h-8 md:h-10 w-auto">
+                </div>
+                
+                <!-- Desktop Links -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#benefits" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Benefícios</a>
+                    <a href="#coverages" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Coberturas</a>
+                    <a href="#app-features" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Serviços</a>
+                    <a href="#feedbacks" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Depoimentos</a>
+                </nav>
+                
+                <!-- Área do Associado CTA -->
+                <div class="flex items-center gap-4">
+                    <a href="#" class="group flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">
+                        <span class="hidden sm:block">Área do Associado</span>
+                        <div class="w-8 h-8 rounded-full bg-emerald-400/10 flex items-center justify-center border border-emerald-400/20 group-hover:bg-emerald-400/20 transition-colors">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="md:hidden text-zinc-300 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
         <div class="video-container">
             <video id="hero-video" src="assets/video/video_hero_v2.mp4" autoplay muted playsinline preload="auto"></video>
             <canvas id="hero-canvas"></canvas>
@@ -321,8 +397,8 @@
         <!-- Partículas de Fundo -->
         <canvas id="particles-canvas" class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[40]"></canvas>
 
-        <div class="hero-content px-6 md:px-12 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-6 lg:mt-20">
+        <div class="hero-content px-6 md:px-12 w-full pt-28 lg:pt-36">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-6 lg:mt-10">
                 
                 <div class="flex flex-col text-left gap-8 lg:gap-0 lg:h-[600px] lg:justify-between lg:py-10 hero-text-col">
                     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit stage2-reveal">
@@ -428,7 +504,6 @@
             <!-- Scroll Indicator removido pois não há mais trava de scroll -->
         </div>
     </div>
-
     <!-- Bloco 2: Benefícios e Funcionamento -->
     <section id="bento-benefits" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5">
         
@@ -555,7 +630,6 @@
 
         </div>
     </section>
-
     <!-- Bloco 3: Coberturas (Grid 6 Cards) -->
     <section id="coberturas" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5 flex flex-col items-center">
         
@@ -657,7 +731,6 @@
 
         </div>
     </section>
-
     <section id="app-features" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5 flex flex-col items-center overflow-hidden">
         
         <!-- Subtle Grid Background -->
@@ -794,7 +867,6 @@
             </div>
         </div>
     </section>
-
     <!-- Bloco 5: Social Proof (Estático) -->
     <section id="social-proof" class="relative z-20 w-full py-16 lg:py-32 flex flex-col items-center justify-center overflow-hidden border-t border-white/5 bg-transparent">
         <!-- Grid de fundo muito suave -->
@@ -829,7 +901,6 @@
             </div>
         </div>
     </section>
-
     <!-- Bloco 6: Timeline de Evolução -->
     <section id="evolution-timeline" class="relative z-30 w-full h-auto min-h-[100dvh] md:h-screen bg-transparent text-white flex flex-col items-center justify-start md:justify-center py-12 md:py-10 overflow-visible md:overflow-hidden border-t border-white/5">
         
@@ -994,7 +1065,6 @@
             </div>
         </div>
     </section>
-
     <!-- Bloco 7: Prova Social (Feedbacks em Loop Contínuo) -->
     <section id="feedbacks" class="pb-12 pt-10 lg:pb-24 lg:pt-20 relative z-10 border-t border-white/5 overflow-hidden">
         
@@ -1039,7 +1109,6 @@
 
         </div>
     </section>
-
     <!-- App Loma Section -->
     <section id="app-loma" class="relative w-full min-h-screen py-16 lg:py-32 flex items-center justify-center border-t border-white/5 z-10">
         
@@ -1130,7 +1199,6 @@
         </div>
         
     </section>
-
     <!-- FAQ Section (Nona Dobra) -->
     <section id="faq" class="relative w-full py-16 lg:py-32 flex flex-col items-center border-t border-white/5 z-20 bg-transparent">
         <!-- Background Glows (Tiffany) -->
@@ -1217,7 +1285,6 @@
 
         </div>
     </section>
-
     <!-- Footer Section (Décima Dobra) -->
     <footer id="footer" class="relative w-full bg-[#09090b] border-t border-white/5 py-16 md:py-24 z-30">
         <div class="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -1398,7 +1465,8 @@
                 const preventTouch = (e) => e.preventDefault();
                 document.addEventListener('touchmove', preventTouch, { passive: false });
 
-                // Toca o vídeo nativamente
+                // Toca o vídeo nativamente com velocidade aumentada
+                heroVideo.playbackRate = 1.5;
                 const playPromise = heroVideo.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
@@ -1413,24 +1481,22 @@
                     transitionToCanvas();
                 });
                 
-                // Depois de 1 segundo, revela o conteúdo do Hero sem depender de scroll
-                setTimeout(() => {
-                    gsap.to(".stage2-reveal, .stage3-reveal", {
-                        y: 0, opacity: 1, filter: "blur(0px)",
-                        duration: 1.5, stagger: 0.15, ease: "power2.out"
-                    });
+                // Revela o conteúdo do Hero instantaneamente, acompanhando o vídeo sem atraso
+                gsap.to(".stage2-reveal, .stage3-reveal", {
+                    y: 0, opacity: 1, filter: "blur(0px)",
+                    duration: 1.5, stagger: 0.15, ease: "power2.out"
+                });
 
-                    gsap.to(".glass-card-wrapper", {
-                        x: 0, opacity: 1, rotationY: 0, scale: 1,
-                        duration: 1.5, stagger: 0.2, ease: "power3.out"
-                    });
-                }, 1000); // 1 segundo de delay antes dos textos surgirem
+                gsap.to(".glass-card-wrapper", {
+                    x: 0, opacity: 1, rotationY: 0, scale: 1,
+                    duration: 1.5, stagger: 0.2, ease: "power3.out"
+                });
 
-                // Libera o scroll após a parte crítica da animação concluir (textos apareceram)
+                // Libera o scroll após a parte crítica da animação concluir
                 setTimeout(() => {
                     document.body.style.overflow = '';
                     document.removeEventListener('touchmove', preventTouch);
-                }, 2500); // 2.5 segundos (1s delay + 1.5s duração do texto)
+                }, 1500); // 1.5 segundos (duração do texto)
                 
             } else {
                 // ESTÁ EM OUTRA DOBRA APÓS REFRESH
@@ -1445,6 +1511,18 @@
                 transitionToCanvas();
             }
         });
+        // ==========================================
+        // NAVBAR SCROLL EFFECT
+        // ==========================================
+        const mainNav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('nav-scrolled');
+            } else {
+                mainNav.classList.remove('nav-scrolled');
+            }
+        }, { passive: true });
+
         // ==========================================
         // GATILHOS DE VÍDEO (ATRASADOS PARA SEGURANÇA NO IOS)
         // ==========================================

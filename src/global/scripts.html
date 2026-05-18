@@ -1,0 +1,648 @@
+    <script>
+        // Permite o navegador restaurar a posição de rolagem no reload (útil para testes)
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'auto';
+        }
+
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        const canvas = document.getElementById("hero-canvas");
+        const context = canvas.getContext("2d");
+
+        // 141 frames otimizados extraídos do Video Hero V2.mp4 a 20fps em 720p
+        const frameCount = 141;
+        canvas.width = 1280;
+        canvas.height = 720;
+
+        const images = [];
+        const videoState = { frame: 1 };
+
+        const currentFrame = index => (
+            `assets/video-frames-v2/frame_${String(index).padStart(4, '0')}.webp`
+        );
+
+        for (let i = 1; i <= frameCount; i++) {
+            const img = new Image();
+            img.src = currentFrame(i);
+            images.push(img);
+        }
+
+        images[0].onload = render;
+
+        function render() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            if (images[videoState.frame - 1]) {
+                context.drawImage(images[videoState.frame - 1], 0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // Configuração inicial das etapas (Escondidos conforme design_system10)
+        gsap.set(".stage2-reveal, .stage3-reveal", { y: 30, opacity: 0, filter: "blur(8px)" });
+        gsap.set(".glass-card-wrapper", { x: 100, opacity: 0, rotationY: 15, scale: 0.9 });
+        gsap.set(".bento-reveal", { y: 60, opacity: 0 });
+        gsap.set(".app-feature-reveal", { y: 30, opacity: 0, filter: "blur(8px)" });
+
+        // Lógica de Loop do Vídeo (Background infinito)
+        let loopTween = null;
+        const startLoopFrame = 100; // Volta para os 5 segundos (20fps)
+
+        function startIdleLoop() {
+            if (loopTween) loopTween.kill();
+            loopTween = gsap.fromTo(videoState, 
+                { frame: frameCount },
+                { 
+                    frame: startLoopFrame, 
+                    duration: 4, // Aumentei o tempo para 4s para dar uma sensação "slow motion" super premium
+                    repeat: -1, 
+                    yoyo: true, 
+                    ease: "power2.inOut", // Curva mais suave para que a "frenagem" e o retorno não tenham tranco
+                    snap: "frame",
+                    onUpdate: render
+                }
+            );
+        }
+
+        function stopIdleLoop() {
+            if (loopTween) {
+                loopTween.kill();
+                loopTween = null;
+                // Devolve a posição exata para o ScrollTrigger não dar "tranco"
+                videoState.frame = Math.round(tl.scrollTrigger.progress * frameCount) || 1;
+                render();
+            }
+        }
+
+        // =====================================
+        // HERO AUTOPLAY (SEM SCROLL)
+        // =====================================
+        const heroVideo = document.getElementById("hero-video");
+        const heroCanvas = document.getElementById("hero-canvas");
+        let isVideoTransitioned = false;
+
+        function transitionToCanvas() {
+            if (isVideoTransitioned) return;
+            isVideoTransitioned = true;
+            
+            // Crossfade: fade out video, fade in canvas
+            heroVideo.style.opacity = 0;
+            heroCanvas.style.opacity = 0.45;
+            
+            // Começa o loop infinito nas outras dobras
+            startIdleLoop();
+        }
+
+        // Se o usuário começar a rolar a página enquanto o vídeo do Hero ainda está tocando,
+        // força o fim da animação instantaneamente para que ele vire o "vídeo em loop das dobras internas".
+        window.addEventListener('scroll', () => {
+            if (!isVideoTransitioned && window.scrollY > 50) {
+                // Libera o scroll e reseta variáveis de touch
+                document.body.style.overflow = '';
+                transitionToCanvas();
+            }
+        }, { passive: true });
+
+        // Toca a intro apenas quando a página carregar
+        window.addEventListener('load', () => {
+            // Verifica se o usuário carregou a página no topo (Hero)
+            if (window.scrollY < 100) {
+                // ESTÁ NO HERO: Faz a animação inicial e trava o scroll
+                document.body.style.overflow = 'hidden';
+                const preventTouch = (e) => e.preventDefault();
+                document.addEventListener('touchmove', preventTouch, { passive: false });
+
+                // Toca o vídeo nativamente com velocidade aumentada
+                heroVideo.playbackRate = 1.5;
+                const playPromise = heroVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Auto-play prevented", error);
+                        // Em caso de bloqueio de autoplay (battery saver, etc), vai direto pro canvas
+                        transitionToCanvas();
+                    });
+                }
+
+                // Quando o vídeo acabar, transiciona suavemente pro canvas
+                heroVideo.addEventListener('ended', () => {
+                    transitionToCanvas();
+                });
+                
+                // Revela o conteúdo do Hero instantaneamente, acompanhando o vídeo sem atraso
+                gsap.to(".stage2-reveal, .stage3-reveal", {
+                    y: 0, opacity: 1, filter: "blur(0px)",
+                    duration: 1.5, stagger: 0.15, ease: "power2.out"
+                });
+
+                gsap.to(".glass-card-wrapper", {
+                    x: 0, opacity: 1, rotationY: 0, scale: 1,
+                    duration: 1.5, stagger: 0.2, ease: "power3.out"
+                });
+
+                // Libera o scroll após a parte crítica da animação concluir
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                    document.removeEventListener('touchmove', preventTouch);
+                }, 1500); // 1.5 segundos (duração do texto)
+                
+            } else {
+                // ESTÁ EM OUTRA DOBRA APÓS REFRESH
+                
+                // Revela instantaneamente os textos do Hero (para o caso do usuário voltar ao topo depois)
+                gsap.set(".stage2-reveal, .stage3-reveal", { y: 0, opacity: 1, filter: "blur(0px)" });
+                gsap.set(".glass-card-wrapper", { x: 0, opacity: 1, rotationY: 0, scale: 1 });
+                
+                // Pula a animação longa de entrada e inicia o vídeo direto em loop
+                heroVideo.style.opacity = 0;
+                heroCanvas.style.opacity = 0.45;
+                transitionToCanvas();
+            }
+        });
+        // ==========================================
+        // NAVBAR SCROLL EFFECT
+        // ==========================================
+        const mainNav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('nav-scrolled');
+            } else {
+                mainNav.classList.remove('nav-scrolled');
+            }
+        }, { passive: true });
+
+        // ==========================================
+        // GATILHOS DE VÍDEO (ATRASADOS PARA SEGURANÇA NO IOS)
+        // ==========================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                ScrollTrigger.create({
+                    trigger: "#social-proof",
+                    start: "top bottom", // Quando a dobra 5 entra na tela por baixo
+                    onEnter: () => {
+                        gsap.to(".video-container", { opacity: 0, duration: 0.5 });
+                        if (loopTween) loopTween.pause();
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(".video-container", { opacity: 1, duration: 0.5 });
+                        if (loopTween) loopTween.play();
+                    }
+                });
+
+                ScrollTrigger.create({
+                    trigger: "#feedbacks",
+                    start: "top bottom", // Quando a dobra 7 entra na tela por baixo
+                    onEnter: () => {
+                        gsap.to(".video-container", { opacity: 1, duration: 0.8 });
+                        if (loopTween) loopTween.play();
+                    },
+                    onLeaveBack: () => {
+                        gsap.to(".video-container", { opacity: 0, duration: 0.8 });
+                        if (loopTween) loopTween.pause();
+                    }
+                });
+                
+                ScrollTrigger.refresh();
+            }, 1000); // 1 segundo extra após o load garante layout 100% estabilizado no iOS
+        });
+
+
+        // Efeito de Lanterna nos Cards (Design System 10)
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.glass-card, .flashlight-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Flutuação Premium (Lenta, orgânica e com leve rotação 3D natural)
+        gsap.to(".float-animation-1", {
+            y: -18,
+            rotationZ: 1.5,
+            duration: 6,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+        gsap.to(".float-animation-2", {
+            y: -14,
+            rotationZ: -1,
+            duration: 5.5,
+            delay: -2,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+        gsap.to(".float-animation-3", {
+            y: -16,
+            rotationZ: 1,
+            duration: 6.5,
+            delay: -4,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+
+        // Animação da Seção Bento (Bloco 2)
+        ScrollTrigger.batch(".bento-reveal", {
+            onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power3.out", overwrite: true }),
+            start: "top 85%"
+        });
+
+        // Animação dos Cards de Funcionalidade do App (Blur in Premium)
+        ScrollTrigger.batch(".app-feature-reveal", {
+            onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, stagger: 0.2, ease: "power3.out", overwrite: true }),
+            start: "top 95%" // Dispara bem cedo para evitar atrasos visíveis
+        });
+
+        // Partículas Flutuantes no Background
+        const pCanvas = document.getElementById('particles-canvas');
+        const pCtx = pCanvas.getContext('2d');
+        
+        function resizeParticles() {
+            pCanvas.width = window.innerWidth;
+            pCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeParticles);
+        resizeParticles();
+
+        const particlesArray = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * pCanvas.width;
+                this.y = Math.random() * pCanvas.height;
+                this.size = Math.random() * 1.5 + 0.5; // tamanho entre 0.5 e 2
+                this.speedY = Math.random() * 0.8 + 0.3; // velocidade levemente maior
+                this.opacity = Math.random() * 0.4 + 0.1; // bem suave (0.1 a 0.5)
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = pCanvas.height;
+                    this.x = Math.random() * pCanvas.width;
+                }
+            }
+            draw() {
+                pCtx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                pCtx.fill();
+            }
+        }
+        
+        // 100 partículas para preencher mais o espaço
+        for (let i = 0; i < 100; i++) {
+            particlesArray.push(new Particle());
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // --- Bloco 6: Timeline de Evolução ---
+        
+        // 1. Transição Diagonal (Bloco 5 saindo pra esquerda, Bloco 6 entrando da direita)
+        
+        // Faz o número "40 Dias" do Bloco 5 ir para a esquerda enquanto sobe
+        gsap.to("#social-proof-stat-2", {
+            x: "-50vw", // Vai para a esquerda
+            opacity: 0,
+            ease: "power1.inOut",
+            scrollTrigger: {
+                trigger: "#evolution-timeline",
+                start: "top bottom", 
+                end: "top top",      
+                scrub: 1.5 // Aumentado o scrub para dar mais fluidez e não parecer "truncado"
+            }
+        });
+
+        // ==========================================
+        // MATCHMEDIA PARA A SEXTA DOBRA
+        // ==========================================
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 768px)", () => {
+            // --- DESKTOP ---
+            
+            // Faz o conteúdo do Bloco 6 vir da direita enquanto sobe
+            gsap.fromTo("#evolution-content", 
+                { x: "60vw", opacity: 0 }, 
+                { 
+                    x: "0vw", opacity: 1, 
+                    ease: "power2.out", // Suaviza bem a parada no centro da tela
+                    scrollTrigger: {
+                        trigger: "#evolution-timeline",
+                        start: "top bottom",
+                        end: "top top",
+                        scrub: 1.5
+                    }
+                }
+            );
+
+            // 2. Timeline Principal do Bloco 6 (Pinned)
+            const tlEvo = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#evolution-timeline",
+                    start: "top top",
+                    end: "+=300%",
+                    pin: true,
+                    scrub: 1
+                }
+            });
+
+            // Configuração inicial (Dot 0 aceso, Bloco 1 em destaque)
+            gsap.set("#evo-block-1", { opacity: 1, scale: 1 });
+            gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
+            gsap.set("#evo-car", { left: "0%" });
+
+            tlEvo.fromTo("#evo-progress-line", 
+                { scaleX: 0 }, 
+                { scaleX: 0.3333, duration: 1, ease: "none" },
+                0 // Também começa no tempo 0
+            )
+            .to("#evo-car", { left: "33.33%", duration: 1, ease: "none" }, 0)
+            // Quando chega em 33.33% (Dot 1)
+            .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+            .to("#evo-block-1", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+            .to("#evo-block-2", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+            .to(".evo-img-block-1", { opacity: 0, duration: 0.2 }, "<") // Bloco 1 sai limpo
+            .fromTo("#evo-images-2", 
+                { opacity: 0 },
+                { opacity: 1, duration: 0.2, ease: "none" }, "<" // Bloco 2 entra direto
+            )
+            
+            // Linha vai até o Dot 2 (66.66%) E Parallax roda
+            .to("#evo-progress-line", { scaleX: 0.6666, duration: 1, ease: "none" })
+            .to("#evo-car", { left: "66.66%", duration: 1, ease: "none" }, "<")
+            // .fromTo("#evo-img-parallax-2", { yPercent: 0 }, { yPercent: -33, duration: 1, ease: "none" }, "<") // Efeito Parallax Removido a pedido
+            
+            // Quando chega em 66.66% (Dot 2)
+            .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.2")
+            .to("#evo-block-2", { opacity: 0.2, scale: 0.95, duration: 0.2 }, "<")
+            .to("#evo-block-3", { opacity: 1, scale: 1, duration: 0.2 }, "<")
+            .to("#evo-images-2", { opacity: 0, duration: 0.2 }, "<") // Bloco 2 (Imagem) sai limpo
+            
+            // --- CONSTRUÇÃO DO BLOCO 3 (66.66% a 100%) ---
+            .add("block3")
+            .to("#evo-progress-line", { scaleX: 1, duration: 1, ease: "none" }, "block3")
+            .to("#evo-car", { left: "100%", duration: 1, ease: "none" }, "block3")
+            
+            // Move todo o conteúdo para baixo (Y) para centralizar visualmente e preencher o vazio
+            .to("#evolution-content", { y: "15vh", duration: 1, ease: "power2.out" }, "block3")
+            
+            // Background Master aparece
+            .to("#evo-bg-container", { opacity: 1, duration: 0.2 }, "block3")
+            
+            // Base Original sobe bem lá de baixo, mas termina um pouco mais baixa para focar no logo "Loma"
+            .fromTo("#evo-bg-base", 
+                { yPercent: 80, scale: 2 }, 
+                { yPercent: 15, scale: 1, duration: 1, ease: "power2.out" }, "block3"
+            )
+            // Céu ganha um parallax extremo: sobe muito mais espaço e diminui o zoom simultaneamente
+            .fromTo("#evo-bg-ceu", 
+                { yPercent: 200, scale: 4 }, 
+                { yPercent: -60, scale: 1.1, duration: 1, ease: "power2.out" }, "block3+=0.1"
+            )
+            
+            // Finaliza com Dot 3
+            .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.2 }, "-=0.1")
+            // Reveal do CTA Final
+            .to("#evo-cta", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, "<");
+        });
+
+        mm.add("(max-width: 767px)", () => {
+            // --- MOBILE ---
+            
+            // Força a visibilidade limpa de todos os blocos no mobile
+            gsap.set(["#evo-block-1", "#evo-block-2", "#evo-block-3"], { opacity: 1, scale: 1, clearProps: "transform" });
+            gsap.set("#evo-dot-0", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)" });
+            gsap.set("#evolution-content", { clearProps: "all" });
+
+            // Timeline simplificada apenas para o carrinho/progresso
+            const tlMobile = gsap.timeline({
+                scrollTrigger: {
+                    trigger: "#evolution-timeline",
+                    start: "top center",
+                    end: "bottom center",
+                    scrub: true
+                }
+            });
+
+            tlMobile.fromTo("#evo-progress-line", { scaleX: 0 }, { scaleX: 1, ease: "none" }, 0)
+                    .fromTo("#evo-car", { left: "0%" }, { left: "100%", ease: "none" }, 0)
+                    .to("#evo-dot-1", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 0.33)
+                    .to("#evo-dot-2", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 0.66)
+                    .to("#evo-dot-3", { backgroundColor: "#34d399", borderColor: "#34d399", scale: 1.5, boxShadow: "0 0 15px rgba(52,211,153,0.8)", duration: 0.1 }, 1);
+        });
+
+        // --- Efeito 3D Perspective nas Imagens do Bloco 6 ---
+        document.querySelectorAll('.evo-image-item').forEach(item => {
+            item.addEventListener('mousemove', (e) => {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left; // Posição X do mouse dentro da imagem
+                const y = e.clientY - rect.top;  // Posição Y do mouse dentro da imagem
+                
+                // Mapeia variáveis CSS para o efeito Flashlight (Glow seguindo o mouse)
+                item.style.setProperty('--mouse-x', `${x}px`);
+                item.style.setProperty('--mouse-y', `${y}px`);
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Rotaciona até 12 graus dependendo de onde o mouse está
+                const rotateX = ((y - centerY) / centerY) * -12; 
+                const rotateY = ((x - centerX) / centerX) * 12;
+                
+                gsap.to(item, {
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    transformPerspective: 1000,
+                    ease: "power2.out",
+                    duration: 0.5
+                });
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    ease: "power3.out",
+                    duration: 0.8
+                });
+            });
+        });
+
+        // ==========================================
+        // BLOCO 7: Prova Social Dinâmica (Feedbacks)
+        // ==========================================
+        const testimonials = [
+            { text: "Cara, eu nunca achei que ia precisar… fiz a proteção meio no 'vai que'… Não deu outra… bateram no meu carro 3 meses depois. Se eu não tivesse com a Loma, tava ferrado hoje.", name: "Carlos Silva", img: "men/32.jpg", car: "Ford Ka" },
+            { text: "Mano, coisa boba… uma batida pequena no trânsito. Mas quando fui ver o valor… já ia pesar demais. Ainda bem que eu tava com a proteção… resolveu tudo.", name: "Tiago Souza", img: "men/44.jpg", car: "Chevrolet Celta" },
+            { text: "Eu uso o carro pra trabalhar todo dia. Ficar sem ele nem pensar. Quando precisei, a Loma resolveu rápido… isso pra mim vale tudo.", name: "Marcos Paulo", img: "men/67.jpg", car: "Renault Kwid" },
+            { text: "Sinceramente, eu achava que era mais uma dessas coisas… Até precisar de verdade. Aí você vê quem resolve e quem some.", name: "Rafael Lima", img: "men/22.jpg", car: "Fiat Uno" },
+            { text: "Fiz mais por segurança mesmo… nem tava pensando em usar. Mas aí deu ruim… vidro quebrado, prejuízo… E foi aí que vi que vale a pena.", name: "Felipe Costa", img: "men/85.jpg", car: "Volkswagen Gol" },
+            { text: "Pra quem trabalha com o carro, isso aqui não é luxo não… É necessidade. Ficar parado é perder dinheiro.", name: "Leandro Santos", img: "men/55.jpg", car: "Hyundai HB20" },
+            { text: "Já fiquei dias sem trabalhar por causa de carro antes… Nunca mais passo por isso. Hoje tenho proteção e fico tranquilo.", name: "André Gomes", img: "men/75.jpg", car: "Chevrolet Onix" },
+            { text: "O valor que eu pago é nada perto do prejuízo que eu teria. Sério mesmo… não compensa arriscar.", name: "Bruno Alves", img: "men/12.jpg", car: "Fiat Palio" },
+            { text: "Eu tava juntando grana pra trocar de carro… Se desse algum problema, já era. A proteção me deu segurança pra seguir com meu plano.", name: "Daniel Ribeiro", img: "men/90.jpg", car: "Renault Sandero" },
+            { text: "Depois que você passa por um susto, muda tudo… Hoje eu não fico sem proteção nem se for carro velho.", name: "Eduardo Martins", img: "men/3.jpg", car: "Toyota Etios" },
+            { text: "Não é nem questão de 'se' vai acontecer… É 'quando'. Eu aprendi isso do jeito difícil.", name: "Fernando Oliveira", img: "men/18.jpg", car: "Nissan March" },
+            { text: "Hoje eu dirijo tranquilo, sem aquele peso na cabeça. Antes qualquer barulho já me preocupava.", name: "Marcelo Pereira", img: "men/29.jpg", car: "Chevrolet Prisma" }
+        ];
+
+        const createCardHTML = (t) => `
+            <div class="bg-[#131316] p-6 flex flex-col gap-4 w-[85vw] max-w-[320px] md:w-auto md:min-w-[320px] shrink-0 whitespace-normal hover:-translate-y-1 transition-transform duration-300 relative border border-white/5 group shadow-[0_20px_40px_rgba(0,0,0,0.3)] rounded-3xl overflow-hidden">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.02)_0%,transparent_60%)]"></div>
+                <div class="text-zinc-300 text-[15px] leading-relaxed relative z-10 italic">
+                    "${t.text}"
+                </div>
+                <div class="flex items-center gap-3 mt-2 relative z-10">
+                    <img src="https://randomuser.me/api/portraits/${t.img}" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=${t.name.replace(' ', '+')}&background=0ABAB5&color=fff';" class="w-10 h-10 rounded-full object-cover filter border border-zinc-700/50" alt="Avatar">
+                    <div class="flex flex-col">
+                        <span class="text-sm font-semibold text-white">${t.name}</span>
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wide flex items-center gap-1 mt-0.5">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                            Protege seu ${t.car}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Popular Colunas Desktop
+        const dCol1 = document.getElementById('desktop-col-1');
+        const dCol2 = document.getElementById('desktop-col-2');
+        const dCol3 = document.getElementById('desktop-col-3');
+        if (dCol1 && dCol2 && dCol3) {
+            dCol1.innerHTML = testimonials.slice(0, 4).map(createCardHTML).join('');
+            dCol2.innerHTML = testimonials.slice(4, 8).map(createCardHTML).join('');
+            dCol3.innerHTML = testimonials.slice(8, 12).map(createCardHTML).join('');
+            dCol1.innerHTML += dCol1.innerHTML;
+            dCol2.innerHTML += dCol2.innerHTML;
+            dCol3.innerHTML += dCol3.innerHTML;
+        }
+
+        // Popular Linhas Mobile
+        const mRow1 = document.getElementById('mobile-row-1');
+        const mRow2 = document.getElementById('mobile-row-2');
+        const mRow3 = document.getElementById('mobile-row-3');
+        if (mRow1 && mRow2 && mRow3) {
+            mRow1.innerHTML = testimonials.slice(0, 4).map(createCardHTML).join('');
+            mRow2.innerHTML = testimonials.slice(4, 8).map(createCardHTML).join('');
+            mRow3.innerHTML = testimonials.slice(8, 12).map(createCardHTML).join('');
+            mRow1.innerHTML += mRow1.innerHTML;
+            mRow2.innerHTML += mRow2.innerHTML;
+            mRow3.innerHTML += mRow3.innerHTML;
+        }
+
+        // Animação de Entrada para a Dobra de Feedbacks
+        ScrollTrigger.create({
+            trigger: "#feedbacks",
+            start: "top 70%",
+            onEnter: () => {
+                gsap.to(["#feedback-header", "#feedback-cta-wrapper"], {
+                    opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
+                });
+                lucide.createIcons();
+            },
+            once: true
+        });
+
+        // Animação de Entrada para a Dobra App Loma
+        ScrollTrigger.create({
+            trigger: "#app-loma",
+            start: "top 75%",
+            onEnter: () => {
+                // Textos
+                gsap.fromTo("#app-loma [data-app-reveal]", 
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8, 
+                        stagger: 0.15, 
+                        ease: "power3.out"
+                    }
+                );
+            },
+            once: true
+        });
+
+        // ==========================================
+        // FAQ LOGIC (NONA DOBRA)
+        // ==========================================
+        
+        // 1. Accordion Toggle
+        document.querySelectorAll('.faq-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.closest('.faq-item');
+                const content = item.querySelector('.faq-content');
+                const isActive = item.classList.contains('active');
+
+                // Fechar todos
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    otherItem.classList.remove('border-emerald-400/30');
+                    otherItem.classList.add('border-white/5');
+                    const otherContent = otherItem.querySelector('.faq-content');
+                    otherContent.style.maxHeight = '0px';
+                    otherContent.style.opacity = '0';
+                    otherContent.style.paddingBottom = '0px';
+                });
+
+                // Se não estava ativo, abre
+                if (!isActive) {
+                    item.classList.add('active');
+                    item.classList.remove('border-white/5');
+                    item.classList.add('border-emerald-400/30');
+                    content.style.maxHeight = content.scrollHeight + 30 + 'px';
+                    content.style.opacity = '1';
+                    content.style.paddingBottom = '24px'; // 1.5rem / p-6
+                }
+            });
+        });
+
+        // 2. Reveal Animation
+        ScrollTrigger.create({
+            trigger: "#faq",
+            start: "top 80%",
+            onEnter: () => {
+                gsap.fromTo("#faq [data-faq-reveal]", 
+                    { opacity: 0, y: 40 },
+                    {
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8, 
+                        stagger: 0.15, 
+                        ease: "power3.out"
+                    }
+                );
+            },
+            once: true
+        });
+        // 3. Footer Reveal Animation
+        ScrollTrigger.create({
+            trigger: "#footer",
+            start: "top 90%",
+            onEnter: () => {
+                gsap.fromTo("#footer [data-footer-reveal]", 
+                    { opacity: 0, y: 30 },
+                    {
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8, 
+                        ease: "power3.out"
+                    }
+                );
+            },
+            once: true
+        });
+
+    </script>

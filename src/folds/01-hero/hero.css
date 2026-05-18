@@ -1,0 +1,71 @@
+        /* ====================================================
+           HERO — Estilos exclusivos da dobra Hero
+           ==================================================== */
+        /* Video Scroll Controls */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            z-index: -10;
+            overflow: hidden;
+        }
+        .video-container video, .video-container canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100dvh;
+            object-fit: cover;
+            opacity: 0.45;
+            filter: blur(0px);
+        }
+        .video-container canvas {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .video-container video {
+            transition: opacity 1s ease-in-out;
+        }
+        
+        /* Gradient Mask for Background */
+        .video-mask {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+            z-index: -9;
+        }
+
+        /* Scroll track (Agora é apenas a primeira dobra normal) */
+        .scroll-track {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .hero-content > * {
+            pointer-events: auto;
+        }
+
+        /* Mouse Scroll Animation */
+        @keyframes scroll-wheel {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0; }
+            50.1% { transform: translateY(-8px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .animate-scroll-wheel {
+            animation: scroll-wheel 2s cubic-bezier(0.15, 0.83, 0.66, 1) infinite;
+        }

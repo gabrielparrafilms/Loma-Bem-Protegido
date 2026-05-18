@@ -1,0 +1,44 @@
+    <!-- Bloco 7: Prova Social (Feedbacks em Loop Contínuo) -->
+    <section id="feedbacks" class="pb-12 pt-10 lg:pb-24 lg:pt-20 relative z-10 border-t border-white/5 overflow-hidden">
+        
+        <div class="max-w-[1400px] mx-auto px-4 md:px-6">
+            
+            <!-- TEXTO PRINCIPAL -->
+            <div class="text-center mb-12 relative z-30 opacity-0 transform translate-y-8" id="feedback-header">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-semibold text-white mb-4 tracking-tighter">Eles não arriscaram.<br><span class="text-emerald-400">E você?</span></h2>
+            </div>
+
+            <!-- CONTAINER DO FEED (Isolado e com mask para feathering perfeito) -->
+            <div class="relative overflow-hidden w-full rounded-2xl [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] md:[mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)] md:[-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+
+                <!-- LAYOUT DESKTOP -->
+                <div class="hidden md:flex justify-center gap-6 h-[750px] relative z-10">
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v hover:pause-on-hover" id="desktop-col-1"></div>
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v-reverse hover:pause-on-hover mt-[-150px]" id="desktop-col-2"></div>
+                    <div class="flex-1 max-w-[380px] flex flex-col gap-6 animate-marquee-v hover:pause-on-hover pt-12" id="desktop-col-3"></div>
+                </div>
+
+                <!-- LAYOUT MOBILE -->
+                <div class="flex flex-col md:hidden gap-4 relative mt-4 z-10 py-4">
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h-reverse hover:pause-on-hover" id="mobile-row-1"></div>
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h hover:pause-on-hover" id="mobile-row-2"></div>
+                    <div class="flex flex-nowrap w-max gap-4 animate-marquee-h-reverse hover:pause-on-hover" id="mobile-row-3"></div>
+                </div>
+            </div>
+            
+            <!-- Botão CTA -->
+            <div class="w-full flex justify-center mt-12 z-30 opacity-0 transform translate-y-8" id="feedback-cta-wrapper">
+                <a href="#" class="group relative inline-flex min-w-[200px] cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                    <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:-translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                        Quero me proteger agora
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                    <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                        Quero me proteger agora
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                </a>
+            </div>
+
+        </div>
+    </section>

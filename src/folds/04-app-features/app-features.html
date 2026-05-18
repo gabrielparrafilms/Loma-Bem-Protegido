@@ -1,0 +1,136 @@
+    <section id="app-features" class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 border-t border-white/5 flex flex-col items-center overflow-hidden">
+        
+        <!-- Subtle Grid Background -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.02]" style="background-image: linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(circle at center, black 0%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);"></div>
+
+        <!-- Header Centralizado -->
+        <div class="text-center flex flex-col items-center gap-6 mb-20 bento-reveal max-w-3xl relative z-10">
+
+            
+            <h2 class="text-4xl md:text-5xl lg:text-6xl font-geist font-medium tracking-tighter leading-[1.1] text-white">
+                Sua proteção resolvida em segundos.
+            </h2>
+            
+            <p class="text-lg text-white/90 font-normal leading-relaxed">
+                Sem ligação, sem espera, sem dor de cabeça.<br>Tudo que você precisa, direto no seu celular.
+            </p>
+        </div>
+
+        <!-- 2 Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 w-full relative z-10 items-center">
+            
+            <!-- Esquerda: Imagem Grande -->
+            <div class="glass-card w-full h-[500px] md:h-[600px] relative overflow-hidden app-feature-reveal border-white/5 shadow-2xl">
+                <!-- Imagem Fixa e Estática -->
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('assets/img/2 dobra.jpg');"></div>
+                
+                <div class="glass-highlight"></div>
+                <div class="glass-card-border"></div>
+            </div>
+
+
+            <!-- Direita: Lista de Features (Cards Premium) -->
+            <div class="flex flex-col justify-center gap-6 lg:pr-10 relative z-10">
+                
+                <!-- Feature 1 -->
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                    <!-- Subtle Glow -->
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+                    
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 font-medium text-sm shadow-[0_0_15px_rgba(52,211,153,0.2)] group-hover/card:scale-110 transition-transform duration-500">
+                            01
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-geist font-medium tracking-tight text-white">2ª Via de Boleto</h3>
+                    </div>
+                    
+                    <p class="text-white text-sm md:text-base leading-relaxed relative z-10">
+                        Acesse sua fatura e resolva tudo em segundos, direto pelo app.
+                    </p>
+                    
+                    <div class="mt-2 relative z-10">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acessar Fatura
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
+                                Acessar Fatura
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="glass-highlight"></div>
+                    <div class="glass-card-border"></div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                    <!-- Subtle Glow -->
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+                    
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 font-medium text-sm shadow-[0_0_15px_rgba(52,211,153,0.2)] group-hover/card:scale-110 transition-transform duration-500">
+                            02
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-geist font-medium tracking-tight text-white">Solicitação de Guincho</h3>
+                    </div>
+                    
+                    <p class="text-white text-sm md:text-base leading-relaxed relative z-10">
+                        Acione o guincho com poucos toques e acompanhe a chegada em tempo real.
+                    </p>
+                    
+                    <div class="mt-2 relative z-10">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acionar Guincho
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
+                                Acionar Guincho
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="glass-highlight"></div>
+                    <div class="glass-card-border"></div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card p-8 flex flex-col gap-5 relative overflow-hidden app-feature-reveal group/card border-white/5 transition-all duration-500 hover:border-emerald-400/30 hover:shadow-[0_10px_40px_-10px_rgba(52,211,153,0.15)] hover:-translate-y-1 bg-[#131316]">
+                    <!-- Subtle Glow -->
+                    <div class="absolute -right-20 -top-20 w-64 h-64 bg-emerald-400/10 blur-[60px] rounded-full pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-700"></div>
+                    
+                    <div class="flex items-center gap-4 relative z-10">
+                        <div class="w-10 h-10 rounded-full bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-emerald-400 font-medium text-sm shadow-[0_0_15px_rgba(52,211,153,0.2)] group-hover/card:scale-110 transition-transform duration-500">
+                            03
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-geist font-medium tracking-tight text-white">Status de Eventos</h3>
+                    </div>
+                    
+                    <p class="text-white text-sm md:text-base leading-relaxed relative z-10">
+                        Veja o andamento do seu atendimento e tenha total controle do processo.
+                    </p>
+                    
+                    <div class="mt-2 relative z-10">
+                        <button class="group/btn relative inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-6 py-2.5 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] w-fit">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover/btn:transform group-hover/btn:translate-y-8 group-hover/btn:opacity-0 group-hover/btn:blur-md">
+                                Acompanhar Status
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full blur-md group-hover/btn:blur-none text-zinc-900 font-bold">
+                                Acompanhar Status
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+                    </div>
+                    
+                    <div class="glass-highlight"></div>
+                    <div class="glass-card-border"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>

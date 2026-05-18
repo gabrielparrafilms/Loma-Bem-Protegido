@@ -1,0 +1,164 @@
+    <!-- Bloco 6: Timeline de Evolução -->
+    <section id="evolution-timeline" class="relative z-30 w-full h-auto min-h-[100dvh] md:h-screen bg-transparent text-white flex flex-col items-center justify-start md:justify-center py-12 md:py-10 overflow-visible md:overflow-hidden border-t border-white/5">
+        
+        <!-- Fundo Escurecido e Desfocado para o Vídeo aparecer (Camada Base) -->
+        <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-20 pointer-events-none"></div>
+
+        <!-- Background Parallax do Bloco 3 (Inicia invisível) -->
+        <div id="evo-bg-container" class="absolute inset-0 w-full h-full -z-10 pointer-events-none overflow-hidden opacity-0">
+            <!-- 1. Céu (Background profundo) -->
+            <img id="evo-bg-ceu" src="assets/img/Ceu.jpg" alt="Céu Loma" class="absolute top-0 left-0 w-full h-[300%] object-cover grayscale-[20%] will-change-transform">
+            
+            <!-- 2. Prédio Base Original -->
+            <img id="evo-bg-base" src="assets/img/Base Original.png" alt="Prédio Loma" class="absolute bottom-0 left-0 w-full h-[120%] object-cover object-bottom grayscale-[10%] will-change-transform">
+            
+            <!-- Gradient Overlay para garantir leitura do texto e linha do tempo -->
+            <div class="absolute inset-0 bg-gradient-to-b from-[#09090b]/95 via-[#09090b]/75 to-[#09090b]/95"></div>
+        </div>
+
+        <!-- Conteúdo Interno que entra na diagonal -->
+        <div id="evolution-content" class="w-full max-w-6xl px-6 flex flex-col items-center will-change-transform">
+            
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-geist font-bold tracking-tighter mb-4">Origem e Consolidação</h2>
+                <p class="text-white text-lg md:text-xl font-medium tracking-wide">Uma trajetória de solidez e crescimento contínuo</p>
+            </div>
+
+            <!-- Grid de Blocos e Linha do Tempo -->
+            <div class="relative w-full max-w-5xl mx-auto flex flex-col">
+                
+                <!-- Blocos de Texto (01, 02, 03) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mb-8 relative z-10">
+                    <!-- Bloco 01 -->
+                    <div id="evo-block-1" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">01</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Origem com propósito</h3>
+                        <p class="text-white leading-relaxed text-sm">A empresa nasce com um objetivo claro: oferecer proteção real para pessoas que não tinham acesso a soluções confiáveis. Desde o início, o foco foi construir algo sólido, baseado em responsabilidade e entrega verdadeira.</p>
+                        
+                        <!-- Imagens Mobile (Bloco 01) -->
+                        <div class="flex flex-col gap-4 mt-6 md:hidden">
+                            <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[50%]">
+                            <img src="assets/img/Loma 2017 3.jpg" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[50%]">
+                        </div>
+                    </div>
+                    
+                    <!-- Bloco 02 -->
+                    <div id="evo-block-2" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">02</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Estrutura e superação</h3>
+                        <p class="text-white leading-relaxed text-sm">Com o crescimento, surgem desafios que exigem organização, adaptação e evolução. A operação se fortalece ao estruturar processos, desenvolver gestão e superar momentos críticos com consistência.</p>
+                        
+                        <!-- Imagens Mobile (Bloco 02) -->
+                        <div class="flex flex-col gap-4 mt-6 md:hidden w-full max-w-sm mx-auto">
+                            <img src="assets/img/Loma Campinas.png" alt="Loma Campinas" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
+                            <img src="assets/img/Loma Osasco.jpg" alt="Loma Osasco" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
+                            <img src="assets/img/Predio Loma.png" alt="Prédio Loma" class="w-full h-[240px] object-cover rounded-2xl shadow-xl">
+                        </div>
+                    </div>
+
+                    <!-- Bloco 03 -->
+                    <div id="evo-block-3" class="flex flex-col opacity-20 scale-95 origin-bottom transition-all duration-500 will-change-transform">
+                        <span class="text-emerald-400 font-bold font-geist text-xl mb-2">03</span>
+                        <h3 class="text-2xl font-bold tracking-tight mb-3">Crescimento e solidez</h3>
+                        <p class="text-white leading-relaxed text-sm">A empresa se consolida como uma operação estruturada, com crescimento acelerado, base sólida de clientes e capacidade de expansão. O foco continua sendo evolução constante e segurança para quem confia no serviço.</p>
+                        
+                        <!-- Imagens Mobile (Bloco 03) -->
+                        <div class="flex flex-col gap-4 mt-6 md:hidden">
+                            <img src="assets/img/Predio Loma.png" alt="Loma 2017" class="w-full rounded-2xl shadow-xl grayscale-[30%]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linha Horizontal e Pontos -->
+                <div class="relative w-full h-[2px] bg-white/10 rounded-full mt-4 hidden md:block">
+                    <!-- Linha Preenchida (Glow) -->
+                    <div id="evo-progress-line" class="absolute top-0 left-0 w-full h-full bg-emerald-400 rounded-full origin-left will-change-transform shadow-[0_0_15px_rgba(52,211,153,0.6)]" style="transform: scaleX(0);"></div>
+                    
+                    <!-- Carrinho (Ícone animado junto com a linha) -->
+                    <div id="evo-car" class="absolute top-1/2 left-[0%] transform -translate-y-1/2 -translate-x-1/2 z-20 flex items-center justify-center bg-zinc-900 rounded-full border border-emerald-400 p-1.5 shadow-[0_0_15px_rgba(52,211,153,0.8)] text-emerald-400 will-change-[left]">
+                        <i data-lucide="car" class="w-4 h-4"></i>
+                    </div>
+
+                    <!-- Pontos (Marcadores nas divisas dos blocos) -->
+                    <div class="absolute inset-0 pointer-events-none transform -translate-y-1/2">
+                        <div id="evo-dot-0" class="absolute left-[0%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-1" class="absolute left-[33.33%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-2" class="absolute left-[66.66%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                        <div id="evo-dot-3" class="absolute left-[100%] top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-zinc-800 border-2 border-zinc-600 transition-all duration-500 will-change-transform z-10"></div>
+                    </div>
+                </div>
+
+                <!-- Botão CTA Final (Movido para ficar logo abaixo da linha do tempo) -->
+                <div class="w-full flex justify-center mt-8 z-30">
+                    <button id="evo-cta" class="group opacity-0 translate-y-4 will-change-transform inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-3 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                        <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                            Falar com um Especialista
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </span>
+                        <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                            Falar com um Especialista
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Containers de Imagens (Grid Overlap) para Bloco 1 e 2 -->
+                <div class="w-full max-w-6xl mx-auto mt-4 hidden md:grid grid-cols-1 grid-rows-1 z-20 place-items-center">
+                    
+                    <!-- Imagens 3D do Bloco 01 (Restrito ao tamanho original) -->
+                    <div id="evo-images-1" class="col-start-1 row-start-1 grid grid-cols-1 md:grid-cols-2 gap-8 perspective-[1000px] w-full max-w-3xl">
+                        <!-- Imagem 1 -->
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
+                            <img src="assets/img/Loma 2017 2.jpg" alt="Loma 2017 - Imagem 1" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
+                            <!-- Overlay escuro para profundidade -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="glass-highlight"></div>
+                            <div class="flashlight-border"></div>
+                        </div>
+
+                        <!-- Imagem 2 -->
+                        <div class="evo-image-item evo-img-block-1 flashlight-card glass-card relative w-full aspect-square rounded-3xl overflow-hidden will-change-transform shadow-2xl group" style="transform-style: preserve-3d;">
+                            <img src="assets/img/Loma 2017 3.jpg" alt="Loma 2017 - Imagem 2" class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 opacity-60 group-hover:opacity-100 grayscale-[50%] group-hover:grayscale-0">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"></div>
+                            <div class="glass-highlight"></div>
+                            <div class="flashlight-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagens Fixas do Bloco 02 (3 Cards) -->
+                    <div id="evo-images-2" class="col-start-1 row-start-1 perspective-[1000px] opacity-0 pointer-events-none flex justify-center items-center w-full">
+                        <!-- Grid 3 colunas Desktop, 1 Coluna Mobile -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full" style="transform-style: preserve-3d;">
+                            
+                            <!-- Card 1: Loma Campinas -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Loma Campinas.png" alt="Loma Campinas" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
+
+                            <!-- Card 2: Loma Osasco -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Loma Osasco.jpg" alt="Loma Osasco" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
+
+                            <!-- Card 3: Predio Loma -->
+                            <div class="evo-image-item flashlight-card glass-card relative w-full h-[450px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
+                                <img src="assets/img/Predio Loma.png" alt="Prédio Loma" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-[#09090b]/10 pointer-events-none"></div>
+                                <div class="glass-highlight"></div>
+                                <div class="glass-card-border"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>

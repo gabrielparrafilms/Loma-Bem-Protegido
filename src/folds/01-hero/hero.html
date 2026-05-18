@@ -1,0 +1,160 @@
+    <div class="scroll-track" id="scroll-track">
+        <!-- NAVBAR PORTO SEGURO STYLE -->
+        <header class="fixed top-0 left-0 w-full z-[60] flex flex-col transition-all duration-300" id="main-nav">
+            <!-- Top Bar (Thin) -->
+            <div id="nav-top-bar" class="hidden md:flex w-full py-1.5 px-6 md:px-12 justify-end gap-6 text-xs font-medium text-zinc-300 transition-all duration-300">
+                <a href="#faq" class="hover:text-emerald-400 transition-colors">Ajuda</a>
+                <a href="#app-loma" class="hover:text-emerald-400 transition-colors">Baixe o App</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Sinistro</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Seja um Corretor</a>
+            </div>
+            
+            <!-- Main Bar -->
+            <div id="nav-main-bar" class="w-full py-4 px-6 md:px-12 flex items-center justify-between transition-all duration-300">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer">
+                    <img src="assets/Logo Loma Branca.svg" alt="Loma" class="h-8 md:h-10 w-auto">
+                </div>
+                
+                <!-- Desktop Links -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#benefits" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Benefícios</a>
+                    <a href="#coverages" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Coberturas</a>
+                    <a href="#app-features" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Serviços</a>
+                    <a href="#feedbacks" class="text-sm font-medium text-zinc-300 hover:text-white transition-colors">Depoimentos</a>
+                </nav>
+                
+                <!-- Área do Associado CTA -->
+                <div class="flex items-center gap-4">
+                    <a href="#" class="group flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">
+                        <span class="hidden sm:block">Área do Associado</span>
+                        <div class="w-8 h-8 rounded-full bg-emerald-400/10 flex items-center justify-center border border-emerald-400/20 group-hover:bg-emerald-400/20 transition-colors">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="md:hidden text-zinc-300 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="video-container">
+            <video id="hero-video" src="assets/video/video_hero_v2.mp4" autoplay muted playsinline preload="auto"></video>
+            <canvas id="hero-canvas"></canvas>
+            <div class="video-mask"></div>
+            <div class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-emerald-500/5 blur-[120px] rounded-full z-[1]"></div>
+        </div>
+        
+        <!-- Partículas de Fundo -->
+        <canvas id="particles-canvas" class="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[40]"></canvas>
+
+        <div class="hero-content px-6 md:px-12 w-full pt-28 lg:pt-36">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-6 lg:mt-10">
+                
+                <div class="flex flex-col text-left gap-8 lg:gap-0 lg:h-[600px] lg:justify-between lg:py-10 hero-text-col">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 w-fit stage2-reveal">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-xs font-medium text-zinc-300 uppercase tracking-widest">Proteção 24/7</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-geist font-medium tracking-tighter leading-[1.05] stage2-reveal">
+                        Proteção Veicular <br>
+                        <span class="text-transparent-bg block mt-2">Inteligente</span>
+                        <span class="text-white text-4xl md:text-5xl lg:text-[3.5rem] mt-2 block font-normal tracking-tight leading-tight">Para Quem Não Pode Parar.</span>
+                    </h1>
+                    
+                    <p class="text-lg md:text-xl lg:text-2xl text-white font-normal leading-relaxed max-w-xl stage3-reveal">
+                        Dirija tranquilo sabendo que você está protegido contra imprevistos, sem burocracia, 100% digital e feito para o seu ritmo.
+                    </p>
+                    
+                    <div class="flex flex-wrap items-center gap-4 mt-4 stage3-reveal">
+                        <!-- Botão Fazer Simulação -->
+                        <button class="group relative w-full sm:w-auto inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-4 items-center justify-center text-sm text-[#09090b] font-semibold bg-emerald-400 transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(52,211,153,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                                Fazer Simulação
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none text-zinc-900 font-bold">
+                                Fazer Simulação
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+
+                        <!-- Botão Falar com Especialista (Secondary / Ghost) -->
+                        <button class="group relative w-full sm:w-auto inline-flex cursor-pointer overflow-hidden tracking-tight rounded-full px-6 py-3.5 md:px-8 md:py-4 items-center justify-center text-sm text-white font-medium border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:bg-yellow-400 hover:border-yellow-400 hover:text-zinc-900 shadow-none hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                            <span class="relative z-10 flex items-center gap-2 rounded-full transition-all duration-500 ease-out group-hover:transform group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                                Falar com um Especialista
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                            <span class="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out transform -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 rounded-full blur-md group-hover:blur-none font-bold">
+                                Falar com um Especialista
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative h-[600px] w-full hidden lg:flex flex-col items-end justify-between py-10 hero-cards-col perspective-[1000px]">
+                    <div class="glass-card-wrapper z-40">
+                        <div class="glass-card w-[28rem] p-8 will-change-transform float-animation-1" style="margin-right: 0 !important;">
+                            <div class="flex items-center gap-6 mb-6">
+                                <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.2)]">
+                                    <i data-lucide="shield-check" class="w-8 h-8"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-medium text-white">Cobertura Total</h3>
+                                    <p class="text-lg text-zinc-500">Ativa e monitorando</p>
+                                </div>
+                            </div>
+                            <div class="h-2.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-400 w-full shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
+                            </div>
+                            <div class="glass-highlight"></div>
+                            <div class="glass-card-border"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-wrapper z-30">
+                        <div class="glass-card w-[26rem] p-8 will-change-transform float-animation-2" style="margin-right: 0 !important;">
+                            <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-5">
+                                <span class="text-lg font-medium text-white">Assistência 24h</span>
+                                <span class="text-base px-3 py-1.5 rounded bg-emerald-400/10 text-emerald-400 border border-emerald-400/20">Online</span>
+                            </div>
+                            <div class="flex items-center gap-5">
+                                <div class="w-14 h-14 rounded-lg bg-[#131316] flex items-center justify-center border border-white/10">
+                                    <i data-lucide="truck" class="w-7 h-7 text-zinc-300"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xl font-medium text-white">Guincho solicitado!</div>
+                                    <div class="text-sm md:text-base text-white mt-1 leading-snug">Utilize o app da Loma para acompanhar o trajeto até você!</div>
+                                </div>
+                            </div>
+                            <div class="glass-highlight"></div>
+                            <div class="glass-card-border"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-wrapper z-20">
+                        <div class="glass-card w-[24rem] p-8 will-change-transform float-animation-3" style="margin-right: 0 !important;">
+                            <div class="flex gap-1.5 mb-5">
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                                <i data-lucide="star" class="w-6 h-6 fill-emerald-400 text-emerald-400"></i>
+                            </div>
+                            <p class="text-lg text-zinc-300 leading-relaxed italic">"Acionei pelo WhatsApp e resolveram tudo em minutos. Excelente experiência."</p>
+                            <div class="glass-highlight"></div>
+                            <div class="glass-card-border"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Scroll Indicator removido pois não há mais trava de scroll -->
+        </div>
+    </div>
