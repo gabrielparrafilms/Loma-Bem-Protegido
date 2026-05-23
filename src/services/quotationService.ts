@@ -1,7 +1,6 @@
 import { QuotationOrder, VehicleBrand, VehicleModel, VehicleModelYear, DecodedVehicle, BrandYearsResultDto, VehicleGroupResultDto } from "@/types/quotation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://service-hml.buildercrm.com.br";
-const createLeadUrl = process.env.NEXT_PUBLIC_CRM_WEBHOOK_URL || "";
 
 export interface AddressData {
     street: string;
@@ -16,7 +15,7 @@ export const quotationService = {
      * Envia a cotação para a API externa (Upsert).
      */
     syncQuotation: async (data: Partial<QuotationOrder>): Promise<QuotationOrder> => {
-        const endpoint = `${createLeadUrl}`;
+        const endpoint = `${API_URL}/api/v1/order/lead`;
 
         const response = await fetch(endpoint, {
             method: 'POST',
