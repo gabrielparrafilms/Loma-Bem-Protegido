@@ -10,16 +10,19 @@ function QuotationModalInner() {
   const { isOpen, close } = useQuotationModal();
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
+    if (!isOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
     };
-    if (isOpen) {
-      document.addEventListener("keydown", onKey);
-      document.body.style.overflow = "hidden";
-    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscape);
+
     return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = previousOverflow;
     };
   }, [isOpen, close]);
 
