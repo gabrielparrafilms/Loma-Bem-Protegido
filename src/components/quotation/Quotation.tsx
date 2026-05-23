@@ -39,24 +39,28 @@ export default function Quotation() {
     const [configLoading, setConfigLoading] = useState<boolean>(!!mode);
 
     useEffect(() => {
-        if (!mode) {
-            setConfiguration(DEFAULT_PAGE_CONFIGURATION);
-            setConfigLoading(false);
-            return;
-        }
-
         let cancelled = false;
-        setConfigLoading(true);
 
-        pageControlService.getByName(mode).then((result) => {
+        const load = async () => {
+            if (!mode) {
+                setConfiguration(DEFAULT_PAGE_CONFIGURATION);
+                setConfigLoading(false);
+                return;
+            }
+
+            setConfigLoading(true);
+            const result = await pageControlService.getByName(mode);
             if (cancelled) return;
+
             if (result?.configuration?.length) {
                 setConfiguration([...result.configuration].sort((a, b) => a.value - b.value));
             } else {
                 setConfiguration(DEFAULT_PAGE_CONFIGURATION);
             }
             setConfigLoading(false);
-        });
+        };
+
+        load();
 
         return () => {
             cancelled = true;
@@ -90,22 +94,28 @@ export default function Quotation() {
     });
 
     useEffect(() => {
-        setHistory([firstStep]);
+        const update = async () => {
+            setHistory([firstStep]);
+        };
+        update();
     }, [firstStep]);
 
     useEffect(() => {
-        const storedId = localStorage.getItem('quotation_id');
-        if (storedId) setQuotationId(storedId);
+        const restore = async () => {
+            const storedId = localStorage.getItem('quotation_id');
+            if (storedId) setQuotationId(storedId);
 
-        const storedData = localStorage.getItem('quotation_initial_data');
-        if (storedData) {
-            try {
-                const parsed = JSON.parse(storedData);
-                setData(prev => ({...prev, ...parsed}));
-            } catch (e) {
-                console.error("Erro ao ler dados iniciais", e);
+            const storedData = localStorage.getItem('quotation_initial_data');
+            if (storedData) {
+                try {
+                    const parsed = JSON.parse(storedData) as Partial<QuotationData>;
+                    setData(prev => ({...prev, ...parsed}));
+                } catch (e) {
+                    console.error("Erro ao ler dados iniciais", e);
+                }
             }
-        }
+        };
+        restore();
     }, []);
 
     const updateData = (newData: Partial<QuotationData>) => {
@@ -115,7 +125,15 @@ export default function Quotation() {
     const saveStepData = async (currentStepData: Partial<QuotationData>, stepName: string): Promise<{ success: boolean; resolvedId: string | null }> => {
         setIsLoading(true);
         try {
-            const anyData = currentStepData as any;
+            const utmData = currentStepData as Partial<QuotationData> & {
+                utmId?: string;
+                utmSource?: string;
+                utmMedium?: string;
+                utmCampaign?: string;
+                utmTerm?: string;
+                utmContent?: string;
+                utmAnnouncement?: string;
+            };
 
             const payload: Partial<QuotationOrder> = {
 
@@ -158,13 +176,13 @@ export default function Quotation() {
                 ...(currentStepData.complement && {observation: currentStepData.complement}),
 
                 utm: {
-                    utmId: anyData.utmId || undefined,
-                    utmSource: anyData.utmSource || undefined,
-                    utmMedium: anyData.utmMedium || undefined,
-                    utmCampaign: anyData.utmCampaign || undefined,
-                    utmTerm: anyData.utmTerm || undefined,
-                    utmContent: anyData.utmContent || undefined,
-                    utmAnnouncement: anyData.utmAnnouncement || undefined,
+                    utmId: utmData.utmId || undefined,
+                    utmSource: utmData.utmSource || undefined,
+                    utmMedium: utmData.utmMedium || undefined,
+                    utmCampaign: utmData.utmCampaign || undefined,
+                    utmTerm: utmData.utmTerm || undefined,
+                    utmContent: utmData.utmContent || undefined,
+                    utmAnnouncement: utmData.utmAnnouncement || undefined,
                 }
             };
 

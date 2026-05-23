@@ -2,13 +2,13 @@
 
 export interface ChoiceItem {
   text: string;
-  value: any;
+  value: string | number;
   loading?: boolean;
 }
 
 interface Props {
   choices: ChoiceItem[];
-  selectedValue?: any;
+  selectedValue?: string | number;
   onSelect: (item: ChoiceItem) => void;
   className?: string;
 }

@@ -125,9 +125,9 @@ export const quotationService = {
 
         // Mapeia o campo 'finalCode' para 'codeFipe' conforme solicitado
         // O usuário indicou que 'finalCode' é o código FIPE.
-        return data.map((item: any) => ({
+        return (data as VehicleModel[]).map((item) => ({
             ...item,
-            codeFipe: item.finalCode || item.codeFipe || item.fipeCode
+            codeFipe: String((item as VehicleModel & { finalCode?: string; fipeCode?: string }).finalCode || item.codeFipe || (item as VehicleModel & { fipeCode?: string }).fipeCode || '')
         }));
     },
 

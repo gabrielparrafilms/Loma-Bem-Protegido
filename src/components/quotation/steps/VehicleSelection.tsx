@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { QuotationData, VehicleType, VehicleBrand, VehicleModel } from "@/types/quotation";
 import Combobox from "@/components/ui/Combobox";
 
@@ -15,7 +15,7 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
     const [years, setYears] = useState<string[]>([]);
     const [groups, setGroups] = useState<string[]>([]);
     const [models, setModels] = useState<VehicleModel[]>([]);
-    
+
     // Estados de carregamento
     const [loadingBrands, setLoadingBrands] = useState(false);
     const [loadingYears, setLoadingYears] = useState(false);
@@ -23,134 +23,8 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
     const [loadingModels, setLoadingModels] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // 1. Carrega MARCAS quando o TIPO muda
-    useEffect(() => {
-        if (data.vehicleType) {
-            const fetchBrands = async () => {
-                setLoadingBrands(true);
-                try {
-                    const response = await fetch(`/api/vehicles/brands?type=${data.vehicleType}`);
-                    if (!response.ok) throw new Error('Failed to fetch brands');
-                    const result = await response.json();
-                    setBrands(result);
-                } catch (error) {
-                    console.error(error);
-                } finally {
-                    setLoadingBrands(false);
-                }
-            };
-
-            fetchBrands();
-
-            // Limpa seleções posteriores se mudar o tipo
-            if (data.selectedBrand?.type !== data.vehicleType) {
-                resetSelections('brand');
-            }
-        }
-    }, [data.vehicleType]);
-
-    // 2. Carrega ANOS quando a MARCA muda
-    useEffect(() => {
-        if (data.selectedBrand) {
-            const fetchYears = async () => {
-                setLoadingYears(true);
-                try {
-                    const response = await fetch(`/api/vehicles/years?brandId=${data.selectedBrand!.id}`);
-                    if (!response.ok) throw new Error('Failed to fetch years');
-                    const result = await response.json();
-                    
-                    let yearsList: string[] = [];
-                    if (Array.isArray(result)) {
-                        if (typeof result[0] === 'string') {
-                            yearsList = result;
-                        } else if (result[0]?.years) {
-                            yearsList = result.flatMap((r: any) => r.years);
-                        } else {
-                             yearsList = result.map((r: any) => r.toString());
-                        }
-                    } else if (result.years) {
-                        yearsList = result.years;
-                    }
-
-                    const uniqueYears = Array.from(new Set(yearsList)).sort((a, b) => parseInt(b) - parseInt(a));
-                    setYears(uniqueYears);
-                    
-                } catch (error) {
-                    console.error(error);
-                    setYears([]);
-                } finally {
-                    setLoadingYears(false);
-                }
-            };
-
-            fetchYears();
-        } else {
-            setYears([]);
-        }
-    }, [data.selectedBrand]);
-
-    // 3. Carrega GRUPOS quando o ANO muda
-    useEffect(() => {
-        if (data.selectedBrand && data.selectedYear) {
-            const fetchGroups = async () => {
-                setLoadingGroups(true);
-                try {
-                    const response = await fetch(`/api/vehicles/groups?brandId=${data.selectedBrand!.id}&year=${data.selectedYear}`);
-                    if (!response.ok) throw new Error('Failed to fetch groups');
-                    const result = await response.json();
-                    
-                    let groupsList: string[] = [];
-                    if (Array.isArray(result)) {
-                         if (typeof result[0] === 'string') groupsList = result;
-                         else if (result[0]?.group) groupsList = result.flatMap((r: any) => r.group);
-                    } else if (result.group) {
-                        groupsList = result.group;
-                    }
-
-                    setGroups(groupsList);
-                } catch (error) {
-                    console.error(error);
-                    setGroups([]);
-                } finally {
-                    setLoadingGroups(false);
-                }
-            };
-
-            fetchGroups();
-        } else {
-            setGroups([]);
-        }
-    }, [data.selectedBrand, data.selectedYear]);
-
-    // 4. Carrega VEÍCULOS (Modelos Finais) quando o GRUPO muda
-    useEffect(() => {
-        if (data.selectedBrand && data.selectedYear && data.selectedGroup) {
-            const fetchModels = async () => {
-                setLoadingModels(true);
-                try {
-                    const response = await fetch(
-                        `/api/vehicles/models?brandId=${data.selectedBrand!.id}&year=${data.selectedYear}&group=${encodeURIComponent(data.selectedGroup!)}`
-                    );
-                    if (!response.ok) throw new Error('Failed to fetch models');
-                    const result = await response.json();
-                    setModels(result);
-                } catch (error) {
-                    console.error(error);
-                    setModels([]);
-                } finally {
-                    setLoadingModels(false);
-                }
-            };
-
-            fetchModels();
-        } else {
-            setModels([]);
-        }
-    }, [data.selectedBrand, data.selectedYear, data.selectedGroup]);
-
-
-    // Helpers
-    const resetSelections = (fromLevel: 'type' | 'brand' | 'year' | 'group') => {
+    // Helpers — declared before effects that depend on them
+    const resetSelections = useCallback((fromLevel: 'type' | 'brand' | 'year' | 'group') => {
         const updates: Partial<QuotationData> = {};
         if (fromLevel === 'type') {
             updates.selectedBrand = undefined;
@@ -169,7 +43,134 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
             setModels([]);
         }
         updateData(updates);
-    };
+    }, [updateData]);
+
+    // 1. Carrega MARCAS quando o TIPO muda
+    useEffect(() => {
+        const fetchBrands = async () => {
+            if (!data.vehicleType) return;
+            setLoadingBrands(true);
+            try {
+                const response = await fetch(`/api/vehicles/brands?type=${data.vehicleType}`);
+                if (!response.ok) throw new Error('Failed to fetch brands');
+                const result = await response.json() as VehicleBrand[];
+                setBrands(result);
+
+                // Limpa seleções posteriores se mudar o tipo
+                if (data.selectedBrand?.type !== data.vehicleType) {
+                    resetSelections('brand');
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoadingBrands(false);
+            }
+        };
+
+        fetchBrands();
+    }, [data.vehicleType, data.selectedBrand?.type, resetSelections]);
+
+    // 2. Carrega ANOS quando a MARCA muda
+    useEffect(() => {
+        const fetchYears = async () => {
+            if (!data.selectedBrand) {
+                setYears([]);
+                return;
+            }
+            setLoadingYears(true);
+            try {
+                const response = await fetch(`/api/vehicles/years?brandId=${data.selectedBrand.id}`);
+                if (!response.ok) throw new Error('Failed to fetch years');
+                const result = await response.json() as unknown[];
+
+                let yearsList: string[] = [];
+                if (Array.isArray(result)) {
+                    if (typeof result[0] === 'string') {
+                        yearsList = result as string[];
+                    } else if ((result[0] as Record<string, unknown>)?.years) {
+                        yearsList = (result as Array<{ years: string[] }>).flatMap((r) => r.years);
+                    } else {
+                        yearsList = result.map((r) => String(r));
+                    }
+                } else if ((result as Record<string, unknown>).years) {
+                    yearsList = (result as { years: string[] }).years;
+                }
+
+                const uniqueYears = Array.from(new Set(yearsList)).sort((a, b) => parseInt(b) - parseInt(a));
+                setYears(uniqueYears);
+
+            } catch (error) {
+                console.error(error);
+                setYears([]);
+            } finally {
+                setLoadingYears(false);
+            }
+        };
+
+        fetchYears();
+    }, [data.selectedBrand]);
+
+    // 3. Carrega GRUPOS quando o ANO muda
+    useEffect(() => {
+        const fetchGroups = async () => {
+            if (!data.selectedBrand || !data.selectedYear) {
+                setGroups([]);
+                return;
+            }
+            setLoadingGroups(true);
+            try {
+                const response = await fetch(`/api/vehicles/groups?brandId=${data.selectedBrand.id}&year=${data.selectedYear}`);
+                if (!response.ok) throw new Error('Failed to fetch groups');
+                const result = await response.json() as unknown;
+
+                let groupsList: string[] = [];
+                if (Array.isArray(result)) {
+                    if (typeof result[0] === 'string') {
+                        groupsList = result as string[];
+                    } else if ((result[0] as Record<string, unknown>)?.group) {
+                        groupsList = (result as Array<{ group: string[] }>).flatMap((r) => r.group);
+                    }
+                } else if ((result as Record<string, unknown>)?.group) {
+                    groupsList = (result as { group: string[] }).group;
+                }
+
+                setGroups(groupsList);
+            } catch (error) {
+                console.error(error);
+                setGroups([]);
+            } finally {
+                setLoadingGroups(false);
+            }
+        };
+
+        fetchGroups();
+    }, [data.selectedBrand, data.selectedYear]);
+
+    // 4. Carrega VEÍCULOS (Modelos Finais) quando o GRUPO muda
+    useEffect(() => {
+        const fetchModels = async () => {
+            if (!data.selectedBrand || !data.selectedYear || !data.selectedGroup) {
+                setModels([]);
+                return;
+            }
+            setLoadingModels(true);
+            try {
+                const response = await fetch(
+                    `/api/vehicles/models?brandId=${data.selectedBrand.id}&year=${data.selectedYear}&group=${encodeURIComponent(data.selectedGroup)}`
+                );
+                if (!response.ok) throw new Error('Failed to fetch models');
+                const result = await response.json() as VehicleModel[];
+                setModels(result);
+            } catch (error) {
+                console.error(error);
+                setModels([]);
+            } finally {
+                setLoadingModels(false);
+            }
+        };
+
+        fetchModels();
+    }, [data.selectedBrand, data.selectedYear, data.selectedGroup]);
 
     const handleTypeSelect = (type: VehicleType) => {
         updateData({ vehicleType: type });
@@ -194,13 +195,12 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
 
     const handleModelChange = (modelId: string | number) => {
         const model = models.find(m => m.id === modelId);
-        
+
         if (model) {
-            const selectedModel: any = {
+            const selectedModel: VehicleModel = {
                 ...model,
-                year: data.selectedYear || 0,
             };
-            updateData({ selectedModel: selectedModel });
+            updateData({ selectedModel });
         }
     };
 
@@ -242,7 +242,7 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
         <div className="space-y-6 animate-in fade-in slide-in-from-right-4">
             <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-black text-primary leading-tight">Dados do Veículo</h2>
-                <button 
+                <button
                     onClick={() => {
                         updateData({ vehicleType: undefined });
                         resetSelections('type');

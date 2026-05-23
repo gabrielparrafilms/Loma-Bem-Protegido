@@ -1,12 +1,15 @@
+type FbqPrimitive = string | number | boolean;
+type FbqData = Record<string, FbqPrimitive | FbqPrimitive[]>;
+
 declare global {
   interface Window {
-    fbq: any;
+    fbq: (action: string, event: string, data?: FbqData) => void;
   }
 }
 
 // Função auxiliar para limpar objetos (remove null/undefined) e garantir tipos primitivos
-const cleanData = (data: Record<string, any>) => {
-  const cleaned: Record<string, any> = {};
+const cleanData = (data: Record<string, unknown>): FbqData => {
+  const cleaned: FbqData = {};
   Object.keys(data).forEach((key) => {
     const value = data[key];
     if (value !== null && value !== undefined && value !== '') {
@@ -15,10 +18,10 @@ const cleanData = (data: Record<string, any>) => {
         try {
             // Converte objetos/arrays para string para garantir que sejam enviados
             cleaned[key] = JSON.stringify(value);
-        } catch (e) {
+        } catch {
             cleaned[key] = String(value);
         }
-      } else {
+      } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
         cleaned[key] = value;
       }
     }

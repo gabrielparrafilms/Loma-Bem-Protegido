@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {QuotationData, DecodedVehicle, VehicleModel} from "@/types/quotation";
+import {QuotationData, DecodedVehicle, VehicleModel, VehicleType} from "@/types/quotation";
 
 interface Props {
     data: Partial<QuotationData>;
@@ -84,7 +84,7 @@ export default function VehicleConfirmation({ data, updateData, onManual }: Prop
                 selectedModel: normalizedModel,
                 selectedBrand: normalizedModel.brand,
                 selectedYear: normalizedModel?.years[0]?.year,
-                vehicleType: (vehicle.vehicleType as any) || 'car'
+                vehicleType: (vehicle.vehicleType as VehicleType) || 'car'
             });
         }
         setSelected(true);
