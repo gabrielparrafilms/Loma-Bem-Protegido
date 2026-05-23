@@ -14,7 +14,7 @@ export default function Navbar() {
           alt="LOMA Bem Protegido"
           width={100}
           height={28}
-          priority
+          preload={true}
           className="h-5 md:h-7 w-auto object-contain"
         />
       </a>
