@@ -518,9 +518,28 @@ import ScrollAnimationInit from "@/components/lps/{slug}/ScrollAnimationInit";
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://loma.com.br";
+
 export const metadata: Metadata = {
   title: "Título da LP | LOMA Proteção Veicular",
-  description: "Descrição para SEO e redes sociais.",
+  description: "Descrição para SEO e redes sociais (até 160 caracteres).",
+  keywords: ["proteção veicular", "loma proteção", /* termos específicos da LP */],
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: `${baseUrl}/{slug}`,
+    title: "Título da LP",
+    description: "Descrição curta para compartilhamento (até 120 caracteres).",
+    siteName: "LOMA Proteção Veicular",
+    images: [{ url: `${baseUrl}/lps/{slug}/og-image.jpg`, width: 1200, height: 630, alt: "LOMA" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Título da LP",
+    description: "Descrição curta.",
+    images: [`${baseUrl}/lps/{slug}/og-image.jpg`],
+  },
+  alternates: { canonical: `${baseUrl}/{slug}` },
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -535,7 +554,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 }
 ```
 
-> Se a metadata for complexa (og, twitter, canonical), extrair para `metadata.ts` separado e importar no `page.tsx` como `export { metadata } from "./metadata"`.
+> Se a metadata for muito extensa, extrair para `metadata.ts` separado e reexportar no `layout.tsx` ou `page.tsx`.
+>
+> A imagem og-image.jpg deve ter **1200×630px** e estar em `public/lps/{slug}/`.
 
 ### Passo 3 — Criar o ScrollAnimationInit
 
@@ -696,13 +717,26 @@ Arquivo: `src/config/lps.ts`
 },
 ```
 
-### Passo 9 — Testar
+### Passo 9 — Adicionar ao sitemap
+
+Arquivo: `src/app/sitemap.ts` — adicionar a nova LP ao array:
+
+```ts
+{
+  url: `${baseUrl}/{slug}`,
+  lastModified: new Date(),
+  changeFrequency: "weekly",   // ou "monthly" para LPs sazonais
+  priority: 0.8,               // 1.0 = LP principal, 0.9 = variantes perenes, 0.7 = sazonais
+},
+```
+
+### Passo 10 — Testar
 
 ```bash
 npm run build   # deve listar a nova rota em Route (app)
 ```
 
-Verificar no output do build que `/{slug}` aparece como rota estática `○`.
+Verificar no output do build que `/{slug}` aparece como rota estática `○`, e que `/sitemap.xml` e `/robots.txt` continuam listados.
 
 ---
 
@@ -725,7 +759,40 @@ const sources = 'whatsapp|youtube|facebook|tik-tok|instagram|google|novafonte'
 
 ---
 
-## 12. Regras Que Não Podem Ser Quebradas
+## 12. Padrões de SEO e Acessibilidade
+
+### SEO
+
+**Infraestrutura (não alterar sem motivo):**
+- `src/app/robots.ts` — gera `/robots.txt` automaticamente. Bloqueia `/api/` e `/_next/`. Aponta para o sitemap.
+- `src/app/sitemap.ts` — gera `/sitemap.xml` com todas as LPs. **Obrigatório adicionar cada nova LP aqui.**
+
+**Por LP:**
+- Toda LP deve ter `title`, `description`, `keywords`, `openGraph` completo (locale, url, siteName, image 1200×630), `twitter card` e `alternates.canonical`.
+- O campo `title` deve ser o título da página, não o template. O template `"%s | LOMA Proteção Veicular"` é aplicado automaticamente pelo RootLayout.
+- `NEXT_PUBLIC_BASE_URL` é a fonte da URL canônica — nunca hardcodar `https://loma.com.br` diretamente nos layouts.
+
+### Acessibilidade
+
+**Foco por teclado:**
+- `:focus-visible` já está definido globalmente em `globals.css` com outline tiffany. Não remover nem sobrescrever com `outline-none` em elementos interativos — usar `focus:outline-none` apenas em inputs onde o foco é visualmente indicado por `focus:border-*`.
+
+**Botões e elementos interativos:**
+- Usar `<button>` para ações, `<a href>` para navegação. **Nunca usar `<div role="button">`** — isso exige suporte manual a Enter, Space e focus, que é difícil de manter correto.
+- Todo `<button>` deve ter texto visível ou `aria-label` descritivo.
+- Elementos decorativos (divs de fundo, SVGs de ornamento, vídeos bg) devem ter `aria-hidden="true"`.
+
+**Formulários:**
+- Todo `<input>` deve ter um `<label>` associado via `htmlFor` + `id`. Usar `className="sr-only"` quando o label visual seria redundante com o placeholder.
+- Adicionar `autoComplete` nos inputs de dados pessoais (`name`, `tel-national`, `postal-code`).
+
+**Contraste:**
+- Tiffany `#0ABAB5` em fundo branco tem contraste 3.65:1 — **abaixo do mínimo WCAG AA (4.5:1) para texto normal**. Evitar usar tiffany como cor de texto em fundos claros. Para texto em fundo claro, preferir `#087F7B` (tiffany escuro) ou texto preto/cinza escuro.
+- Tiffany em fundo escuro (`#09090b`) e branco em fundo tiffany são seguros.
+
+---
+
+## 13. Regras Que Não Podem Ser Quebradas
 
 1. **Nunca usar iframe para cotação.** O modal usa `<Quotation />` interno.
 2. **Nunca criar arquivos de config com URLs externas** de cotação. O endpoint fica em `quotationService.ts`.
@@ -735,3 +802,5 @@ const sources = 'whatsapp|youtube|facebook|tik-tok|instagram|google|novafonte'
 6. **Fidelidade ao original** ao migrar LP legada — mesmas cores, fontes, espaçamentos, copy e animações. Sem "melhorias" não solicitadas.
 7. **Sem comentários que explicam o que o código faz.** Comentar apenas o porquê quando não for óbvio.
 8. **Sem features extras** além do que foi pedido. YAGNI (You Aren't Gonna Need It).
+9. **Toda nova LP deve ter OpenGraph completo e ser adicionada ao `sitemap.ts`.** Ver seção 12.
+10. **Nunca usar `<div role="button">`** — usar `<button>` nativo.
