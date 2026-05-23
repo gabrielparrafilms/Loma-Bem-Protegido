@@ -1,5 +1,7 @@
 "use client";
 
+import { TrendingDown, MapPin, CalendarX2 } from "lucide-react";
+
 export default function PainSection() {
   return (
     <section
@@ -115,10 +117,7 @@ export default function PainSection() {
             {/* Content Area */}
             <div className="relative z-10 mt-auto p-8 pt-0 flex flex-col">
               <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-6 group-hover:bg-[#0ABAB5]/10 group-hover:scale-110 transition-all duration-500 border border-red-100 group-hover:border-[#0ABAB5]/20 shadow-sm">
-                <i
-                  data-lucide="trending-down"
-                  className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500"
-                ></i>
+                <TrendingDown className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-geist font-semibold text-gray-900 mb-2 group-hover:text-[#0ABAB5] transition-colors duration-500">
                 Score Baixo
@@ -177,10 +176,7 @@ export default function PainSection() {
             {/* Content Area */}
             <div className="relative z-10 mt-auto p-8 pt-0 flex flex-col">
               <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-6 group-hover:bg-[#0ABAB5]/10 group-hover:scale-110 transition-all duration-500 border border-red-100 group-hover:border-[#0ABAB5]/20 shadow-sm">
-                <i
-                  data-lucide="map-pin"
-                  className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500"
-                ></i>
+                <MapPin className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-geist font-semibold text-gray-900 mb-2 group-hover:text-[#0ABAB5] transition-colors duration-500">
                 CEP de Risco
@@ -272,10 +268,7 @@ export default function PainSection() {
             {/* Content Area */}
             <div className="relative z-10 mt-auto p-8 pt-0 flex flex-col">
               <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-6 group-hover:bg-[#0ABAB5]/10 group-hover:scale-110 transition-all duration-500 border border-red-100 group-hover:border-[#0ABAB5]/20 shadow-sm">
-                <i
-                  data-lucide="calendar-x-2"
-                  className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500"
-                ></i>
+                <CalendarX2 className="w-6 h-6 text-red-500 group-hover:text-[#0ABAB5] transition-colors duration-500" />
               </div>
               <h3 className="text-2xl font-geist font-semibold text-gray-900 mb-2 group-hover:text-[#0ABAB5] transition-colors duration-500">
                 Carro Antigo / Uso
