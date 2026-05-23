@@ -16,6 +16,7 @@ export default function TurningPointSection() {
           muted
           loop
           playsInline
+          aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover object-[center_80%] opacity-80"
         >
           {/* O src será injetado via JS apenas quando o usuário chegar perto da seção */}
