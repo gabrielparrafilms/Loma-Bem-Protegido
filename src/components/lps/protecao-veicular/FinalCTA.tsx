@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuotationModal } from "@/components/shared/QuotationModal/context";
+import Footer from "@/components/shared/Footer";
 
 export default function FinalCTA() {
   const { open } = useQuotationModal();
@@ -9,11 +10,11 @@ export default function FinalCTA() {
     <>
       <section
         id="cta-final"
-        className="py-24 md:py-40 px-6 w-full text-center relative overflow-hidden border-b border-white/5"
+        className="py-24 md:py-40 px-6 w-full text-center relative overflow-hidden border-b border-white/5 isolate"
       >
         {/* Fundo com imagem */}
         <div
-          className="absolute inset-0 bg-cover bg-center md:bg-fixed opacity-70 pointer-events-none -z-20"
+          className="absolute inset-0 bg-cover bg-center md:bg-[85%_center] md:bg-fixed opacity-70 pointer-events-none -z-20"
           style={{ backgroundImage: "url('/lps/protecao-veicular/images/PLANOS.jpg')" }}
         />
         {/* Escuro Overlay para manter leitura 100% */}
@@ -21,7 +22,7 @@ export default function FinalCTA() {
         {/* Glow Radial Fundo */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(37,211,102,0.05)_0%,transparent_50%)] pointer-events-none z-0" />
 
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
           <h2 className="text-5xl md:text-7xl font-[family-name:var(--font-inter)] font-medium tracking-tighter leading-[1.05] text-white mb-6">
             Enquanto você lê isso,<br />seu carro está sem proteção.
           </h2>
@@ -58,15 +59,7 @@ export default function FinalCTA() {
         </div>
       </section>
 
-      <footer className="py-12 text-center relative overflow-hidden border-t border-white/5">
-        <h2 className="text-3xl font-[family-name:var(--font-inter)] font-medium text-transparent-bg mb-4 relative z-10">
-          LOMA Bem Protegido
-        </h2>
-        <p className="text-xs text-zinc-600 font-mono relative z-10">
-          &copy; {new Date().getFullYear()} Loma Bem Protegido. Todos os direitos reservados.
-          <br />Proteção veicular regulamentada.
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }

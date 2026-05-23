@@ -4,6 +4,7 @@
   --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-geist: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-manrope: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   /* Cores da marca LOMA */
   --color-primary: #0ABAB5;
@@ -39,7 +40,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.font-geist { font-family: 'Geist', sans-serif; }
+.font-geist { font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif; }
+.font-manrope { font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif; }
 
 /* ========================================
    Texto com fundo texturizado animado
@@ -243,4 +245,128 @@ body {
     mask-image: none !important;
     -webkit-mask-image: none !important;
   }
+}
+
+/* ========================================
+   Maio Amarelo — Animações específicas
+======================================== */
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6px, -12px); }
+}
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-8px, 10px); }
+}
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-6px, -8px); }
+}
+@keyframes float-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, 12px); }
+}
+.animate-float-1 { animation: float-1 6s ease-in-out infinite; }
+.animate-float-2 { animation: float-2 7s ease-in-out infinite; }
+.animate-float-3 { animation: float-3 5.5s ease-in-out infinite; }
+.animate-float-4 { animation: float-4 8s ease-in-out infinite; }
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  15% { transform: scale(1.04); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.animate-heartbeat {
+  animation: heartbeat 2s infinite ease-in-out;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Marquee timings específicos para maio-amarelo (45s left, 40s right) */
+.animate-marquee-h-45 { animation: marquee-horizontal 45s linear infinite; }
+.animate-marquee-h-reverse-40 { animation: marquee-horizontal-reverse 40s linear infinite; }
+
+/* ========================================
+   Proposta Racional — Animações específicas
+======================================== */
+/* Vertical marquee aliases for proposta-racional (35s each) */
+.animate-marquee-up { animation: marquee-vertical 35s linear infinite; }
+.animate-marquee-down { animation: marquee-vertical-reverse 35s linear infinite; }
+.marquee-col:hover > div { animation-play-state: paused; }
+
+/* CTA tiffany pulse */
+@keyframes cta-pulse-anim {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(10, 186, 181, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 45px rgba(10, 186, 181, 0.7); }
+}
+.animate-cta-pulse {
+  animation: cta-pulse-anim 2s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+.animate-cta-pulse:hover {
+  animation: none;
+  transform: scale(1.04) translateY(-2px) !important;
+  box-shadow: 0 0 40px rgba(250, 182, 0, 0.6) !important;
+  background-color: #FAB600 !important;
+  border-color: #FAB600 !important;
+}
+
+/* WhatsApp pulse */
+@keyframes whatsapp-pulse-anim {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(37, 211, 102, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 45px rgba(37, 211, 102, 0.7); }
+}
+.animate-whatsapp-pulse {
+  animation: whatsapp-pulse-anim 2s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+.animate-whatsapp-pulse:hover {
+  animation: none;
+  transform: scale(1.04) translateY(-2px) !important;
+  box-shadow: 0 0 50px rgba(37, 211, 102, 0.6) !important;
+  background-color: #22c55e !important;
+}
+
+/* LOMA card scale pulse */
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.animate-pulse-scale {
+  animation: pulse-scale 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
+}
+
+/* LOMA glow card */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 25px rgba(10, 186, 181, 0.15), inset 0 0 15px rgba(10, 186, 181, 0.05); }
+  50% { box-shadow: 0 0 45px rgba(10, 186, 181, 0.35), inset 0 0 25px rgba(10, 186, 181, 0.15); }
+}
+.loma-glow-card {
+  animation: pulse-glow 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  border-color: rgba(10, 186, 181, 0.5) !important;
+  background: rgba(10, 186, 181, 0.08) !important;
+}
+
+/* Feature card hover (proposta racional) */
+.feature-card-hover {
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease, scale 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: scale, box-shadow, background-color;
+}
+.feature-card-hover:hover {
+  scale: 1.03;
+  border-color: rgba(10, 186, 181, 0.6) !important;
+  background-color: rgba(18, 18, 22, 0.95) !important;
+  box-shadow: 0 0 40px rgba(10, 186, 181, 0.2), inset 0 0 20px rgba(10, 186, 181, 0.05) !important;
+  z-index: 10;
+}
+
+/* Tiffany gradient text */
+.text-tiffany-gradient {
+  background-image: linear-gradient(135deg, #fff 0%, #0ABAB5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

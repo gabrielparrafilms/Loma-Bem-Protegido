@@ -22,7 +22,10 @@ function TestimonialCard({ t }: { t: Testimonial }) {
         <div className="flex flex-col">
           <span className="text-sm font-semibold text-gray-900">{t.name}</span>
           <span className="text-[10px] font-bold text-[#0ABAB5] uppercase tracking-wide flex items-center gap-1">
-            ✓ Protege seu {t.car}
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            Protege seu {t.car}
           </span>
         </div>
       </div>
@@ -45,8 +48,8 @@ export default function SocialProofSection() {
   return (
     <section id="prova-social" className="pb-24 pt-8 relative z-10">
       <div className="max-w-[1400px] mx-auto px-4 md:px-6">
-        <div className="text-center mb-12 relative z-30">
-          <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-inter)] font-semibold text-gray-900 mb-4 tracking-tight">
+        <div className="text-center mb-12 relative z-30 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+          <h2 className="text-4xl md:text-5xl font-geist font-semibold text-gray-900 mb-4 tracking-tight">
             Eles não arriscaram.<br />
             <span className="text-[#0ABAB5]">E você?</span>
           </h2>
@@ -81,9 +84,10 @@ export default function SocialProofSection() {
           </div>
         </div>
 
-        <div className="mt-10 md:mt-16 flex justify-center relative z-20">
-          <button
-            onClick={open}
+        <div className="mt-10 md:mt-16 flex justify-center relative z-20 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+          <a
+            href="#"
+            onClick={(e) => { e.preventDefault(); open(); }}
             className="group/cta5 relative inline-flex items-center justify-center overflow-hidden font-medium tracking-tight bg-[#0ABAB5] rounded-full px-8 py-4 text-base md:text-lg text-white shadow-[0_0_20px_rgba(10,186,181,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,204,21,0.4)] hover:-translate-y-1"
           >
             <span className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -95,7 +99,7 @@ export default function SocialProofSection() {
             <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-10 group-hover/cta5:translate-y-0 group-hover/cta5:opacity-100 opacity-0 rounded-full text-black font-bold">
               Quero me proteger agora
             </span>
-          </button>
+          </a>
         </div>
       </div>
     </section>

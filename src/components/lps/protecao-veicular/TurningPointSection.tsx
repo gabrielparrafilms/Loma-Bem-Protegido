@@ -1,8 +1,37 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { CheckCircle2, Truck } from "lucide-react";
 
 export default function TurningPointSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const source = video.querySelector("source");
+          if (source) {
+            const dataSrc = source.getAttribute("data-src");
+            if (dataSrc && !source.getAttribute("src")) {
+              source.setAttribute("src", dataSrc);
+              video.load();
+              video.play().catch(() => {});
+            }
+          }
+          observer.unobserve(video);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="a-virada"
@@ -11,6 +40,7 @@ export default function TurningPointSection() {
       {/* Background Video Otimizado */}
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
         <video
+          ref={videoRef}
           id="virada-video"
           preload="none"
           muted

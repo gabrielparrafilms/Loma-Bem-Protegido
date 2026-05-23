@@ -56,7 +56,7 @@ function QuotationModalInner() {
               }}
               /* Mobile: sobrescreve com slide de baixo via CSS */
               className={[
-                "pointer-events-auto relative w-full bg-[#f8fafc]",
+                "pointer-events-auto relative w-full bg-[#f8fafc] text-[#09090b]",
                 "shadow-[0_25px_60px_rgba(0,0,0,0.45)] overflow-hidden",
                 /* Desktop */
                 "sm:max-w-[580px] sm:rounded-[40px]",

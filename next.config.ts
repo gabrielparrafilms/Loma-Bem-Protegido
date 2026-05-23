@@ -19,13 +19,21 @@ const nextConfig: NextConfig = {
     optimizeCss: true,
   },
   async redirects() {
+    const sources = 'whatsapp|youtube|facebook|tik-tok|instagram|google'
+
     return [
-      { source: '/whatsapp', destination: '/protecao-veicular?utm_source=whatsapp', permanent: false },
-      { source: '/youtube', destination: '/protecao-veicular?utm_source=youtube', permanent: false },
-      { source: '/facebook', destination: '/protecao-veicular?utm_source=facebook', permanent: false },
-      { source: '/tik-tok', destination: '/protecao-veicular?utm_source=tik-tok', permanent: false },
-      { source: '/instagram', destination: '/protecao-veicular?utm_source=instagram', permanent: false },
-      { source: '/google', destination: '/protecao-veicular?utm_source=google', permanent: false },
+      // /{lp}/{fonte} → /{lp}?utm_source={fonte}  (qualquer LP)
+      {
+        source: `/:lp/:source(${sources})`,
+        destination: '/:lp?utm_source=:source',
+        permanent: false,
+      },
+      // /{fonte} → /protecao-veicular?utm_source={fonte}  (fallback sem LP)
+      {
+        source: `/:source(${sources})`,
+        destination: '/protecao-veicular?utm_source=:source',
+        permanent: false,
+      },
     ]
   },
 }
