@@ -27,22 +27,32 @@ export default function InitialData({ data, updateData }: Props) {
             </div>
 
             <div className="space-y-4">
-                <input
-                    type="text"
-                    placeholder="Seu Nome Completo"
-                    className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-[#3CC0B7] outline-none shadow-sm text-lg transition-all"
-                    value={data.name || ""}
-                    onChange={(e) => updateData({ name: e.target.value })}
-                />
-                <PatternFormat
-                    format="(##) #####-####"
-                    mask="_"
-                    placeholder="Seu WhatsApp (com DDD)"
-                    className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-[#3CC0B7] outline-none shadow-sm text-lg transition-all"
-                    value={data.phone || ""}
-                    onValueChange={(values) => updateData({ phone: values.value })}
-                    onPaste={handlePastePhone}
-                />
+                <div>
+                    <label htmlFor="quotation-name" className="sr-only">Nome Completo</label>
+                    <input
+                        id="quotation-name"
+                        type="text"
+                        placeholder="Seu Nome Completo"
+                        autoComplete="name"
+                        className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-[#3CC0B7] outline-none shadow-sm text-lg transition-all"
+                        value={data.name || ""}
+                        onChange={(e) => updateData({ name: e.target.value })}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="quotation-phone" className="sr-only">WhatsApp com DDD</label>
+                    <PatternFormat
+                        id="quotation-phone"
+                        format="(##) #####-####"
+                        mask="_"
+                        placeholder="Seu WhatsApp (com DDD)"
+                        autoComplete="tel-national"
+                        className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-[#3CC0B7] outline-none shadow-sm text-lg transition-all"
+                        value={data.phone || ""}
+                        onValueChange={(values) => updateData({ phone: values.value })}
+                        onPaste={handlePastePhone}
+                    />
+                </div>
             </div>
         </div>
     );

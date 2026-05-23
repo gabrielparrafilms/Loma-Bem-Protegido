@@ -74,7 +74,7 @@ export default function BenefitsSection() {
                   ].join(" ")}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && open()}
+                  onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && open()}
                 >
                   {/* Top row */}
                   <div className="flex justify-between items-start gap-4">
