@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect("/proteção-veicular");
+  redirect("/protecao-veicular");
 }

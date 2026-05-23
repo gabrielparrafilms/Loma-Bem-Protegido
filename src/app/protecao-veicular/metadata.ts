@@ -17,13 +17,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    url: `${baseUrl}/proteção-veicular`,
+    url: `${baseUrl}/protecao-veicular`,
     title: "LOMA — Proteção Veicular Inteligente",
     description: "Proteção completa para seu veículo a partir de R$ 89/mês. Sem análise de crédito.",
     siteName: "LOMA Proteção Veicular",
     images: [
       {
-        url: `${baseUrl}/lps/proteção-veicular/og-image.jpg`,
+        url: `${baseUrl}/lps/protecao-veicular/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: "LOMA Proteção Veicular",
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LOMA — Proteção Veicular Inteligente",
     description: "Proteção completa para seu veículo a partir de R$ 89/mês.",
-    images: [`${baseUrl}/lps/proteção-veicular/og-image.jpg`],
+    images: [`${baseUrl}/lps/protecao-veicular/og-image.jpg`],
   },
   alternates: {
-    canonical: `${baseUrl}/proteção-veicular`,
+    canonical: `${baseUrl}/protecao-veicular`,
   },
 };

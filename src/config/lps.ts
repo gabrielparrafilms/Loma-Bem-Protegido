@@ -10,7 +10,7 @@ export type LP = {
 
 export const lpsConfig: LP[] = [
   {
-    slug: "proteção-veicular",
+    slug: "protecao-veicular",
     name: "Proteção Veicular Inteligente",
     description: "LP principal da LOMA com vídeo hero e funil de cotação via modal",
     ctaType: "modal",

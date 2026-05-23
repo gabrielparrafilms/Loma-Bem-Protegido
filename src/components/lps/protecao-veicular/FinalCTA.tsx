@@ -14,7 +14,7 @@ export default function FinalCTA() {
         {/* Fundo com imagem */}
         <div
           className="absolute inset-0 bg-cover bg-center md:bg-fixed opacity-70 pointer-events-none -z-20"
-          style={{ backgroundImage: "url('/lps/proteção-veicular/images/PLANOS.jpg')" }}
+          style={{ backgroundImage: "url('/lps/protecao-veicular/images/PLANOS.jpg')" }}
         />
         {/* Escuro Overlay para manter leitura 100% */}
         <div className="absolute inset-0 bg-[#09090b]/50 backdrop-blur-[1px] pointer-events-none -z-10" />

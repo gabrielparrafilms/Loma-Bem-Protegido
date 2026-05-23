@@ -20,12 +20,12 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: '/whatsapp', destination: '/proteção-veicular?utm_source=whatsapp', permanent: false },
-      { source: '/youtube', destination: '/proteção-veicular?utm_source=youtube', permanent: false },
-      { source: '/facebook', destination: '/proteção-veicular?utm_source=facebook', permanent: false },
-      { source: '/tik-tok', destination: '/proteção-veicular?utm_source=tik-tok', permanent: false },
-      { source: '/instagram', destination: '/proteção-veicular?utm_source=instagram', permanent: false },
-      { source: '/google', destination: '/proteção-veicular?utm_source=google', permanent: false },
+      { source: '/whatsapp', destination: '/protecao-veicular?utm_source=whatsapp', permanent: false },
+      { source: '/youtube', destination: '/protecao-veicular?utm_source=youtube', permanent: false },
+      { source: '/facebook', destination: '/protecao-veicular?utm_source=facebook', permanent: false },
+      { source: '/tik-tok', destination: '/protecao-veicular?utm_source=tik-tok', permanent: false },
+      { source: '/instagram', destination: '/protecao-veicular?utm_source=instagram', permanent: false },
+      { source: '/google', destination: '/protecao-veicular?utm_source=google', permanent: false },
     ]
   },
 }

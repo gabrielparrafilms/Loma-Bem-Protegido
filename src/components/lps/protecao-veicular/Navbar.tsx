@@ -10,7 +10,7 @@ export default function Navbar() {
     <header className="fixed flex px-6 md:px-12 z-50 pointer-events-auto py-4 md:py-5 top-0 w-full items-center justify-between backdrop-blur-md bg-[#09090b]/60 border-b border-white/5 transition-all">
       <a href="#" className="flex items-center shrink-0">
         <Image
-          src="/lps/proteção-veicular/logo-loma.svg"
+          src="/lps/protecao-veicular/logo-loma.svg"
           alt="LOMA Bem Protegido"
           width={100}
           height={28}

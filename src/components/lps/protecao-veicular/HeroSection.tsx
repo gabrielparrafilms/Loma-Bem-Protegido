@@ -23,7 +23,7 @@ export default function HeroSection() {
           className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-screen will-change-[transform,opacity] [transform:translateZ(0)] [backface-visibility:hidden]"
           aria-hidden="true"
         >
-          <source src="/lps/proteção-veicular/videos/video-hero.mp4" type="video/mp4" />
+          <source src="/lps/protecao-veicular/videos/video-hero.mp4" type="video/mp4" />
         </video>
         {/* Overlays para leitura */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#09090b]/60 via-[#09090b]/40 to-[#09090b]" />

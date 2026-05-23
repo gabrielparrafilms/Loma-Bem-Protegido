@@ -20,7 +20,7 @@ export default function TurningPointSection() {
           className="absolute inset-0 w-full h-full object-cover object-[center_80%] opacity-80"
         >
           {/* O src será injetado via JS apenas quando o usuário chegar perto da seção */}
-          <source data-src="/lps/proteção-veicular/videos/polinho.mp4" type="video/mp4" />
+          <source data-src="/lps/protecao-veicular/videos/polinho.mp4" type="video/mp4" />
         </video>
         {/* Overlays de gradiente para legibilidade do texto e transição suave */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-[#09090b]/30 to-transparent"></div>
