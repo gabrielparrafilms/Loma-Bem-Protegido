@@ -49,12 +49,6 @@ export default function FinalCTA() {
                 Quero minha cotação
               </span>
             </button>
-            <button
-              onClick={open}
-              className="text-white/90 hover:text-white transition-colors text-sm underline underline-offset-4"
-            >
-              Prefiro preencher formulário
-            </button>
           </div>
         </div>
       </section>

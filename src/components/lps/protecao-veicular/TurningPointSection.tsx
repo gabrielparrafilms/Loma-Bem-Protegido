@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import { CheckCircle2, Truck } from "lucide-react";
+import { useQuotationModal } from "@/components/shared/QuotationModal/context";
 
 export default function TurningPointSection() {
+  const { open } = useQuotationModal();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -153,8 +155,8 @@ export default function TurningPointSection() {
                   A partir de R$89<span className="text-lg text-emerald-400/60 font-normal">/mês</span>
                 </div>
               </div>
-              <a
-                href="https://lomaprotecao.com.br/cotacao?o=SITE&subO=TRAFEGO&code=C5VCWGWW&utm_source=google&utm_medium=maxconversao&utm_campaign=%7Bcampaignname%7D&utm_term=loma&utm_content=%7Badgroupname%7D&utm_id=22925727481"
+              <button
+                onClick={open}
                 className="group/btn relative shrink-0 inline-flex min-w-[160px] cursor-pointer overflow-hidden font-medium tracking-tight bg-[#09090b]/80 backdrop-blur-md border border-zinc-700/80 hover:border-white rounded-full px-8 py-4 items-center justify-center text-sm text-white/90 shadow-[0_2.8px_2.2px_rgba(0,0,0,0.3)] transition-colors duration-300 z-10"
               >
                 {/* Revex Hover BG Fill */}
@@ -169,7 +171,7 @@ export default function TurningPointSection() {
                 <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-8 group-hover/btn:translate-y-0 group-hover/btn:opacity-100 opacity-0 rounded-full text-[#09090b] font-bold shadow-sm">
                   Simular Agora
                 </span>
-              </a>
+              </button>
             </div>
           </div>
         </div>

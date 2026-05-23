@@ -1,8 +1,11 @@
 "use client";
 
 import { TrendingDown, MapPin, CalendarX2 } from "lucide-react";
+import { useQuotationModal } from "@/components/shared/QuotationModal/context";
 
 export default function PainSection() {
+  const { open } = useQuotationModal();
+
   return (
     <section
       id="a-ferida"
@@ -300,9 +303,9 @@ export default function PainSection() {
           </div>
 
           <div className="pt-10 flex justify-center">
-            <a
-              href="https://lomaprotecao.com.br/cotacao?o=SITE&subO=TRAFEGO&code=C5VCWGWW&utm_source=google&utm_medium=maxconversao&utm_campaign=%7Bcampaignname%7D&utm_term=loma&utm_content=%7Badgroupname%7D&utm_id=22925727481"
-              className="group/cta3 relative inline-flex items-center justify-center overflow-hidden font-medium tracking-tight bg-[#0ABAB5] rounded-full px-8 py-4 text-base md:text-lg text-white shadow-[0_0_20px_rgba(10,186,181,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,204,21,0.4)] hover:-translate-y-1"
+            <button
+              onClick={open}
+              className="group/cta3 relative inline-flex items-center justify-center overflow-hidden font-medium tracking-tight bg-[#0ABAB5] rounded-full px-8 py-4 text-base md:text-lg text-white shadow-[0_0_20px_rgba(10,186,181,0.3)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,204,21,0.4)] hover:-translate-y-1 cursor-pointer"
             >
               {/* Revex Hover BG Fill (Yellow) */}
               <span className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -317,7 +320,7 @@ export default function PainSection() {
               <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-500 ease-[cubic-bezier(0.15,0.83,0.66,1)] translate-y-10 group-hover/cta3:translate-y-0 group-hover/cta3:opacity-100 opacity-0 rounded-full text-black font-bold">
                 Simular meu plano agora
               </span>
-            </a>
+            </button>
           </div>
         </div>
 
