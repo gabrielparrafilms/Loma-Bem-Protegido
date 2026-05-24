@@ -190,7 +190,7 @@ export default function Quotation() {
 
                 utm: {
                     utmId: data.utmId || undefined,
-                    utmSource: data.utmSource || undefined,
+                    utmSource: data.utmSource || "organico",
                     utmMedium: data.utmMedium || undefined,
                     utmCampaign: data.utmCampaign || undefined,
                     utmTerm: data.utmTerm || undefined,
