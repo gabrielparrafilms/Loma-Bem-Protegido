@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useState} from "react";
-import {useSearchParams} from "next/navigation";
+import {usePathname, useSearchParams} from "next/navigation";
 import {AnimatePresence, LazyMotion, domAnimation, m} from "framer-motion";
 import {QuotationData, QuotationOrder} from "@/types/quotation";
 import {
@@ -31,8 +31,15 @@ const VEHICLE_STEPS: string[] = [
     QuotationStepName.VEHICLE_MANUAL_SELECTION,
 ];
 
+const LP_ORIGINS: Record<string, string> = {
+    "/protecao-veicular": "Site: Proteção Veicular",
+    "/maio-amarelo": "Site: Maio Amarelo",
+    "/proposta-racional": "Site: Proposta Racional",
+};
+
 export default function Quotation() {
     const searchParams = useSearchParams();
+    const pathname = usePathname();
     const mode = searchParams.get("mode");
 
     const [configuration, setConfiguration] = useState<PageConfigurationStep[]>(DEFAULT_PAGE_CONFIGURATION);
@@ -101,6 +108,21 @@ export default function Quotation() {
     }, [firstStep]);
 
     useEffect(() => {
+        const captured: Partial<QuotationData> = {
+            utmId: searchParams.get("utm_id") ?? undefined,
+            utmSource: searchParams.get("utm_source") ?? undefined,
+            utmMedium: searchParams.get("utm_medium") ?? undefined,
+            utmCampaign: searchParams.get("utm_campaign") ?? undefined,
+            utmTerm: searchParams.get("utm_term") ?? undefined,
+            utmContent: searchParams.get("utm_content") ?? undefined,
+        };
+        if (Object.values(captured).some(Boolean)) {
+            setData(prev => ({ ...prev, ...captured }));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const restore = async () => {
             const storedId = localStorage.getItem('quotation_id');
             if (storedId) setQuotationId(storedId);
@@ -125,21 +147,12 @@ export default function Quotation() {
     const saveStepData = async (currentStepData: Partial<QuotationData>, stepName: string): Promise<{ success: boolean; resolvedId: string | null }> => {
         setIsLoading(true);
         try {
-            const utmData = currentStepData as Partial<QuotationData> & {
-                utmId?: string;
-                utmSource?: string;
-                utmMedium?: string;
-                utmCampaign?: string;
-                utmTerm?: string;
-                utmContent?: string;
-                utmAnnouncement?: string;
-            };
-
             const payload: Partial<QuotationOrder> = {
-
                 ...(quotationId && {code: quotationId}),
 
                 step: stepName,
+                origin: LP_ORIGINS[pathname] || "Site: LOMA",
+
                 ...(currentStepData.name && {name: currentStepData.name}),
                 ...(currentStepData.phone && {phone: currentStepData.phone}),
                 ...(currentStepData.email && {email: currentStepData.email}),
@@ -176,13 +189,13 @@ export default function Quotation() {
                 ...(currentStepData.complement && {observation: currentStepData.complement}),
 
                 utm: {
-                    utmId: utmData.utmId || undefined,
-                    utmSource: utmData.utmSource || undefined,
-                    utmMedium: utmData.utmMedium || undefined,
-                    utmCampaign: utmData.utmCampaign || undefined,
-                    utmTerm: utmData.utmTerm || undefined,
-                    utmContent: utmData.utmContent || undefined,
-                    utmAnnouncement: utmData.utmAnnouncement || undefined,
+                    utmId: data.utmId || undefined,
+                    utmSource: data.utmSource || undefined,
+                    utmMedium: data.utmMedium || undefined,
+                    utmCampaign: data.utmCampaign || undefined,
+                    utmTerm: data.utmTerm || undefined,
+                    utmContent: data.utmContent || undefined,
+                    utmAnnouncement: data.utmAnnouncement || undefined,
                 }
             };
 
