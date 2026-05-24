@@ -5,7 +5,7 @@ import FlashlightInit from "@/components/lps/proposta-racional/FlashlightInit";
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://loma.com.br";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://proposta.lomaprotecao.com.br";
 
 export const metadata: Metadata = {
   title: "LOMA Proposta Racional e Econômica — Proteção Veicular a partir de R$129/mês",

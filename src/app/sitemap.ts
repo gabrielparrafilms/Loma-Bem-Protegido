@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://loma.com.br";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://proposta.lomaprotecao.com.br";
   return [
     {
       url: `${baseUrl}/protecao-veicular`,

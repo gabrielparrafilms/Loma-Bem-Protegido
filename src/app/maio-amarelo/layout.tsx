@@ -4,7 +4,7 @@ import ScrollAnimationInit from "@/components/lps/maio-amarelo/ScrollAnimationIn
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://loma.com.br";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://proposta.lomaprotecao.com.br";
 
 export const metadata: Metadata = {
   title: "Maio Amarelo — Proteção Veicular a partir de R$89,90",
