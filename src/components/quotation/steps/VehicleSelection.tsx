@@ -55,11 +55,6 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
                 if (!response.ok) throw new Error('Failed to fetch brands');
                 const result = await response.json() as VehicleBrand[];
                 setBrands(result);
-
-                // Limpa seleções posteriores se mudar o tipo
-                if (data.selectedBrand?.type !== data.vehicleType) {
-                    resetSelections('brand');
-                }
             } catch (error) {
                 console.error(error);
             } finally {
@@ -68,12 +63,14 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
         };
 
         fetchBrands();
-    }, [data.vehicleType, data.selectedBrand?.type, resetSelections]);
+        resetSelections('brand');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.vehicleType]);
 
     // 2. Carrega ANOS quando a MARCA muda
     useEffect(() => {
         const fetchYears = async () => {
-            if (!data.selectedBrand) {
+            if (!data.selectedBrand?.id) {
                 setYears([]);
                 return;
             }
@@ -108,12 +105,13 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
         };
 
         fetchYears();
-    }, [data.selectedBrand]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.selectedBrand?.id]);
 
     // 3. Carrega GRUPOS quando o ANO muda
     useEffect(() => {
         const fetchGroups = async () => {
-            if (!data.selectedBrand || !data.selectedYear) {
+            if (!data.selectedBrand?.id || !data.selectedYear) {
                 setGroups([]);
                 return;
             }
@@ -144,12 +142,13 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
         };
 
         fetchGroups();
-    }, [data.selectedBrand, data.selectedYear]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.selectedBrand?.id, data.selectedYear]);
 
     // 4. Carrega VEÍCULOS (Modelos Finais) quando o GRUPO muda
     useEffect(() => {
         const fetchModels = async () => {
-            if (!data.selectedBrand || !data.selectedYear || !data.selectedGroup) {
+            if (!data.selectedBrand?.id || !data.selectedYear || !data.selectedGroup) {
                 setModels([]);
                 return;
             }
@@ -170,7 +169,8 @@ export default function VehicleSelection({ data, updateData, onNext }: Props) {
         };
 
         fetchModels();
-    }, [data.selectedBrand, data.selectedYear, data.selectedGroup]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.selectedBrand?.id, data.selectedYear, data.selectedGroup]);
 
     const handleTypeSelect = (type: VehicleType) => {
         updateData({ vehicleType: type });
