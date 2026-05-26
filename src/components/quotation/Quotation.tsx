@@ -123,21 +123,8 @@ export default function Quotation() {
     }, []);
 
     useEffect(() => {
-        const restore = async () => {
-            const storedId = localStorage.getItem('quotation_id');
-            if (storedId) setQuotationId(storedId);
-
-            const storedData = localStorage.getItem('quotation_initial_data');
-            if (storedData) {
-                try {
-                    const parsed = JSON.parse(storedData) as Partial<QuotationData>;
-                    setData(prev => ({...prev, ...parsed}));
-                } catch (e) {
-                    console.error("Erro ao ler dados iniciais", e);
-                }
-            }
-        };
-        restore();
+        const storedId = sessionStorage.getItem('quotation_id');
+        if (storedId) setQuotationId(storedId);
     }, []);
 
     const updateData = (newData: Partial<QuotationData>) => {
@@ -220,10 +207,10 @@ export default function Quotation() {
 
             if (result.code) {
                 setQuotationId(result.code);
-                localStorage.setItem('quotation_id', result.code);
+                sessionStorage.setItem('quotation_id', result.code);
             } else if (result.id) {
                 setQuotationId(result.id);
-                localStorage.setItem('quotation_id', result.id);
+                sessionStorage.setItem('quotation_id', result.id);
             }
 
             return { success: true, resolvedId };
@@ -353,8 +340,7 @@ export default function Quotation() {
         if (successStep) {
             setHistory((prev) => [...prev, successStep]);
         }
-        localStorage.removeItem('quotation_initial_data');
-        localStorage.removeItem('quotation_id');
+        sessionStorage.removeItem('quotation_id');
     };
 
     const isStepValid = () => {
