@@ -15,7 +15,7 @@ export const quotationService = {
      * Envia a cotação para a API externa (Upsert).
      */
     syncQuotation: async (data: Partial<QuotationOrder>): Promise<QuotationOrder> => {
-        const endpoint = `${API_URL}/api/v1/order/lead`;
+        const endpoint = `${API_URL}/api/v1/order/lead/test`;
 
         const response = await fetch(endpoint, {
             method: 'POST',
