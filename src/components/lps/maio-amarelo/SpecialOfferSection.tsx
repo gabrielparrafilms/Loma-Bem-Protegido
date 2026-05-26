@@ -68,7 +68,7 @@ export default function SpecialOfferSection() {
           />
 
           <p className="relative z-10 font-[family-name:var(--font-inter)] font-extrabold text-[0.85rem] uppercase tracking-[0.2em] text-black/60 -mb-4">
-            Adesão por apenas
+            A partir de
           </p>
 
           {/* Price */}
