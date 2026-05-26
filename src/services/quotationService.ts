@@ -24,7 +24,15 @@ export const quotationService = {
         });
 
         if (!response.ok) {
-            throw new Error(`External API Error: ${response.statusText}`);
+            const errorBody = await response.text().catch(() => "(sem body)");
+            console.error(`[quotationService] ${response.status} ${response.statusText}`, errorBody);
+
+            // A API tenta re-inserir o telefone em atualizações — tratar como não-fatal
+            if (response.status === 400 && errorBody.includes('já cadastrado')) {
+                return data as QuotationOrder;
+            }
+
+            throw new Error(`External API Error: ${response.status} ${response.statusText} — ${errorBody}`);
         }
 
         return await response.json();
