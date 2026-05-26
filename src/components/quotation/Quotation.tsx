@@ -1,7 +1,8 @@
 "use client";
 
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useMemo, useState, useRef} from "react";
 import {usePathname, useSearchParams} from "next/navigation";
+import {useQuotationModal} from "@/components/shared/QuotationModal/context";
 import {AnimatePresence, LazyMotion, domAnimation, m} from "framer-motion";
 import {QuotationData, QuotationOrder} from "@/types/quotation";
 import {
@@ -40,6 +41,7 @@ const LP_ORIGINS: Record<string, string> = {
 export default function Quotation() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const { isOpen } = useQuotationModal();
     const mode = searchParams.get("mode");
 
     const [configuration, setConfiguration] = useState<PageConfigurationStep[]>(DEFAULT_PAGE_CONFIGURATION);
@@ -99,6 +101,17 @@ export default function Quotation() {
         postalCode: "",
         qualificationChoices: [],
     });
+
+    const wasOpen = useRef(false);
+    useEffect(() => {
+        if (isOpen && !wasOpen.current) {
+            setQuotationId(null);
+            setHistory([firstStep]);
+            setData({ name: "", phone: "", email: "", plate: "", work: false, postalCode: "", qualificationChoices: [] });
+            sessionStorage.removeItem('quotation_id');
+        }
+        wasOpen.current = isOpen;
+    }, [isOpen, firstStep]);
 
     useEffect(() => {
         const update = async () => {
