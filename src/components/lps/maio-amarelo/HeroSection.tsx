@@ -56,12 +56,19 @@ export default function HeroSection() {
         </h1>
 
         <p
-          className="[animation:animationIn_0.8s_ease-out_0.3s_both] font-[family-name:var(--font-inter)] font-normal leading-relaxed text-[#1A1A1A] mb-12"
+          className="[animation:animationIn_0.8s_ease-out_0.3s_both] font-[family-name:var(--font-inter)] font-normal leading-relaxed text-[#1A1A1A] mb-2"
           style={{ fontSize: "clamp(1rem, 4.3vw, 24px)", maxWidth: "800px" }}
         >
           Nesse Maio Amarelo a <strong className="font-bold text-black">LOMA</strong> vai garantir
-          sua proteção no trânsito com <strong className="font-bold text-black">condições</strong>{" "}
+          sua proteção <br className="hidden md:block" />
+          no trânsito com <strong className="font-bold text-black">condições</strong>{" "}
           <strong className="font-bold text-black">imperdíveis</strong>.
+        </p>
+        <p
+          className="[animation:animationIn_0.8s_ease-out_0.35s_both] font-[family-name:var(--font-inter)] text-sm text-[#1A1A1A]/80 mb-12"
+          style={{ maxWidth: "800px" }}
+        >
+          *válido somente nesse maio amarelo
         </p>
 
         <button
