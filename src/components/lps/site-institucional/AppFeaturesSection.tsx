@@ -94,14 +94,14 @@ export default function AppFeaturesSection() {
               </div>
             </div>
 
-            <p className="-mt-2">
-              Tudo que você precisa, direto no seu celular.
+            <p className="-mt-2 max-w-2xl text-center mx-auto">
+              Acesse sua 2ª via de boleto, solicite guincho e acompanhe seus eventos direto pelo app. Mais autonomia para você, menos espera no atendimento.
             </p>
           </div>
         </div>
 
         {/* Interactive Accordion Container */}
-        <div className="bg-zinc-100 rounded-[2rem] p-4 flex flex-col lg:flex-row gap-4 w-full lg:h-[500px] animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+        <div className="bg-zinc-100 rounded-[2rem] p-4 flex flex-col lg:flex-row lg:overflow-hidden gap-4 w-full lg:h-[500px] animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
           {features.map((feat, i) => {
             const isActive = activeCard === i;
             return (
@@ -109,9 +109,9 @@ export default function AppFeaturesSection() {
                 key={feat.num}
                 onMouseEnter={() => setActiveCard(i)}
                 onClick={() => setActiveCard(i)}
-                className={`group relative overflow-hidden rounded-[1.5rem] bg-white border ${
+                className={`group relative overflow-hidden rounded-[1.5rem] bg-white border flex flex-col cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] w-full h-auto lg:h-full lg:shrink-1 ${
                   isActive ? "border-[#0ABAB5]/30 shadow-xl lg:w-[60%] lg:flex-none" : "border-zinc-200 hover:border-zinc-300 lg:w-[20%] lg:flex-none"
-                } transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col cursor-pointer w-full h-auto lg:h-full`}
+                }`}
               >
                 {/* INACTIVE STATE CONTENT (Desktop Only) */}
                 <div className={`hidden lg:flex absolute inset-0 p-6 flex-col items-start justify-between transition-opacity duration-300 ${isActive ? "opacity-0 pointer-events-none" : "opacity-100 delay-200"}`}>
@@ -126,7 +126,7 @@ export default function AppFeaturesSection() {
                 </div>
 
                 {/* ACTIVE STATE CONTENT (Always visible on mobile) */}
-                <div className={`p-6 md:p-8 flex flex-col lg:flex-row items-center gap-6 lg:gap-8 h-full transition-opacity duration-500 ${isActive ? "lg:opacity-100 lg:delay-200" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0"}`}>
+                <div className={`p-5 lg:p-8 flex flex-col lg:flex-row items-center gap-5 lg:gap-8 h-full transition-opacity duration-500 ${isActive ? "lg:opacity-100 lg:delay-200" : "lg:opacity-0 lg:pointer-events-none lg:absolute lg:inset-0"}`}>
                   {/* Text Header (Esquerda) */}
                   <div className="flex-1 flex flex-col justify-center items-center lg:items-start h-full w-full lg:w-1/2">
                     <div className="flex items-center justify-center lg:justify-start gap-3 mb-4 w-full">
@@ -149,7 +149,7 @@ export default function AppFeaturesSection() {
                   </div>
 
                   {/* Image/Mockup Area (Direita) */}
-                  <div className="flex-none h-[250px] lg:flex-1 lg:h-full w-full lg:w-1/2 rounded-2xl bg-zinc-50 border border-zinc-100 overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-700">
+                  <div className="flex-none h-[180px] lg:flex-1 lg:h-full w-full lg:w-1/2 rounded-2xl bg-zinc-50 border border-zinc-100 overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-700">
                     <img src={feat.image} alt={feat.title} className="absolute inset-0 w-full h-full object-cover object-center" />
                   </div>
                 </div>

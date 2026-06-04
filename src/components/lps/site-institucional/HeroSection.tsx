@@ -5,7 +5,7 @@ export default function HeroSection() {
   const { open } = useQuotationModal();
 
   return (
-    <section className="relative w-full overflow-hidden min-h-[100dvh] flex items-center">
+    <section className="relative w-full overflow-hidden min-h-[85dvh] lg:min-h-[100dvh] flex items-center">
       {/* 1. BACKGROUND — Video autoplay loop */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
         <video
@@ -22,8 +22,8 @@ export default function HeroSection() {
       </div>
 
       {/* 2. CONTEÚDO PRINCIPAL */}
-      <div className="relative z-10 w-full px-6 md:px-12 pt-28 pb-20 lg:pt-36 lg:pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-6 lg:mt-10">
+      <div className="relative z-10 w-full px-6 md:px-12 pt-10 pb-0 md:pt-28 md:pb-20 lg:pt-36 lg:pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full mt-2 lg:mt-10">
 
           {/* Coluna de Texto */}
           <div className="flex flex-col text-left gap-8 lg:gap-0 lg:h-[600px] lg:justify-between lg:py-10">

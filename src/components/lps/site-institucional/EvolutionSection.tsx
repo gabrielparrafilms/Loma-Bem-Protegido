@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useQuotationModal } from "@/components/shared/QuotationModal/context";
 
@@ -17,6 +17,24 @@ export default function EvolutionSection() {
   // Mobile Carousel State
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
+
+  const [particles, setParticles] = useState<any[]>([]);
+
+  useEffect(() => {
+    setParticles(
+      Array.from({ length: 60 }).map((_, i) => {
+        const duration = 6 + Math.random() * 10;
+        return {
+          id: i,
+          left: `${Math.random() * 100}%`,
+          duration: duration,
+          delay: -(Math.random() * duration), // Negative delay makes them appear instantly
+          size: Math.random() * 4 + 1,
+          opacity: Math.random() * 0.4 + 0.2,
+        };
+      })
+    );
+  }, []);
 
   const handleCarouselScroll = () => {
     if (!carouselRef.current) return;
@@ -68,6 +86,9 @@ export default function EvolutionSection() {
   const ctaY = useTransform(scrollYProgress, [0.8, 1], [20, 0]);
   const ctaOpacity = useTransform(scrollYProgress, [0.8, 1], [0, 1]);
 
+  // Lights & Particles Fade Out (Fades out when Phase 3 Building appears)
+  const lightsOpacity = useTransform(scrollYProgress, [0.55, 0.75], [1, 0]);
+
   return (
     <>
       {/* DESKTOP: Scrollytelling Timeline */}
@@ -78,6 +99,23 @@ export default function EvolutionSection() {
           
           {/* Base Dark Overlay */}
           <div className="absolute inset-0 bg-[#09090b]/80 backdrop-blur-md -z-20 pointer-events-none" />
+
+          {/* BACKGROUND LIGHTS & PARTICLES (Fades out on Phase 3) */}
+          <motion.div style={{ opacity: lightsOpacity }} className="absolute inset-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
+            {/* Luz Difusa Forte */}
+            <div className="absolute bottom-0 left-0 w-full h-[90%] pointer-events-none z-0" aria-hidden="true">
+              <motion.div animate={{ opacity: [0.3, 0.45, 0.3], scale: [1, 1.05, 1] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] md:w-[150%] h-full origin-bottom" style={{ background: "radial-gradient(ellipse at bottom, #0ABAB5 0%, transparent 70%)" }} />
+              <motion.div animate={{ opacity: [0.4, 0.6, 0.4], x: ["-50%", "-48%", "-52%", "-50%"] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-[10%] left-1/2 w-[120%] h-[70%] bg-[#0ABAB5] blur-[150px]" />
+              <motion.div animate={{ opacity: [0.7, 0.9, 0.75, 0.85, 0.7] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute -bottom-[50px] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] h-[250px] bg-[#0ABAB5] blur-[100px]" />
+            </div>
+
+            {/* Partículas flutuantes */}
+            <div className="absolute inset-0 z-[5] pointer-events-none overflow-hidden">
+              {particles.map((p) => (
+                <motion.div key={p.id} animate={{ y: ["120vh", "-20vh"], opacity: [0, p.opacity, p.opacity, 0], x: [0, Math.random() * 60 - 30, Math.random() * 60 - 30] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }} className="absolute bg-[#0ABAB5] rounded-full blur-[1px]" style={{ left: p.left, top: 0, width: p.size, height: p.size, boxShadow: "0 0 10px 2px rgba(10,186,181,0.5)" }} />
+              ))}
+            </div>
+          </motion.div>
 
           {/* Parallax Background (Phase 3) */}
           <motion.div style={{ opacity: bgMasterOpacity }} className="absolute inset-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
@@ -144,19 +182,19 @@ export default function EvolutionSection() {
               </div>
 
               {/* CTA Button */}
-              <div className="w-full flex justify-center mt-8 z-30">
+              <div className="absolute top-[320px] left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
                 <motion.button 
                   onClick={open}
                   style={{ opacity: ctaOpacity, y: ctaY }}
-                  className="group inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-8 py-3 items-center justify-center text-sm text-[#09090b] font-semibold bg-[#0ABAB5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(10,186,181,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)]"
+                  className="group inline-flex cursor-pointer overflow-hidden font-medium tracking-tight rounded-full px-10 py-4 items-center justify-center text-base text-[#09090b] font-bold bg-[#0ABAB5] transition-all duration-500 hover:bg-yellow-400 hover:text-zinc-900 shadow-[0_0_20px_rgba(10,186,181,0.4)] hover:shadow-[0_0_20px_rgba(250,204,21,0.5)] scale-110"
                 >
-                  <span className="relative z-10 flex items-center gap-2 transition-all duration-500 ease-out group-hover:translate-y-8 group-hover:opacity-0 group-hover:blur-md">
+                  <span className="relative z-10 flex items-center gap-2 transition-all duration-500 ease-out group-hover:translate-y-10 group-hover:opacity-0 group-hover:blur-md">
                     Falar com um Especialista
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                   </span>
-                  <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out -translate-y-8 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 blur-md group-hover:blur-none text-zinc-900 font-bold">
+                  <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 transition-all duration-300 ease-in-out -translate-y-10 group-hover:translate-y-0 group-hover:opacity-100 opacity-0 blur-md group-hover:blur-none text-zinc-900 font-bold">
                     Falar com um Especialista
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                   </span>
                 </motion.button>
               </div>
@@ -194,7 +232,12 @@ export default function EvolutionSection() {
 
       {/* MOBILE: Static Fallback Layout */}
       <section id="evolution-timeline-mobile" className="md:hidden relative w-full bg-[#09090b] text-white py-16 overflow-hidden border-t border-white/5 z-30">
-        <div className="w-full max-w-xl mx-auto px-6 flex flex-col gap-12">
+        
+        {/* Luzes de Fundo (Mobile) */}
+        <div className="absolute top-[-10%] left-[-20%] w-[350px] h-[350px] bg-[#0ABAB5]/40 blur-[120px] pointer-events-none rounded-full" aria-hidden="true" />
+        <div className="absolute bottom-[0%] right-[-20%] w-[350px] h-[350px] bg-[#0ABAB5]/40 blur-[120px] pointer-events-none rounded-full" aria-hidden="true" />
+
+        <div className="relative z-10 w-full max-w-xl mx-auto px-6 flex flex-col gap-12">
           
           <div className="text-center mb-4">
             <h2 className="text-3xl font-geist font-bold tracking-tighter mb-4">Origem e Consolidação</h2>
