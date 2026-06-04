@@ -33,4 +33,12 @@ export const lpsConfig: LP[] = [
     active: false,
     sharedComponents: ["QuotationModal", "AnalyticsWrapper"],
   },
+  {
+    slug: "site-institucional",
+    name: "LOMA Bem Protegido — Site Institucional",
+    description: "Site institucional completo com todas as seções da marca LOMA",
+    ctaType: "modal",
+    active: true,
+    sharedComponents: ["QuotationModal", "AnalyticsWrapper"],
+  },
 ];

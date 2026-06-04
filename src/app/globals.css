@@ -119,6 +119,39 @@ body {
   pointer-events: none;
 }
 
+/* Glass card hover flashlight glow (site-institucional) */
+.glass-card::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  border-radius: inherit;
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(52, 211, 153, 0.2), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  z-index: 3;
+}
+.glass-card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(52, 211, 153, 0.3), transparent 40%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.glass-card:hover::before,
+.glass-card:hover .glass-card-border {
+  opacity: 1;
+}
+
 /* ========================================
    Flashlight Effect
    Requer JS: document.addEventListener('mousemove', ...) → CSS vars --mouse-x, --mouse-y
@@ -375,4 +408,15 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ========================================
+   Marquee Left — Site Institucional App Carousel
+======================================== */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-left {
+  animation: marquee-left 12s linear infinite;
 }
