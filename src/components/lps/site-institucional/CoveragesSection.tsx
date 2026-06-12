@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 const coverages = [
   { icon: "shield-alert", title: "Roubo & Furto", desc: "Indenização de até 100% da FIPE em caso de perda total.\nSegurança de verdade quando você mais precisa.", span: 2 },
@@ -21,25 +20,8 @@ const iconPaths: Record<string, React.ReactNode> = {
 };
 
 export default function CoveragesSection() {
-  const [particles, setParticles] = useState<any[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    setParticles(
-      Array.from({ length: 20 }).map((_, i) => {
-        const duration = 6 + Math.random() * 10;
-        return {
-          id: i,
-          left: `${Math.random() * 100}%`,
-          duration: duration,
-          delay: -(Math.random() * duration), // Negative delay makes them appear instantly
-          size: Math.random() * 4 + 1,
-          opacity: Math.random() * 0.4 + 0.2,
-        };
-      })
-    );
-  }, []);
 
   // Autoplay Carousel Logic
   useEffect(() => {
@@ -50,57 +32,31 @@ export default function CoveragesSection() {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  const handleNext = () => setActiveIndex((prev) => (prev + 1) % coverages.length);
-  const handlePrev = () => setActiveIndex((prev) => (prev - 1 + coverages.length) % coverages.length);
-
   return (
     <section id="coverages" className="relative z-20 w-full border-t border-white/5 flex flex-col items-center overflow-hidden">
-      {/* Luz Difusa Forte vindo de baixo com animação */}
+      {/* Luz Difusa — CSS puro */}
       <div className="absolute bottom-0 left-0 w-full h-[90%] pointer-events-none z-0" aria-hidden="true">
-        {/* Glow amplo e suave que sobe quase até o topo */}
-        <motion.div 
-          animate={{ opacity: [0.3, 0.45, 0.3], scale: [1, 1.05, 1] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] md:w-[150%] h-full origin-bottom" 
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] md:w-[150%] h-full origin-bottom [animation:coverageGlow_7s_ease-in-out_infinite]" 
           style={{ background: "radial-gradient(ellipse at bottom, #0ABAB5 0%, transparent 70%)" }} 
         />
-        {/* Glow intermediário movendo sutilmente pros lados */}
-        <motion.div 
-          animate={{ opacity: [0.4, 0.6, 0.4], x: ["-50%", "-48%", "-52%", "-50%"] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-[10%] left-1/2 w-[120%] h-[70%] bg-[#0ABAB5] blur-[150px]" 
-        />
-        {/* Núcleo brilhante na base (Flicker sutil e rápido) */}
-        <motion.div 
-          animate={{ opacity: [0.7, 0.9, 0.75, 0.85, 0.7] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-[50px] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] h-[250px] bg-[#0ABAB5] blur-[100px]" 
-        />
+        <div className="absolute -bottom-[10%] left-1/2 -translate-x-1/2 w-[120%] h-[70%] bg-[#0ABAB5] blur-[150px] [animation:coverageGlow_10s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-[50px] left-1/2 -translate-x-1/2 w-[80%] md:w-[60%] h-[250px] bg-[#0ABAB5] blur-[100px] [animation:coverageFlicker_5s_ease-in-out_infinite]" />
         <div className="absolute -bottom-[20px] left-1/2 -translate-x-1/2 w-[40%] md:w-[30%] h-[100px] bg-[#e6f8f7] blur-[50px] opacity-100" />
       </div>
 
-      {/* Partículas flutuantes (agora com z-[5] para ficar na frente da luz mas atrás dos cards) */}
-      <div className="absolute inset-0 z-[5] pointer-events-none overflow-hidden">
-        {particles.map((p) => (
-          <motion.div
-            key={p.id}
-            animate={{ 
-              y: ["120vh", "-20vh"], 
-              opacity: [0, p.opacity, p.opacity, 0],
-              x: [0, Math.random() * 60 - 30, Math.random() * 60 - 30]
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              delay: p.delay,
-              ease: "linear"
-            }}
-            className="absolute bg-[#0ABAB5] rounded-full blur-[1px]"
+      {/* Partículas CSS — sem Framer Motion */}
+      <div className="absolute inset-0 z-[5] pointer-events-none overflow-hidden hidden md:block" aria-hidden="true">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-[#0ABAB5] rounded-full blur-[1px] [animation:particleFloat_linear_infinite]"
             style={{
-              left: p.left,
-              top: 0,
-              width: p.size,
-              height: p.size,
+              left: `${(i * 10) + Math.random() * 5}%`,
+              width: `${Math.random() * 3 + 1}px`,
+              height: `${Math.random() * 3 + 1}px`,
+              opacity: Math.random() * 0.3 + 0.1,
+              animationDuration: `${8 + i * 1.5}s`,
+              animationDelay: `${-i * 1.2}s`,
               boxShadow: "0 0 10px 2px rgba(10,186,181,0.5)"
             }}
           />
