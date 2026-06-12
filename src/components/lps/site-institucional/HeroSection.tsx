@@ -33,7 +33,7 @@ export default function HeroSection() {
           <div className="flex flex-col text-left gap-8 lg:gap-0 lg:h-[600px] lg:justify-between lg:py-10">
 
 
-            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-geist font-medium tracking-tighter leading-[1.05] [animation:animationIn_0.8s_ease-out_0.1s_both]">
+            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-geist font-medium tracking-tighter leading-[1.05]">
               Proteção Veicular <br />
               <span className="text-transparent-bg block mt-2">Inteligente</span>
               <span className="text-white text-4xl md:text-5xl lg:text-[3.5rem] mt-2 block font-normal tracking-tight leading-tight">Para Quem Não Pode Parar.</span>

@@ -54,13 +54,12 @@ body {
    Usado em: títulos, footer
 ======================================== */
 .text-transparent-bg {
-  background-image: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,1) 100%), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center;
+  background-image: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(10,186,181,0.6) 25%, rgba(255,255,255,0.9) 50%, rgba(10,186,181,0.5) 75%, rgba(255,255,255,1) 100%);
+  background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  animation: bg-pan 30s linear infinite alternate;
+  animation: bg-pan 8s linear infinite alternate;
 }
 
 .text-transparent-gradient {
