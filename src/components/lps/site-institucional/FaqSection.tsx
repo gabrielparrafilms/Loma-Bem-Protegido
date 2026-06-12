@@ -27,7 +27,7 @@ export default function FaqSection() {
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 flex flex-col items-center">
         {/* Header */}
-        <div className="text-center mb-16 flex flex-col items-center animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div className="text-center mb-16 flex flex-col items-center">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-zinc-900 tracking-tight mb-6 font-geist">
             Perguntas frequentes
           </h2>
@@ -37,7 +37,7 @@ export default function FaqSection() {
         </div>
 
         {/* Accordion */}
-        <div className="w-full flex flex-col gap-4 mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+        <div className="w-full flex flex-col gap-4 mb-16">
           {faqItems.map((item, i) => (
             <div
               key={i}
@@ -65,7 +65,7 @@ export default function FaqSection() {
         </div>
 
         {/* CTA Footer */}
-        <div className="flex flex-col items-center p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-3xl text-center animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both] shadow-xl">
+        <div className="flex flex-col items-center p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-3xl text-center shadow-xl">
           <h3 className="text-2xl md:text-3xl font-semibold text-white mb-4 font-geist tracking-tight">Ficou com mais alguma dúvida?</h3>
           <p className="text-zinc-400 mb-8 text-lg">Nossos consultores estão prontos para te ajudar e montar o plano ideal para você.</p>
           <button

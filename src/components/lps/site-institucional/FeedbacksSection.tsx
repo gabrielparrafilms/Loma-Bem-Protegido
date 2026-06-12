@@ -51,7 +51,7 @@ export default function FeedbacksSection() {
 
       <div className="relative max-w-[1400px] mx-auto px-4 md:px-6 z-10">
         {/* Header */}
-        <div className="text-center mb-16 relative z-30 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both] flex flex-col items-center">
+        <div className="text-center mb-16 relative z-30 flex flex-col items-center">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-geist font-semibold text-zinc-900 mb-4 tracking-tighter leading-[1.1]">
             A proteção que funciona na prática.<br /><span className="text-[#0ABAB5]">Ouça quem já testou e aprovou.</span>
           </h2>
@@ -88,7 +88,7 @@ export default function FeedbacksSection() {
           </div>
         </div>
 
-        <div className="w-full flex justify-center mt-12 z-30 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+        <div className="w-full flex justify-center mt-12 z-30">
           <button
             onClick={open}
             className="group relative inline-flex min-w-[200px] cursor-pointer overflow-hidden font-bold tracking-widest rounded-full px-8 py-4 items-center justify-center text-sm text-[#0ABAB5] bg-zinc-900 transition-all duration-300 hover:bg-zinc-800 hover:scale-[1.02] shadow-xl shadow-zinc-900/10 uppercase"

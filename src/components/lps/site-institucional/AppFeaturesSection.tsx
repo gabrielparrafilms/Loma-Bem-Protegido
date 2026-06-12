@@ -45,7 +45,7 @@ export default function AppFeaturesSection() {
     <section id="app-features" className="w-full bg-[#FAFAFA] py-20 lg:py-32">
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
         {/* Header */}
-        <div className="text-center flex flex-col items-center gap-6 mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both] max-w-3xl mx-auto relative z-10">
+        <div className="text-center flex flex-col items-center gap-6 mb-16 max-w-3xl mx-auto relative z-10">
           <div className="flex items-center gap-3 mb-2">
             <span className="text-[10px] font-bold tracking-[0.2em] text-zinc-900 uppercase">
               &bull; APP EXCLUSIVO
@@ -101,7 +101,7 @@ export default function AppFeaturesSection() {
         </div>
 
         {/* Interactive Accordion Container */}
-        <div className="bg-zinc-100 rounded-[2rem] p-4 flex flex-col lg:flex-row lg:overflow-hidden gap-4 w-full lg:h-[500px] animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+        <div className="bg-zinc-100 rounded-[2rem] p-4 flex flex-col lg:flex-row lg:overflow-hidden gap-4 w-full lg:h-[500px]">
           {features.map((feat, i) => {
             const isActive = activeCard === i;
             return (

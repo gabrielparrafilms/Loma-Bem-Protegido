@@ -12,7 +12,7 @@ export default function BenefitsSection() {
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-6xl lg:text-7xl font-geist font-medium tracking-tighter leading-[1.05] text-zinc-900">
               Você não precisa de seguradora.<br />
@@ -29,7 +29,7 @@ export default function BenefitsSection() {
           {/* Coluna Esquerda */}
           <div className="lg:col-span-7 flex flex-col gap-6">
             {/* Card 1: O que é a LOMA? */}
-            <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl flex-1 p-8 md:p-12 relative overflow-hidden animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both] min-h-[300px] group">
+            <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl flex-1 p-8 md:p-12 relative overflow-hidden min-h-[300px] group">
               <div className="absolute inset-0 bg-cover bg-center opacity-[0.03] transition-transform duration-1000 group-hover:scale-105" style={{ backgroundImage: "url('/lps/site-institucional/img_bloco_2.jpg')" }} aria-hidden="true" />
               
               <div className="relative z-10 max-w-sm flex flex-col h-full justify-center">
@@ -46,7 +46,7 @@ export default function BenefitsSection() {
             {/* Grid Inferior */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Card 2: Como funciona? */}
-              <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl p-8 relative animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+              <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl p-8 relative">
                 <h3 className="text-xl font-geist font-medium tracking-tight text-zinc-900 mb-4">Como funciona?</h3>
                 <p className="text-zinc-600 text-sm leading-relaxed mb-6">
                   Você paga uma mensalidade fixa. Se acontecer algum imprevisto, o fundo cobre o prejuízo.
@@ -64,7 +64,7 @@ export default function BenefitsSection() {
               </div>
 
               {/* Destaque Extra */}
-              <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl p-8 flex flex-col justify-center relative animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both] overflow-hidden">
+              <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden">
                 <div className="text-5xl md:text-6xl font-geist font-medium text-[#0ABAB5] tracking-tighter mb-2">-40%</div>
                 <p className="text-zinc-600 text-sm leading-relaxed relative z-10 font-medium">Até 40% mais econômico que seguro tradicional</p>
                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#0ABAB5]/20 blur-[50px] rounded-full pointer-events-none" aria-hidden="true" />
@@ -74,7 +74,7 @@ export default function BenefitsSection() {
 
           {/* Coluna Direita: Por que escolher a LOMA? */}
           <div className="lg:col-span-5">
-            <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl h-full p-8 md:p-12 relative flex flex-col animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+            <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl h-full p-8 md:p-12 relative flex flex-col">
               <h3 className="text-3xl md:text-4xl font-geist font-medium tracking-tight text-zinc-900 mb-6">Por que escolher a LOMA?</h3>
               <p className="text-zinc-600 leading-relaxed mb-10 text-lg">Mais proteção, menos custo e sem burocracia.</p>
 

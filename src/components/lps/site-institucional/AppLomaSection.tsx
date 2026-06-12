@@ -25,20 +25,20 @@ export default function AppLomaSection() {
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 flex flex-col items-center justify-center">
         <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center relative z-30">
-          <h2 className="text-4xl md:text-5xl lg:text-[64px] leading-tight font-bold text-white tracking-tight mb-6 font-geist animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both]">
+          <h2 className="text-4xl md:text-5xl lg:text-[64px] leading-tight font-bold text-white tracking-tight mb-6 font-geist">
             Conheça nosso <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0ABAB5] to-[#08938F]">aplicativo Loma</span>
           </h2>
 
-          <p className="text-lg text-zinc-300 leading-relaxed mb-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.2s_both]">
+          <p className="text-lg text-zinc-300 leading-relaxed mb-4">
             <strong className="text-white font-semibold">Tenha sua proteção sempre à mão.</strong> Pelo app, você acessa boletos, acompanha seus serviços, atualiza dados e fala direto com a gente de forma rápida e simples.
           </p>
 
-          <p className="text-lg text-zinc-300 leading-relaxed mb-10 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.3s_both]">
+          <p className="text-lg text-zinc-300 leading-relaxed mb-10">
             Baixe agora e aproveite mais praticidade no seu dia a dia.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.4s_both]">
+          <div className="flex flex-col sm:flex-row gap-4">
             <a href="https://apps.apple.com/au/app/loma-prote%C3%A7%C3%A3o-veicular/id1456159026" target="_blank" rel="noopener noreferrer" className="transition-transform hover:-translate-y-1 duration-300">
               <img src="https://pages.greatpages.com.br/four-comercial.pages.net.br-testetestestesteteste/1759952664/imagens/desktop/3336933_1_70434.png" alt="Baixar na App Store" className="h-[56px] w-auto object-contain drop-shadow-lg" />
             </a>
@@ -48,7 +48,7 @@ export default function AppLomaSection() {
           </div>
 
           {/* App Screenshots */}
-          <div className="w-full mt-8 md:mt-12 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.5s_both]">
+          <div className="w-full mt-8 md:mt-12">
             {/* Desktop Fan Effect */}
             <div className="hidden md:flex relative justify-center items-center h-[550px] w-full max-w-[1000px] mx-auto">
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-emerald-400/10 blur-[100px] rounded-full pointer-events-none z-0" aria-hidden="true" />

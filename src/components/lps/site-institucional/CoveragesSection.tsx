@@ -109,7 +109,7 @@ export default function CoveragesSection() {
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 py-16 lg:py-32 flex flex-col items-center">
         {/* Header */}
-        <div className="text-center flex flex-col items-center gap-6 mb-20 animate-on-scroll [animation:animationIn_0.8s_ease-out_0.1s_both] max-w-3xl relative z-10">
+        <div className="text-center flex flex-col items-center gap-6 mb-20 max-w-3xl relative z-10">
         <h2 className="text-4xl md:text-5xl lg:text-6xl font-geist font-medium tracking-tighter leading-[1.1] text-white">
           Tudo o que seu veículo precisa para rodar tranquilo.
         </h2>
@@ -123,7 +123,7 @@ export default function CoveragesSection() {
         {coverages.map((cov, i) => (
           <div
             key={i}
-            className={`flashlight-card ${cov.span === 2 ? "lg:col-span-2" : "lg:col-span-1"} p-8 md:p-10 relative flex flex-col justify-center animate-on-scroll [animation:animationIn_0.8s_ease-out_${0.1 + i * 0.1}s_both] overflow-hidden`}
+            className={`flashlight-card ${cov.span === 2 ? "lg:col-span-2" : "lg:col-span-1"} p-8 md:p-10 relative flex flex-col justify-center overflow-hidden`}
           >
             <div className="absolute -right-8 -top-8 w-32 h-32 bg-[#0ABAB5]/10 blur-[40px] rounded-full pointer-events-none" aria-hidden="true" />
             <div className="w-10 h-10 rounded-lg bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 flex items-center justify-center text-[#0ABAB5] mb-6 relative z-10 shadow-[0_0_15px_rgba(10,186,181,0.2)]">
