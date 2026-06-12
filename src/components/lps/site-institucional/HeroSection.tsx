@@ -6,19 +6,23 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full overflow-hidden min-h-[85dvh] lg:min-h-[100dvh] flex items-center">
-      {/* 1. BACKGROUND — Video autoplay loop */}
+      {/* 1. BACKGROUND — Video (desktop only) + Static fallback (mobile) */}
       <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        {/* Desktop: video with lazy loading */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover opacity-45"
+          preload="none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover opacity-45 hidden md:block"
         >
           <source src="/lps/site-institucional/video-hero.mp4" type="video/mp4" />
         </video>
+        {/* Mobile: static dark gradient (no video download) */}
+        <div className="absolute inset-0 block md:hidden bg-gradient-to-br from-[#09090b] via-[#0a1a19] to-[#09090b]" />
         {/* Glow overlay */}
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-emerald-500/5 blur-[120px] rounded-full z-[1]" />
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vh] bg-emerald-500/5 blur-[80px] rounded-full z-[1]" />
       </div>
 
       {/* 2. CONTEÚDO PRINCIPAL */}
