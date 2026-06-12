@@ -9,21 +9,21 @@ const features = [
     title: "2ª Via de Boleto",
     desc: "Acesse sua fatura e resolva tudo em segundos, direto pelo app.",
     cta: "Acessar Fatura",
-    image: "/lps/site-institucional/Via Boleto - Web.jpg",
+    image: "/lps/site-institucional/Via Boleto - Web.webp",
   },
   {
     num: "02",
     title: "Solicitação de Guincho",
     desc: "Acione o guincho com poucos toques e acompanhe a chegada em tempo real.",
     cta: "Acionar Guincho",
-    image: "/lps/site-institucional/Soli Guincho - Web.jpg",
+    image: "/lps/site-institucional/Soli Guincho - Web.webp",
   },
   {
     num: "03",
     title: "Status de Eventos",
     desc: "Veja o andamento do seu atendimento e tenha total controle do processo.",
     cta: "Acompanhar Status",
-    image: "/lps/site-institucional/Eventos - Web.jpg",
+    image: "/lps/site-institucional/Eventos - Web.webp",
   },
 ];
 
@@ -150,7 +150,7 @@ export default function AppFeaturesSection() {
 
                   {/* Image/Mockup Area (Direita) */}
                   <div className="flex-none h-[180px] lg:flex-1 lg:h-full w-full lg:w-1/2 rounded-2xl bg-zinc-50 border border-zinc-100 overflow-hidden relative group-hover:scale-[1.02] transition-transform duration-700">
-                    <img src={feat.image} alt={feat.title} className="absolute inset-0 w-full h-full object-cover object-center" />
+                    <img src={feat.image} alt={feat.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-center" />
                   </div>
                 </div>
               </div>

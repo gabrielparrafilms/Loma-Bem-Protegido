@@ -22,7 +22,7 @@ export default function EvolutionSection() {
 
   useEffect(() => {
     setParticles(
-      Array.from({ length: 60 }).map((_, i) => {
+      Array.from({ length: 20 }).map((_, i) => {
         const duration = 6 + Math.random() * 10;
         return {
           id: i,
@@ -120,13 +120,13 @@ export default function EvolutionSection() {
           {/* Parallax Background (Phase 3) */}
           <motion.div style={{ opacity: bgMasterOpacity }} className="absolute inset-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
             <motion.img 
-              src="/lps/site-institucional/Ceu.jpg" 
+              src="/lps/site-institucional/Ceu.webp" 
               alt="Céu Loma" 
               style={{ scale: ceuScale, y: ceuY }}
               className="absolute top-0 left-0 w-full h-[300%] object-cover grayscale-[20%]"
             />
             <motion.img 
-              src="/lps/site-institucional/Base Original.png" 
+              src="/lps/site-institucional/Base Original.webp" 
               alt="Prédio Loma" 
               style={{ scale: baseOriginalScale, y: baseOriginalY }}
               className="absolute bottom-0 left-0 w-full h-[120%] object-cover object-bottom grayscale-[10%]"
@@ -205,20 +205,20 @@ export default function EvolutionSection() {
                 {/* Phase 1 Images */}
                 <motion.div style={{ opacity: images1Opacity }} className="col-start-1 row-start-1 grid grid-cols-2 gap-8 w-full max-w-2xl pointer-events-none">
                   <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
-                    <img src="/lps/site-institucional/Loma 2017 2.jpg" alt="Loma 2017" className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105" />
+                    <img src="/lps/site-institucional/Loma 2017 2.webp" alt="Loma 2017" loading="lazy" className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 pointer-events-none" />
                   </div>
                   <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
-                    <img src="/lps/site-institucional/Loma 2017 3.jpg" alt="Loma 2017" className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105" />
+                    <img src="/lps/site-institucional/Loma 2017 3.webp" alt="Loma 2017" loading="lazy" className="w-full h-full object-cover transition-all duration-700 ease-out grayscale-[50%] group-hover:grayscale-0 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 pointer-events-none" />
                   </div>
                 </motion.div>
 
                 {/* Phase 2 Images */}
                 <motion.div style={{ opacity: images2Opacity }} className="col-start-1 row-start-1 grid grid-cols-3 gap-6 w-full pointer-events-none">
-                  {["Loma Campinas.png", "Loma Osasco.jpg", "Predio Loma.png"].map((img, idx) => (
+                  {["Loma Campinas.webp", "Loma Osasco.webp", "Predio Loma.webp"].map((img, idx) => (
                     <div key={idx} className="relative w-full h-[280px] lg:h-[320px] rounded-3xl overflow-hidden shadow-2xl border border-white/5 group">
-                      <img src={`/lps/site-institucional/${img}`} alt="Unidade Loma" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <img src={`/lps/site-institucional/${img}`} alt="Unidade Loma" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                       <div className="absolute inset-0 bg-[#09090b]/10 pointer-events-none" />
                     </div>
                   ))}
@@ -250,8 +250,8 @@ export default function EvolutionSection() {
             <h3 className="text-2xl font-bold tracking-tight">{blocks[0].title}</h3>
             <p className="text-white/80 leading-relaxed text-sm mb-2">{blocks[0].desc}</p>
             <div className="grid grid-cols-2 gap-3">
-              <img src="/lps/site-institucional/Loma 2017 2.jpg" alt="Loma 2017" className="w-full aspect-[4/3] object-cover rounded-xl shadow-xl grayscale-[50%]" />
-              <img src="/lps/site-institucional/Loma 2017 3.jpg" alt="Loma 2017" className="w-full aspect-[4/3] object-cover rounded-xl shadow-xl grayscale-[50%]" />
+              <img src="/lps/site-institucional/Loma 2017 2.webp" alt="Loma 2017" loading="lazy" className="w-full aspect-[4/3] object-cover rounded-xl shadow-xl grayscale-[50%]" />
+              <img src="/lps/site-institucional/Loma 2017 3.webp" alt="Loma 2017" loading="lazy" className="w-full aspect-[4/3] object-cover rounded-xl shadow-xl grayscale-[50%]" />
             </div>
           </div>
 
@@ -266,9 +266,9 @@ export default function EvolutionSection() {
                 onScroll={handleCarouselScroll}
                 className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 w-full hide-scrollbar relative"
               >
-                <img src="/lps/site-institucional/Loma Campinas.png" alt="Loma Campinas" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
-                <img src="/lps/site-institucional/Loma Osasco.jpg" alt="Loma Osasco" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
-                <img src="/lps/site-institucional/Predio Loma.png" alt="Prédio Loma" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
+                <img src="/lps/site-institucional/Loma Campinas.webp" alt="Loma Campinas" loading="lazy" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
+                <img src="/lps/site-institucional/Loma Osasco.webp" alt="Loma Osasco" loading="lazy" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
+                <img src="/lps/site-institucional/Predio Loma.webp" alt="Prédio Loma" loading="lazy" className="w-[85%] flex-shrink-0 snap-center aspect-[4/3] object-cover rounded-xl shadow-xl" />
               </div>
               
               {/* Swipe Arrow Hint */}
@@ -296,8 +296,8 @@ export default function EvolutionSection() {
             <h3 className="text-2xl font-bold tracking-tight">{blocks[2].title}</h3>
             <p className="text-white/80 leading-relaxed text-sm mb-2">{blocks[2].desc}</p>
             <div className="relative w-full h-56 rounded-xl overflow-hidden border border-white/10 shadow-2xl">
-              <img src="/lps/site-institucional/Ceu.jpg" alt="Céu" className="absolute inset-0 w-full h-full object-cover grayscale-[20%]" />
-              <img src="/lps/site-institucional/Base Original.png" alt="Loma Evolução" className="absolute bottom-0 w-full h-[120%] object-cover object-bottom relative z-10" />
+              <img src="/lps/site-institucional/Ceu.webp" alt="Céu" loading="lazy" className="absolute inset-0 w-full h-full object-cover grayscale-[20%]" />
+              <img src="/lps/site-institucional/Base Original.webp" alt="Loma Evolução" loading="lazy" className="absolute bottom-0 w-full h-[120%] object-cover object-bottom relative z-10" />
             </div>
           </div>
 

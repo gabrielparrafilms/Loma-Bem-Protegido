@@ -3,7 +3,7 @@ export default function SocialProofSection() {
     <section id="social-proof" className="relative z-20 w-full py-16 lg:py-32 flex flex-col items-center justify-center overflow-hidden border-t border-white/5 bg-transparent">
       {/* Image Background */}
       <div className="absolute inset-0 pointer-events-none opacity-20 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]" aria-hidden="true">
-        <img src="/lps/site-institucional/Img Social.jpg" alt="" className="w-full h-full object-cover object-[75%_center] md:object-center" />
+        <img src="/lps/site-institucional/Img Social.webp" alt="" loading="lazy" className="w-full h-full object-cover object-[75%_center] md:object-center" />
       </div>
 
       {/* Grid Background */}

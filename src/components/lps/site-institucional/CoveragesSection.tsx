@@ -27,7 +27,7 @@ export default function CoveragesSection() {
 
   useEffect(() => {
     setParticles(
-      Array.from({ length: 60 }).map((_, i) => {
+      Array.from({ length: 20 }).map((_, i) => {
         const duration = 6 + Math.random() * 10;
         return {
           id: i,

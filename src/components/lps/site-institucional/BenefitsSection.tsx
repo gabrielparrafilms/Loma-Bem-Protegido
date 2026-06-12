@@ -30,7 +30,7 @@ export default function BenefitsSection() {
           <div className="lg:col-span-7 flex flex-col gap-6">
             {/* Card 1: O que é a LOMA? */}
             <div className="bg-[#0ABAB5]/10 border border-[#0ABAB5]/20 hover:border-[#0ABAB5]/40 transition-colors rounded-3xl flex-1 p-8 md:p-12 relative overflow-hidden min-h-[300px] group">
-              <div className="absolute inset-0 bg-cover bg-center opacity-[0.03] transition-transform duration-1000 group-hover:scale-105" style={{ backgroundImage: "url('/lps/site-institucional/img_bloco_2.jpg')" }} aria-hidden="true" />
+              <div className="absolute inset-0 bg-cover bg-center opacity-[0.03] transition-transform duration-1000 group-hover:scale-105" style={{ backgroundImage: "url('/lps/site-institucional/img_bloco_2.webp')" }} aria-hidden="true" />
               
               <div className="relative z-10 max-w-sm flex flex-col h-full justify-center">
                 <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[#0ABAB5] shadow-lg mb-6">
